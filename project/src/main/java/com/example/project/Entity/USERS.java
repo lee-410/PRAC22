@@ -1,17 +1,20 @@
 package com.example.project.Entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-@ToString
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "USERS")
-@Entity
+//
+//@ToString
+//@Getter
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Table(name = "USERS")
+@Entity(name = "USERS")
+@Data
 public class USERS {
 
     @Id // PK
@@ -31,6 +34,6 @@ public class USERS {
     private String user_auth;
 
     @Column
-    private LocalDateTime append_date;
+    private LocalDate append_date;
 
 }
