@@ -46,4 +46,13 @@ public class UserRepositoryTest {
             userRepository.save(selectUser);
         });
     }
+
+    @Test
+    public void delete(){//read()메서드실행->read()메서드가 존재한다면 원하는 데이터를 삭제->저장
+        Optional<USERS> users = userRepository.findById(2L);
+        users.ifPresent(selectUser -> { //검색을 원하는 id값을 찾아서 ifPresent값이 존재할때 삭제
+            userRepository.delete(selectUser);
+        });
+
+    }
 }
