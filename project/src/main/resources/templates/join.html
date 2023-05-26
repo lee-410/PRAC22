@@ -14,8 +14,20 @@
         <p>권한:<input type="text" name="inputAU"></p>
         <p>날짜:<input type="date" name="inputDATE"></p>
         <p><input type="submit" value="저장"></p>
-
-
-
+        <script type="text/javascript">
+            let date = {
+                inputID = $('inputID').val(),
+                inputPW = $('inputPW').val(),
+                inputNAME = $('inputNAME').val(),
+                inputAU = $('inputAU').val(),
+                inputDATE = $('inputDATE').val()
+            };
+            $.ajax({
+                type: "POST",
+                url:"/join",
+                data : data,
+                dataType : "json"
+            });
+        </script>
 </body>
 </html>
