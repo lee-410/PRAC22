@@ -3,11 +3,9 @@ package com.example.project.controller;
 import com.example.project.Entity.USERS;
 import com.example.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -17,13 +15,13 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping
-    public ModelAndView Search() {
+    public ModelAndView search() {
         ModelAndView modelAndView = new ModelAndView("join");
         return modelAndView;
     }
 
     @PostMapping
-    public String join(@RequestBody USERS users) {
+    public String create(@RequestBody USERS users) {
         USERS newUSERS = userRepository.save(users);
         return users.getUser_name() + "님의 회원가입이 완료되었습니다.";
     }

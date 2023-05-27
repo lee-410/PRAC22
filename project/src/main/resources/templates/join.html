@@ -8,26 +8,32 @@
 <section>
     <h1>회원가입</h1>
 </section>
-       <p>아이디:<input type="text" name="inputID"></p>
-        <p>패스워드:<input type="text" name="inputPW"></p>
-        <p>이름:<input type="text" name="inputNAME"></p>
-        <p>권한:<input type="text" name="inputAU"></p>
-        <p>날짜:<input type="date" name="inputDATE"></p>
-        <p><input type="submit" value="저장"></p>
-        <script type="text/javascript">
-            let date = {
-                inputID = $('inputID').val(),
-                inputPW = $('inputPW').val(),
-                inputNAME = $('inputNAME').val(),
-                inputAU = $('inputAU').val(),
-                inputDATE = $('inputDATE').val()
-            };
+
+        <input type="text" th:field="${inputID}" placeholder="ID"/>
+        <input type="text" th:field="${inputPW}" placeholder="PASSWORD"/>
+        <input type="text" th:field="${inputNAME}" placeholder="NAME"/>
+        <input type="text" th:field="${inputAU}" placeholder="AUTH"/>
+        <input type="date" th:field="${inputDATE}"/>
+        <button onclick="test()" type="submit">저장</button>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var obj = { "user_name":[[${inputNAME}]], "user_id":[[${inputID}]], "user_pw":[[${inputPW}]],"user_auth":[[${inputAU}]],"append_date":[[${inputDATE}]] };
+
+        function test() {
             $.ajax({
-                type: "POST",
-                url:"/join",
-                data : data,
-                dataType : "json"
+                url: "http://localhost8081/join",
+                type : "POST",
+                data : JSON.stringify(obj),
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function(data) {
+                    console.log(data);
+                }
             });
-        </script>
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>
+
