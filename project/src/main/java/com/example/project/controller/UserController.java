@@ -21,9 +21,10 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@RequestBody USERS users) {
+    public USERS create(@RequestBody USERS users) {
         USERS newUSERS = userRepository.save(users);
-        return users.getUser_name() + "님의 회원가입이 완료되었습니다.";
+        //return users.getUser_name() + "님의 회원가입이 완료되었습니다.";
+        return newUSERS;
     }
 
     @GetMapping("/user")

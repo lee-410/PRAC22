@@ -23,16 +23,16 @@
             "user_auth":$('#user_auth').val(),
             "append_date":$('#append_date').val()
      };
-
      $.ajax({
             type: "post",
             url: "/join",
             data: JSON.stringify(obj),
             dataType: "json",
-            contentType: "application/json",
-            success: function(data){
-                alert("성공");
-            }
+            contentType: "application/json"
+     })
+     .done(function(){
+     alert("success");
+     location.href="/";
      });
      }
     </script>

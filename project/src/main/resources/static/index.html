@@ -1,48 +1,190 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>HOME</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!--<link rel="stylesheet" href="/css/layout.css">-->
+    <!--바디 전체에 패딩?마진? 거는게 조을듯-->
+    <style>
+        body {
+            margin: 0px 30px 0px 30px;
+        }
+
+        /* 헤더 */
+        #header {
+            position: relative;
+            background-color: white;
+            border-bottom:1px solid lightgray;
+        }
+        #header_container {
+            width: 300px;
+            padding: 0px;
+        }
+        #header_container h1 {
+            font-family: fantasy;
+            font-weight: 100;
+            text-align: center;
+            margin: 10px;
+            background-color: #F8CD07;
+        }
+
+        /* 메뉴 */
+        #Menu {
+            position: absolute;
+            border-right: 1px solid lightgray;
+            width: 300px;
+            height: 100%;
+            float: left;
+        }
+        #Menu ul{
+            padding: 0px;
+        }
+        #Menu ul li {
+            list-style: none;
+            color: black;
+            font-size: x-large;
+            text-align: center;
+            line-height: 50px;
+        }
+        #Menu ul li a {
+            text-decoration: none;
+            font-family: cursive;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 300px;
+            text-align: center;
+        }
+
+        .content {
+            width: 700px;
+            height: 500px;
+            text-align:left;
+            float:left;
+            margin:0px 0px 0px 300px;
+
+        }
+
+
+        /* 모달 팝업 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+
+        /* 모달 팝업: 숨기기 */
+            z-index: -1;
+            opacity: 0;
+      }
+
+      .show {
+        opacity: 1;
+        z-index: 1000;
+        transition: all 0.5s;
+      }
+
+      .window {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .popup {
+        color : black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 1);
+
+        /* 모달 팝업: 임시 지정 */
+        width: 100px;
+        height: 100px;
+
+        /* 모달 팝업: 초기에 약간 아래에 배치 */
+        transform: translate(-50%, -40%);
+      }
+
+      .show .popup {
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+      }
+
+
+      /* 밑줄 애니메이션 */
+      .underline {
+      background-image: linear-gradient(transparent calc(100% - 3px), #000 3px);
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      transition: background-size 0.5s;
+      color: #000;
+      cursor: pointer;
+      }
+
+    .underline.yellow {
+      background-image: linear-gradient(transparent 50%, #F8CD07 40%);
+    }
+    .underline:hover {
+      background-size: 100% 100%;
+    }
+
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">WELLMING</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <!--  #collapsibleNavbar는 화면이 줄어들었을 때 반응형으로 메뉴바 나타내게 해줌-->
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
-            <li class="nav-item"><a class="nav-link" href="/join">회원가입</a></li>
-        </ul>
+<div id="header">
+    <div id="header_container">
+        <h1>WELLMING</h1>
     </div>
-</nav>
-<br>
+</div>
 
 <div class="container">
+    <nav id="Menu">
+        <ul>
+            <li><a class="yellow underline" href="/">HOME</a></li>
+            <li><a class="yellow underline" id="show" href="#">SEARCH</a></li>
+            <li><a class="yellow underline" href="#">PROFILE</a></li>
+            <li><a class="yellow underline" href="#">UPLOAD</a></li>
+            <li><a class="yellow underline" href="/join">JOIN</a></li>
+        </ul>
 
-    <div class="card m-2">
-        <div class="card-body">
-            <h4 class="card-title">제목을 적는 부분</h4>
-            <p class="card-text">내용을 적는 부분</p>
-            <a href="#" class="btn btn-primary">상세보기</a>
+        <div class="background">
+            <div class="window">
+                <div class="popup">
+                    <a id="close">팝업닫기</a>
+                    얏호
+                </div>
+            </div>
         </div>
+        <div class="footer">
+            <p>🐲 Created By TEARAN</p>
+            <p>📧 xofks2000@gmail.com</p>
+        </div>
+    </nav>
+
+    <script>
+            function show () {
+                document.querySelector(".background").className = "background show";
+            }
+
+            function close () {
+                document.querySelector(".background").className = "background";
+        }
+
+            document.querySelector("#show").addEventListener('click', show);
+            document.querySelector("#close").addEventListener('click', close);
+        </script>
+    <div class="content">
+        <p>dasdasdasdasds</p>
+        <img src="https://i.namu.wiki/i/n4az4akeL8B-cx5z_ORWe-2T_92YTVlTP0qB7UaQm-Z3UDWLH7oKXsp2BS2F0cgGevh-0HpuaOSC71SLem5TKhbJ_A_SFkI_0AakFbT40RqBkJnlgipTR7_uO6IiyP1xr9ioXkyiimVD-W5QZjcdcQ.webp">
+        <img src="https://previews.123rf.com/images/roxichka25/roxichka251508/roxichka25150800036/43629300-%EA%B2%A8%EC%9A%B8-%ED%91%B8%EB%A5%B8-%EB%88%88%EC%86%A1%EC%9D%B4%EC%99%80-%ED%8C%8C%EB%9E%80%EC%83%89-%ED%8C%A8%ED%84%B4-%EA%B3%84%EC%A0%88-%EA%B3%84%EC%A0%88-%EB%B0%B0%EA%B2%BD-%EA%B8%B4-%EA%B0%80%EB%A1%9C-%EC%95%84%EC%9D%B4%EC%8A%A4.jpg">
     </div>
-
-
 </div>
-
-<div class="jumbotron text-center" style="margin-bottom: 0">
-    <p>🐲 Created by TAERAN 🐲</p>
-    <p>📧 xofks2000@gmail.com 📧</p>
-</div>
-
 </body>
 </html>
