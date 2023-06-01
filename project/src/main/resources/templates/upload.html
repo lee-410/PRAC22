@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>HOME</title>
+    <title>UPLOAD</title>
     <!--<link rel="stylesheet" href="/css/layout.css">-->
-    <!--바디 전체에 패딩?마진? 거는게 조을듯-->
     <style>
         body {
             margin: 0px 30px 0px 30px;
@@ -23,51 +22,73 @@
         }
 
         /* 메뉴 */
-        #Menu {
+        .Menu {
             position: fixed;
             width: 300px;
             height: 100%;
             border-right: 1px solid lightgray;
             float: left;
         }
-        #Menu ul{
+        .Menu ul{
             padding: 0px;
             position: relative;
             height: 0;
         }
-        #Menu ul li {
+
+        .collection {
+        margin: 20px 0 0 0;
+        }
+
+        .collection li {
             list-style: none;
             color: black;
             font-size: x-large;
             text-align: center;
             line-height: 50px;
         }
-        #Menu ul li a {
+        .collection li a {
             text-decoration: none;
             font-family: cursive;
+        }
+
+
+        .information {
+            position: absolute;
+            bottom: 30px;
+            width: 300px;
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            font-size: 30px;
+            padding: 0 0 20px 0;
+
+        }
+        .information i {
+            color: #000000;
         }
 
         .footer {
             position: absolute;
             bottom: 0;
+
             width: 300px;
             text-align: center;
+            font-size: x-small;
         }
 
         .section {
-            padding-left: 300px;
-            padding-top: 20px;
-            padding-right: 20px;
+            padding-left: 380px;
+            padding-top: 60px;
+            padding-right: 200px;
             padding-bottom: 20px;
+
         }
 
         .content {
-
+            padding : 30px;
+            border-bottom: 1px solid lightgray;
+            margin: 20px 10px;
         }
-
-/* ---------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------- */
 
         /* 모달 팝업 */
         .background {
@@ -114,14 +135,11 @@
         transform: translate(-50%, -40%);
       }
 
-
       .show .popup {
         transform: translate(-50%, -50%);
         transition: all 0.5s;
       }
-/* ---------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------- */
+
       /* 밑줄 애니메이션 */
       .underline {
       background-image: linear-gradient(transparent calc(100% - 3px), #000 3px);
@@ -139,63 +157,90 @@
       background-size: 100% 100%;
     }
 
+
+
+
+
+
+
+
+
+    .product-title {
+        text-align:center;
+        display:table;
+        border:1px solid #cecece;
+        width:280px;
+        height:250px;
+        float: left;
+    }
+
+    .product-img-div {
+        display:table-cell;
+        vertical-align:middle;
+    }
+
+    .product-img {
+        max-width: 250px;
+        max-height: 250px;
+    }
     </style>
+    <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-
-<div class="container">
-    <nav id="Menu">
-        <ul>
-            <div class="header">
-                <a>&nbsp; WELLMING &nbsp;</a>
-                <br>
-            </div>
+<nav class="Menu">
+    <ul>
+        <div class="header">
+            <a>&nbsp; WELLMING &nbsp;</a>
+            <br>
+        </div>
+        <div class="collection">
             <li><a class="yellow underline" href="/">HOME</a></li>
-            <li><a class="yellow underline" id="show" href="#">SEARCH</a></li>
+            <li><a class="yellow underline" id="show">SEARCH</a></li>
             <li><a class="yellow underline" href="/profile">PROFILE</a></li>
             <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
-            <li><a class="yellow underline" href="/join">JOIN</a></li>
-        </ul>
+        </div>
+    </ul>
 
-        <div class="background">
-            <div class="window">
-                <div class="popup">
-                    <p>ID로 친구 찾기</p>
-                    <input type="text" id="user_id" placeholder="ID"/>
-                    <input type="button" onclick="" value="검색"/>
-                    <br>
-                    <a id="close">팝업닫기</a>
+    <div class="background">
+        <div class="window">
+            <div class="popup">
+                <p>ID로 친구 찾기</p>
+                <input type="text" id="user_id" placeholder="ID"/>
+                <input type="button" onclick="" value="검색"/>
+                <br>
+                <a id="close">팝업닫기</a>
 
-                </div>
             </div>
         </div>
+    </div>
+    <div class="information">
+        <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
+        <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
+        <li><a href="/join"><i class="fa-solid fa-arrow-right-to-bracket"></i></a> </li>
+    </div>
+    <div class="footer">
+        <p> Created By TEARAN <br> xofks2000@gmail.com</p>
 
-        <div class="footer">
-            <p>🐲 Created By TEARAN</p>
-            <p>📧 xofks2000@gmail.com</p>
-            p태그끼리 너무 머니까 line-height줄이고, 색깔 연하게 해서 보일듯말듯하게 작게 넣고,
-            깃헙 아이콘 삽입.. 
-            조인은 어디에 배치? 그리고
-            서치 모달팝업에서는 기록을 넣을건지? 아니면 그냥 비워놓을건지?
+    </div>
+</nav>
+<script src="/js/modal.js"></script>
+
+<div class="section">
+    <div class="content">
+        <div class="product-title">
+            <div class="product-img-div">
+                <img class="product-img" src="">
+            </div>
         </div>
-    </nav>
-    <script>
-            function show () {
-                document.querySelector(".background").className = "background show";
-            }
-            function close () {
-                document.querySelector(".background").className = "background";
-        }
-            document.querySelector("#show").addEventListener('click', show);
-            document.querySelector("#close").addEventListener('click', close);
-        </script>
-    <div class="section">
-        <div class="content">
-            <p>dasdasdasdasds</p>
+        <div class="product-title">
+            
         </div>
 
     </div>
+
+
 </div>
+
+
 </body>
 </html>

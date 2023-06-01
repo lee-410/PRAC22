@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <!--<link rel="stylesheet" href="/css/layout.css">-->
+    <style>
+        body {
+            margin: 0px 30px 0px 30px;
+        }
+
+        /* 헤더 */
+        .header{
+            text-align: center;
+            border-bottom: 1px solid lightgray;
+            padding: 5px 0px 20px;
+        }
+        .header a {
+            font-family: fantasy;
+            font-weight: 100;
+            font-size: xx-large;
+            background-color: #F8CD07;
+        }
+
+        /* 메뉴 */
+        .Menu {
+            position: fixed;
+            width: 300px;
+            height: 100%;
+            border-right: 1px solid lightgray;
+            float: left;
+        }
+        .Menu ul{
+            padding: 0px;
+            position: relative;
+            height: 0;
+        }
+
+        .collection {
+        margin: 20px 0 0 0;
+        }
+
+        .collection li {
+            list-style: none;
+            color: black;
+            font-size: x-large;
+            text-align: center;
+            line-height: 50px;
+        }
+        .collection li a {
+            text-decoration: none;
+            font-family: cursive;
+        }
+
+
+        .information {
+            position: absolute;
+            bottom: 30px;
+            width: 300px;
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            font-size: 30px;
+            padding: 0 0 20px 0;
+
+        }
+        .information i {
+            color: #000000;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+
+            width: 300px;
+            text-align: center;
+            font-size: x-small;
+        }
+
+        .section {
+            padding-left: 380px;
+            padding-top: 60px;
+            padding-right: 200px;
+            padding-bottom: 20px;
+
+        }
+
+        .content {
+            padding : 30px;
+            border-bottom: 1px solid lightgray;
+            margin: 20px 10px;
+        }
+
+        /* 모달 팝업 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+
+        /* 모달 팝업: 숨기기 */
+            z-index: -1;
+            opacity: 0;
+      }
+
+      .show {
+        opacity: 1;
+        z-index: 1000;
+        transition: all 0.5s;
+      }
+
+      .window {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .popup {
+        color : black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 1);
+
+        padding: 20px;
+        width: 30%;
+        height: 50%;
+        text-align: center;
+
+        /* 모달 팝업: 초기에 약간 아래에 배치 */
+        transform: translate(-50%, -40%);
+      }
+
+      .show .popup {
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+      }
+
+      /* 밑줄 애니메이션 */
+      .underline {
+      background-image: linear-gradient(transparent calc(100% - 3px), #000 3px);
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      transition: background-size 0.5s;
+      color: #000;
+      cursor: pointer;
+      }
+
+    .underline.yellow {
+      background-image: linear-gradient(transparent 50%, #F8CD07 40%);
+    }
+    .underline:hover {
+      background-size: 100% 100%;
+    }
+    </style>
+    <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="Menu">
+        <ul>
+            <div class="header">
+                <a>&nbsp; WELLMING &nbsp;</a>
+                <br>
+            </div>
+            <div class="collection">
+                <li><a class="yellow underline" href="/">HOME</a></li>
+                <li><a class="yellow underline" id="show">SEARCH</a></li>
+                <li><a class="yellow underline" href="/profile">PROFILE</a></li>
+                <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
+            </div>
+        </ul>
+
+        <div class="background">
+            <div class="window">
+                <div class="popup">
+                    <p>ID로 친구 찾기</p>
+                    <input type="text" id="user_id" placeholder="ID"/>
+                    <input type="button" onclick="" value="검색"/>
+                    <br>
+                    <a id="close">팝업닫기</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="information">
+            <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
+            <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
+            <li><a href="/join"><i class="fa-solid fa-arrow-right-to-bracket"></i></a> </li>
+        </div>
+        <div class="footer">
+            <p> Created By TEARAN <br> xofks2000@gmail.com</p>
+
+        </div>
+    </nav>
+    <script src="/js/modal.js"></script>
+    <div class="section">
+        <div class="content">
+            <p>
+                아이디, 사진, 글
+            </p>
+        </div>
+        <div class="content">
+            <p>I'm 23 난 수수께끼 (Question)
+                뭐게요 맞혀봐요
+                I'm 23 틀리지 말기 because
+                난 몹시 예민해요 맞혀봐
+                한 떨기 스물셋 좀 아가씨 태가 나네
+                다 큰 척해도 적당히 믿어줘요
+                얄미운 스물셋 아직 한참 멀었다 얘
+                덜 자란 척해도 대충 속아줘요
+                난, 그래 확실히 지금이 좋아요
+                아냐, 아냐 사실은 때려 치고 싶어요
+                아 알겠어요 나는 사랑이 하고 싶어
+                아니 돈이나 많이 벌래 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든
+                Check it out
+                겁나는 게 없어요 엉망으로 굴어도
+                사람들은 내게 매일 친절해요
+                인사하는 저 여자 모퉁이를 돌고도
+                아직 웃고 있을까 늘 불안해요
+                난, 영원히 아이로 남고 싶어요
+                아니, 아니 물기 있는 여자가 될래요
+                아 정했어요 난 죽은 듯이 살래요
+                아냐, 다 뒤집어 볼래 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든
+                난 당신 맘에 들고 싶어요
+                아주 살짝만 얄밉게 해도 돼요?
+                난 당신 맘에 들고 싶어요
+                자기 머리 꼭대기 위에서 놀아도 돼요? 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든</p>
+        </div>
+        <div class="content">
+            <p>I'm 23 난 수수께끼 (Question)
+                뭐게요 맞혀봐요
+                I'm 23 틀리지 말기 because
+                난 몹시 예민해요 맞혀봐
+                한 떨기 스물셋 좀 아가씨 태가 나네
+                다 큰 척해도 적당히 믿어줘요
+                얄미운 스물셋 아직 한참 멀었다 얘
+                덜 자란 척해도 대충 속아줘요
+                난, 그래 확실히 지금이 좋아요
+                아냐, 아냐 사실은 때려 치고 싶어요
+                아 알겠어요 나는 사랑이 하고 싶어
+                아니 돈이나 많이 벌래 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든
+                Check it out
+                겁나는 게 없어요 엉망으로 굴어도
+                사람들은 내게 매일 친절해요
+                인사하는 저 여자 모퉁이를 돌고도
+                아직 웃고 있을까 늘 불안해요
+                난, 영원히 아이로 남고 싶어요
+                아니, 아니 물기 있는 여자가 될래요
+                아 정했어요 난 죽은 듯이 살래요
+                아냐, 다 뒤집어 볼래 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든
+                난 당신 맘에 들고 싶어요
+                아주 살짝만 얄밉게 해도 돼요?
+                난 당신 맘에 들고 싶어요
+                자기 머리 꼭대기 위에서 놀아도 돼요? 맞혀봐
+                어느 쪽이게? 얼굴만 보면 몰라
+                속마음과 다른 표정을 짓는 일 아주 간단하거든
+                어느 쪽이게? 사실은 나도 몰라
+                애초에 나는 단 한 줄의 거짓말도 쓴 적이 없거든
+                여우인 척, 하는 곰인 척
+                하는 여우 아니면 아예 다른 거
+                어느 쪽이게? 뭐든 한 쪽을 골라
+                색안경 안에 비춰지는 거 뭐 이제 익숙하거든</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
