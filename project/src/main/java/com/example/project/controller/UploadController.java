@@ -1,15 +1,21 @@
 package com.example.project.controller;
 
 import com.example.project.DTO.UploadResultDTO;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -20,65 +26,120 @@ import java.util.UUID;
 
 @RestController
 public class UploadController {
-    @Value("${com.example.upload.path}") //application.properties의 변수
+
+    @Value("${com.example.upload.path}") // application.properties의 변수
     private String uploadPath;
 
-    //배열로 하면 동시에 여러개의 파일 정보를 처리할 수 있으므로 화면에서 여러개의 파일을 동시에 업로드할 수 있다.
     @PostMapping("/uploadAjax")
-    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) { //업로드 결과를 반환하기 위해 리턴타입 void에서 ResponseEntity로 변경하고, 임지 파일이 아닌 경우 예외 처리 대신 403 Forbidden을 반환하도록 한다. >> 브라우저는 업로드 후 JSON의 배열형태로 결과를 전달받는다.
+    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
+
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
         for (MultipartFile uploadFile : uploadFiles) {
 
-            //이미지 파일만 업로드
-            //업로드된 확장자가 이미지만 가능하도록 검사한다.
-            //파일 확장자 체크 (MultipartFile)에서 제공하는 getContentType()이용하려했으나
-            if (uploadFile.getContentType().startsWith("image") == false) {
-                //이미지가 아닌 경우 403 Forbidden 반환
+            // 이미지 파일만 업로드 가능
+            if(uploadFile.getContentType().startsWith("image") == false){
+                // 이미지가 아닌경우 403 Forbidden 반환
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
 
-            //실제 파일 이름 IE나 Edge는 전체 경로가 들어오므로
+            // 실제 파일 이름 IE나 Edge는 전체 경로가 들어오므로
             String originalName = uploadFile.getOriginalFilename();
 
             String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
 
-            //날짜 폴더 생성
+            // 날짜 폴더 생성
             String folderPath = makeFolder();
 
             //UUID
-            // 동일한 이름의 파일이 업로드 된다면 기존 파일을 덮어쓴다.
-            // UUID를 이용해 고유한 값을 만들어 사용
             String uuid = UUID.randomUUID().toString();
 
             //저장할 파일 이름 중간에 "_"를 이용해 구분
-            //업로드된 파일을 저장하는 폴더의 용량 >> 년/월/일 폴더를 따로 생성해 파일을 저장한다.
             String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
 
             Path savePath = Paths.get(saveName);
 
             try {
-                uploadFile.transferTo(savePath); //실제 이미지 저장
-                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
-            } catch (IOException e) {
+                uploadFile.transferTo(savePath);// 실제 이미지 저장(원본 파일)
+
+                //섬네일 생성 -> 섬네일 파일 이름은 중간에 s_로 시작
+                String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
+
+                File thumbnailFile = new File(thubmnailSaveName);
+                // 섬네일 생성
+                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,100,100);
+
+                resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
+            }catch (IOException e){
                 e.printStackTrace();
             }
         }
+
         return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
     }
+
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> getFile(String fileName, String size){
+
+        ResponseEntity<byte[]> result = null;
+
+        try {
+
+            String srcFileName = URLDecoder.decode(fileName,"UTF-8");
+
+            File file = new File(uploadPath + File.separator + srcFileName);
+
+            if(size != null && size.equals("1")){
+                file = new File(file.getParent(),file.getName().substring(2));
+            }
+
+            HttpHeaders header = new HttpHeaders();
+
+            //MIME타입 처리
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+
+            //파일 데이터 처리
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+        }catch (Exception e){
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
+    }
+
+    @PostMapping("/removeFile")
+    public ResponseEntity<Boolean> removeFile(String fileName){
+        String srcFileName = null;
+
+        try {
+            srcFileName = URLDecoder.decode(fileName,"UTF-8");
+            File file = new File(uploadPath + File.separator + srcFileName);
+
+            boolean result = file.delete();
+
+            File thumbnail = new File(file.getParent(),"s_" + file.getName());
+
+            result = thumbnail.delete();
+
+            return new ResponseEntity<>(result,HttpStatus.OK);
+
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     private String makeFolder() {
+
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
         String folderPath = str.replace("/", File.separator);
 
-        //make folder
-        File uploadPatheFolder = new File(uploadPath, folderPath);
+        // make folder ----
+        File uploadPatheFolder = new File(uploadPath,folderPath);
 
-        if (uploadPatheFolder.exists() == false) {
+        if(uploadPatheFolder.exists() == false){
             uploadPatheFolder.mkdirs();
         }
 
         return folderPath;
     }
 }
-
-

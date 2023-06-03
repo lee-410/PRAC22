@@ -284,7 +284,7 @@
             <textarea class="input" placeholder=" 내용 입력"></textarea>
         </div>
 
-        <button class="uploadBtn" onclick="upload_click()">Upload</button>
+        <button class="uploadBtn">Upload</button>
 
     <div class="uploadResult">
 
@@ -299,8 +299,9 @@
         crossorigin="anonymous"></script>
 
 <script>
-    function upload_click(){
-     var formData = new FormData();
+    $('.uploadBtn').click(function( ) {
+
+        var formData = new FormData();
 
         var inputFile = $("input[type='file']");
 
@@ -321,16 +322,51 @@
             type: 'POST',
             dataType:'json',
             success: function(result){
-                alert("아이유");
                 console.log(result);
                 //나중에 화면 처리
-                // 추가
-                //showUploadedImages(result);
+                showUploadedImages(result);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(textStatus);
             }
 
-        });
-   }
+        }); //$.ajax
+    }); //end click
 
+    function showUploadedImages(arr){
+
+        console.log(arr);
+
+        var divArea = $(".uploadResult");
+
+        var str = "";
+
+        for(var i = 0; i < arr.length; i++){
+            str += "<div>";
+            str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
+            str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'>REMOVE</button>"
+            str += "<div>"
+        }
+        divArea.append(str);
+
+    }
+
+    $(".uploadResult").on("click", ".removeBtn", function(e){
+
+        var target = $(this);
+        var fileName = target.data("name");
+        var targetDiv = $(this).closest("div");
+
+        console.log(fileName);
+
+        $.post('/removeFile', {fileName: fileName}, function(result){
+            console.log(result);
+            if(result === true){
+                targetDiv.remove();
+            }
+        } )
+
+    });
 
 </script>
 
