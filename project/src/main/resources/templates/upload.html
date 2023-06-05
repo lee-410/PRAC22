@@ -286,7 +286,7 @@
 
         <button class="uploadBtn">Upload</button>
 
-    <div class="uploadResult">
+    <div class="uploadResult"> <!-- 업로드된 이미지들을 보여줄 수 있는 div를 추가한다. Ajax업로드 이후 이미지들을 호출하는 함수 showUploadedImages()를 작성하고, Ajax 호출 성공 후 '/display?fileName=XXX'를 호출한다. -->
 
     </div>
     </div>
@@ -301,11 +301,12 @@
 <script>
     $('.uploadBtn').click(function( ) {
 
+        //ajax로 파일 업로드를 하기위해 가상의 Form객체를 만들어 사용한다.
+        //FormData라는 객체로 전송하려는 내용을 추가할 수 있다.
+        //파일 업로드를 위해 contentType속성은 반드시 false로 지정한다. -> multipart/form-data 타입을 사용하기 위해
         var formData = new FormData();
 
-        var inputFile = $("input[type='file']");
-
-        var files = inputFile[0].files;
+        var files = $("input[type='file']")[0].files;
 
         for (var i = 0; i < files.length; i++) {
             console.log(files[i]);
@@ -323,7 +324,6 @@
             dataType:'json',
             success: function(result){
                 console.log(result);
-                //나중에 화면 처리
                 showUploadedImages(result);
             },
             error: function(jqXHR, textStatus, errorThrown){
@@ -333,6 +333,9 @@
         }); //$.ajax
     }); //end click
 
+    // Ajax 업로드 이후 이미지들을 호출하는 함수
+    // 이미지를 호출하고 난 후, 파일을 삭제할 수 있도록 버튼을 추가하고 버튼과 이미지를 하나의 div로 묶는다.
+    // -> 한 번에 버튼과 이미지를 같이 삭제할 수 있다. 함수 내부에서 div태그를 생성하고 img, button태그를 div태그 안쪽으로 추가한다. 추가된 button태그는 data-name이라는 커스텀 속성을 지정해 버튼을 클릭했을때 삭제해야하는 파일의 이름을 알아내는 용도로 사용한다.
     function showUploadedImages(arr){
 
         console.log(arr);
@@ -344,13 +347,17 @@
         for(var i = 0; i < arr.length; i++){
             str += "<div>";
             str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
-            str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'>REMOVE</button>"
-            str += "<div>"
+            str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'>REMOVE</button>";
+            str += "<div>";
         }
         divArea.append(str);
 
+
     }
 
+    //REMOVE 버튼 클릭시 동작
+    //->업로드 결과로 만들어지는 div태그는 동적으로 생성되기 때문에 바로 클릭 이벤트 처리를 할 수 없어 위임(delegate)하는 방식으로 이벤트를 처리해야 한다.
+    //=>POST방식으로 호출하고 정상적으로 서버에서 원본 파일과 썸네일 파일이 삭제된 후 화면에서 해당 이미지가 포함된 div를 삭제한다.
     $(".uploadResult").on("click", ".removeBtn", function(e){
 
         var target = $(this);

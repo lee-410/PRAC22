@@ -30,8 +30,9 @@
             dataType: "json",
             contentType: "application/json"
      })
-     .done(function(){
+     .done(function(result){
      alert("success");
+     console.log(result);
      location.href="/";
      });
      };
