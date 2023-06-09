@@ -344,6 +344,7 @@
 
         $(".file_upload").remove(); //파일추가버튼 없어짐
 
+
         console.log(arr);
         var divArea = $(".uploadResult");
         var str = "";
@@ -355,6 +356,8 @@
             str += "<div>";
         }
         divArea.append(str);
+        //사진이 0개이면 파일추가버튼$(".file_upload")이 다시 생겨야 함.
+
 
 
     }
