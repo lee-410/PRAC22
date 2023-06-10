@@ -78,11 +78,11 @@
 
         .section {
             margin-left: 380px;
-            margin-top: 50px;
+            margin-top: 20px;
             margin-right: 200px;
             margin-bottom: 20px;
-            padding : 30px;
-            width: 800px;
+            padding : 20px;
+            width: 720px;
             height: 30px;
         }
 
@@ -173,9 +173,11 @@
 
 
     .file_upload {
+      position: relative;
       font-size: 35px;
       cursor: pointer;
       width: 40px;
+      padding: 0 0 0 5px;
       &:hover {
         color: #919090;
         }
@@ -192,7 +194,7 @@
         border: 0;
         border-radius: 15px;
         outline: none;
-        padding; 20px;
+        padding: 20px;
         background-color: rgb(233, 233, 233);
         resize: none;
         font-family: serif;
@@ -208,18 +210,40 @@
         font-size: large;
         border-radius: 10px;
         position: relative;
-        margin : 10px;
+        margin : 20px -20px;
         float: right;
+        cursor: pointer;
+
     }
+
     .removeBtn {
+        position: relative;
         border : none;
         background-color: white;
+        cursor: pointer;
+        padding : 0px;
+        float: left;
     }
 
     .uploadResult_Bin {
-        background-color : red;
-        border-radius: 30px;
+        width: 500px;
+        height: 50px;
     }
+
+    .uploadResult {
+        padding: 5px;
+        width: 500px;
+        height: 50px;
+    }
+
+    table {
+    border : none;
+    border-collapse : collapse;
+    }
+
+    td { border: none; }
+
+    .test { float: left; }
 
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
@@ -264,36 +288,25 @@
 <script src="/js/modal.js"></script>
 
 <div class="section">
-    <table border="1">이거 따로 css 가능한가?? 그리고 input은 왜 padding이 안들어가?
+    <table border="1">
     <tr>
         <td>
             <label for="file">
-            <div class="file_upload"><i class="fa-solid fa-file-circle-plus"></i></div></label>
+            <div class="file_upload"><i class="fa-solid fa-plus" style="color: #8a8a8a;"></i></div></label>
             <input name="uploadFiles" type="file" id="file" multiple>
         </td>
-        <td colspan="2"><div class="uploadResult_Bin"><div class="uploadResult">
-        </div></div></td>
-        <td colspan="3">img</td>
-        <td colspan="4">img</td>
-        <td colspan="5">img</td>
-        <td colspan="6">img</td>
-        <td colspan="7">img</td>
-        <td colspan="8">img</td>
-        <td colspan="9">img</td>
-        <td colspan="10">img</td>
+        <td>
+            <div class="uploadResult_Bin">
+                <div class="uploadResult">
+                </div>
+            </div>
+        </td>
     </tr>
     </table>
-
-
-
-        <div class="product-title">
-            <textarea class="input" placeholder=" 내용 입력"></textarea>
-        </div>
-
-        <button class="uploadBtn">Upload</button>
-
-
-
+    <div class="product-title">
+        <textarea class="input" placeholder=" 내용 입력"></textarea>
+    </div>
+    <button class="uploadBtn">Upload</button>
 </div>
 
 
@@ -304,8 +317,8 @@
         crossorigin="anonymous"></script>
 
 <script>
-    $('.uploadBtn').click(function( ) {
-
+    $('.uploadBtn').click(function(){
+//여기 위에 .uploadBtn만 바꾸면 될것같은데?
         //ajax로 파일 업로드를 하기위해 가상의 Form객체를 만들어 사용한다.
         //FormData라는 객체로 전송하려는 내용을 추가할 수 있다.
         //파일 업로드를 위해 contentType속성은 반드시 false로 지정한다. -> multipart/form-data 타입을 사용하기 위해
@@ -342,22 +355,17 @@
     // -> 한 번에 버튼과 이미지를 같이 삭제할 수 있다. 함수 내부에서 div태그를 생성하고 img, button태그를 div태그 안쪽으로 추가한다. 추가된 button태그는 data-name이라는 커스텀 속성을 지정해 버튼을 클릭했을때 삭제해야하는 파일의 이름을 알아내는 용도로 사용한다.
     function showUploadedImages(arr){
 
-        $(".file_upload").remove(); //파일추가버튼 없어짐
-
-
         console.log(arr);
         var divArea = $(".uploadResult");
         var str = "";
 
         for(var i = 0; i < arr.length; i++){
-            str += "<div>";
+            str += "<div class=\"test\">";
             str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
             str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'><i class='fa-solid fa-square-minus'></i></button>";
-            str += "<div>";
+            str += "</div>";
         }
         divArea.append(str);
-        //사진이 0개이면 파일추가버튼$(".file_upload")이 다시 생겨야 함.
-
 
 
     }
