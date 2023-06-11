@@ -245,9 +245,13 @@
 
     .test { float: left; }
 
+    .preview {
+        width: 40px;
+        height: 40px;
+    }
+
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
 <nav class="Menu">
@@ -282,7 +286,6 @@
     </div>
     <div class="footer">
         <p> Created By TEARAN <br> xofks2000@gmail.com</p>
-
     </div>
 </nav>
 <script src="/js/modal.js"></script>
@@ -293,11 +296,12 @@
         <td>
             <label for="file">
             <div class="file_upload"><i class="fa-solid fa-plus" style="color: #8a8a8a;"></i></div></label>
-            <input name="uploadFiles" type="file" id="file" multiple>
+            <input name="uploadFiles" onchange="readURL(this)" type="file" id="file" multiple>
         </td>
         <td>
             <div class="uploadResult_Bin">
                 <div class="uploadResult">
+                    <img id="preview"/>
                 </div>
             </div>
         </td>
@@ -313,8 +317,22 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous"></script>
 <script>
-      $('.uploadBtn').click(function() {
 
+//이미지 미리보기
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    document.getElementById('preview').src = "";
+  }
+}
+
+//업로드 버튼 클릭->홈으로 전송
+      $('.uploadBtn').click(function() {
         var formData = new FormData();
         var files = $("input[type='file']")[0].files;
         for (var i = 0; i < files.length; i++) {
@@ -346,7 +364,7 @@
     //REMOVE 버튼 클릭시 동작
     //->업로드 결과로 만들어지는 div태그는 동적으로 생성되기 때문에 바로 클릭 이벤트 처리를 할 수 없어 위임(delegate)하는 방식으로 이벤트를 처리해야 한다.
     //=>POST방식으로 호출하고 정상적으로 서버에서 원본 파일과 썸네일 파일이 삭제된 후 화면에서 해당 이미지가 포함된 div를 삭제한다.
-    $(".uploadResult").on("click", ".removeBtn", function(e){
+    $("#preview").on("click", ".removeBtn", function(e){
 
         var target = $(this);
         var fileName = target.data("name");
@@ -361,6 +379,8 @@
             }
         })
     });
+
+
 
 </script>
 
