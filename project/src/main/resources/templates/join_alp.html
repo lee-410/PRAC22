@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JOIN</title>
+</head>
+<body>
+<section>
+    <h1>회원가입</h1>
+</section>
+        <input type="text" id="user_id" placeholder="ID"/>
+        <input type="text" id="user_pw" placeholder="PASSWORD"/>
+        <input type="text" id="user_name" placeholder="NAME"/>
+        <input type="text" id="user_auth" placeholder="AUTH"/>
+        <input type="date" id="append_date"/>
+        <input type="button" onclick="join_user()" value="전송"/>
+    <script>
+    function join_user(){
+        let obj = {
+            "user_name": $('#user_name').val(),
+            "user_id":$('#user_id').val(),
+            "user_pw":$('#user_pw').val(),
+            "user_auth":$('#user_auth').val(),
+            "append_date":$('#append_date').val()
+     };
+     $.ajax({
+            type: "post",
+            url: "/join",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: "application/json"
+     })
+     .done(function(result){
+     alert("success");
+     console.log(result);
+     location.href="/";
+     });
+     };
+    </script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</body>
+</html>
+
