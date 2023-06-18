@@ -1,29 +1,29 @@
-//package com.example.project.repositoryTest;
-//
-//import com.example.project.Entity.Member;
-//import com.example.project.repository.UserRepository;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import java.util.Optional;
-//
-//@SpringBootTest
-//public class UserRepositoryTest {
-//    @Autowired //Auto어노테이션으로 spring IOC가 Bean의 의존성을 알아서 주입
-//    UserRepository userRepository;
-//
-//    @Test
-//    public void create() {
-//        Member users = new Member();
-//
-//        users.setUser_id("xofks410");
-//        users.setUser_pw("1234");
-//        users.setUser_name("taeran");
-//
-//        Member newUSERS = userRepository.save(users);
-//    }
-//
+package com.example.project.repositoryTest;
+
+import com.example.project.Entity.Member;
+import com.example.project.repository.UserRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
+
+@SpringBootTest
+public class UserRepositoryTest {
+    @Autowired //Auto어노테이션으로 spring IOC가 Bean의 의존성을 알아서 주입
+    UserRepository userRepository;
+
+    @Test
+    public void create() {
+        Member users = new Member();
+
+        users.setUserid("ean");
+        users.setPw("1234");
+        users.setRoles("USER");
+
+        Member newUSERS = userRepository.save(users);
+    }
+
 //    @Test
 //    public void read() { //특정값에 의한 정보를 읽는 것이 목적
 //        Optional<Member> users = userRepository.findById(1L);
@@ -52,4 +52,4 @@
 //        });
 //
 //    }
-//}
+}

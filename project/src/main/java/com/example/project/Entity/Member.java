@@ -2,47 +2,30 @@ package com.example.project.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Entity(name = "Member")
+import java.time.LocalDate;
+
+@Entity(name = "MEMBER")
+@Data
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(unique = true)
-    private String userid;
+    @Id // PK
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //1씩 자동증가
+    private Long user_no;
 
-    private String pw;
+    @Column(length = 200, nullable = false) //NOT NULL, 200글자 제한(string에서만)
+    private String user_id;
 
-    private String roles;
+    @Column(length = 200, nullable = false)
+    private String user_pw;
 
-    private Member(Long id, String userid, String pw, String roleUser) {
-        this.id = id;
-        this.userid = userid;
-        this.pw = pw;
-        this.roles = roleUser;
-    }
+    @Column(length = 200, nullable = false)
+    private String user_name;
 
-    protected Member() {}
+    @Column(length = 200, nullable = false)
+    private String user_auth;
 
-    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
-        return new Member(null, userId, passwordEncoder.encode(pw), "USER");
-    }
+    @Column
+    private LocalDate append_date;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public String getPw() {
-        return pw;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
 }
