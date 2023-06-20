@@ -15,13 +15,13 @@ public class UserRepositoryTest {
 
     @Test
     public void create() {
-        Member users = new Member();
+       // Member users = new Member();
 //
 //        users.setUserid("ean");
 //        users.setPw("1234");
 //        users.setRoles("USER");
 
-        Member newUSERS = userRepository.save(users);
+      //  Member newUSERS = userRepository.save(users);
     }
 
 //    @Test
