@@ -33,7 +33,7 @@ public class SpringSecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/view/login")
                         .loginProcessingUrl("/login-process")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/view/dashboard", true)
                         .failureUrl("/login.html?error=true")
                         .permitAll()
                 )

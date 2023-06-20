@@ -20,11 +20,7 @@ public class Controller_ {
         ModelAndView modelAndView = new ModelAndView("profile");
         return modelAndView;
     }
-    @GetMapping("/upload")
-    public ModelAndView uploadForm() {
-        ModelAndView modelAndView = new ModelAndView("upload");
-        return modelAndView;
-    }
+
 
 
 }

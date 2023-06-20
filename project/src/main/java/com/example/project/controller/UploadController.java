@@ -27,6 +27,12 @@ import java.util.UUID;
 @RestController
 public class UploadController {
 
+    @GetMapping("/upload")
+    public ModelAndView uploadForm() {
+        ModelAndView modelAndView = new ModelAndView("upload");
+        return modelAndView;
+    }
+
     @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
     private String uploadPath; //이미지가 저장될 경로
 
