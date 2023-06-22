@@ -26,7 +26,7 @@ public class SpringSecurityConfig {
         http
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/status", "/images/**", "/view/join", "/auth/join").permitAll()
+                        .requestMatchers("/", "/images/**", "/view/join", "/auth/join", "/profile").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -34,7 +34,7 @@ public class SpringSecurityConfig {
                         .loginProcessingUrl("/login-process")
                         .usernameParameter("userid")
                         .passwordParameter("pw")
-                        .defaultSuccessUrl("/view/dashboard", true)
+                        .defaultSuccessUrl("/", true)
                         .failureUrl("/login.html?error=true")
                         .permitAll()
                 )

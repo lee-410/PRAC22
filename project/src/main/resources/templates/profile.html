@@ -216,13 +216,12 @@
 
     }
 
-    .removeBtn {
+    .delete-btn {
         position: relative;
         border : none;
         background-color: white;
         cursor: pointer;
         padding : 0px;
-        float: left;
     }
 
     .uploadResult_Bin {
@@ -246,6 +245,12 @@
     #preview-container img{
     width: 40px;
     height: 40px;
+    }
+
+    .image-container {
+      display: inline-block;
+      vertical-align: top; /* 이미지 상단 정렬을 위한 속성 */
+      margin-right: 3px; /* 이미지 간격을 조정하기 위한 속성 */
     }
 
     </style>
@@ -300,6 +305,7 @@
             <div class="uploadResult_Bin">
                 <div class="uploadResult">
                     <div id="preview-container"></div>
+
                 </div>
             </div>
         </td>
@@ -325,8 +331,11 @@ $(document).ready(function() {
       var reader = new FileReader();
       reader.onload = function(e) {
         var img = $('<img>').attr('src', e.target.result);
-        var deleteBtn = $('<button>').text('Delete').addClass('delete-btn');
+        var deleteBtn = $('<button>')
+                          .addClass('delete-btn')
+                          .html("<i class='fa-solid fa-square-minus'></i>");
         var container = $('<div>').addClass('image-container').append(img, deleteBtn);
+
         $('#preview-container').append(container);
       }
       reader.readAsDataURL(files[i]);
@@ -335,13 +344,16 @@ $(document).ready(function() {
 
   $('#preview-container').on('click', '.delete-btn', function() {
     $(this).closest('.image-container').remove();
+
   });
 });
 
 //업로드 버튼 클릭->홈으로 전송
       $('.uploadBtn').click(function() {
+
         var formData = new FormData();
         var files = $("input[type='file']")[0].files;
+
         for (var i = 0; i < files.length; i++) {
             console.log(files[i]);
             formData.append("uploadFiles", files[i]);
@@ -368,22 +380,7 @@ $(document).ready(function() {
     }); //end click
 
 
-    //REMOVE 버튼 클릭시 동작
-    $("#trpreview-container").on("click", ".removeBtn", function(e){
 
-        var target = $(this);
-        var fileName = target.data("name");
-        var targetDiv = $(this).closest("div");
-
-        console.log(fileName);
-
-        $.post('/removeFile', {fileName: fileName}, function(result){
-            console.log(result);
-            if(result === true){
-                targetDiv.remove();
-            }
-        })
-    });
 
 
 
