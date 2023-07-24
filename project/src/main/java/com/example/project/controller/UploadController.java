@@ -91,7 +91,6 @@ public class UploadController {
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName, String size){
-
         ResponseEntity<byte[]> result = null;
 
         try {
@@ -141,6 +140,19 @@ public class UploadController {
             e.printStackTrace();
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/getUploadedImages")
+    public ResponseEntity<List<UploadResultDTO>> getUploadedImages() {
+        // 업로드된 이미지 정보를 가져와서 List<UploadResultDTO> 형태로 반환
+        // 이 부분은 기존에 이미지 정보를 저장하고 있는 데이터베이스 등을 이용하여 구현해야 합니다.
+        // 예시로 임의의 데이터를 생성하여 반환하도록 하겠습니다.
+
+        List<UploadResultDTO> uploadedImages = new ArrayList<>();
+        // 예시 데이터 추가
+        uploadedImages.add(new UploadResultDTO("image1.jpg", "UUID1", "2023/07/25"));
+        uploadedImages.add(new UploadResultDTO("image2.jpg", "UUID2", "2023/07/25"));
+
+        return new ResponseEntity<>(uploadedImages, HttpStatus.OK);
     }
 
     private String makeFolder() {
