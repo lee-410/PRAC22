@@ -293,6 +293,7 @@
     </div>
 </nav>
 <script src="/js/modal.js"></script>
+
 <div class="section">
 <form id="upload_form">
     <table border="1">
@@ -300,7 +301,7 @@
         <td>
             <label for="image-input">
             <div class="file_upload"><i class="fa-solid fa-plus" style="color: #8a8a8a;"></i></div></label>
-            <input name="uploadFiles" type="file" id="image-input" multiple>
+            <input name="uploadFiles" onchange="readURL(this)" type="file" id="image-input" multiple>
         </td>
         <td>
             <div class="uploadResult_Bin">
@@ -316,6 +317,7 @@
     </div>
     <button class="uploadBtn">Upload</button>
     <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
 </form>
 </div>
 <script
@@ -325,64 +327,86 @@
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('image-input').addEventListener('change', function() {
-    var files = this.files;
+
+ $('.uploadBtn').click(function( ) {
+     const csrfTokenElement = document.getElementById("csrf_token");
+     const csrfToken = csrfTokenElement.value;
+
+        var formData = new FormData();
+        var files = $("input[type='file']")[0].files;
+
+        for (var i = 0; i < files.length; i++) {
+            console.log(files[i]);
+            formData.append("uploadFiles", files[i]);
+        }
+
+        //실제 업로드 부분
+        //upload ajax
+        $.ajax({
+            url: '/uploadAjax',
+            processData: false,
+            contentType: false,
+            data: formData,
+            type: 'POST',
+            dataType:'json',
+            headers: {
+            'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(result){
+                console.log(result);
+                localStorage.setItem("uploadedImages", JSON.stringify(result)); //결과를 LocalStorage에 저장
+                location.href="/";
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(textStatus);
+            }
+        }); //$.ajax
+    }); //end click
+
+// 이미지 미리보기 함수
+function readURL(input) {
+    var files = input.files;
+
+    // 이미지 미리보기를 보여줄 div 요소를 선택
     var previewContainer = document.getElementById('preview-container');
+
+    // 기존 미리보기 이미지 삭제
     previewContainer.innerHTML = '';
 
+    // 선택된 이미지 파일들을 순회하면서 미리보기 생성
     for (var i = 0; i < files.length; i++) {
-      var reader = new FileReader();
+        var reader = new FileReader();
 
-      reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.setAttribute('src', e.target.result);
+        reader.onload = function (e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
 
-        var deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.innerHTML = "<i class='fa-solid fa-square-minus'></i>";
+            var deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = "<i class='fa-solid fa-square-minus'></i>";
 
-        var container = document.createElement('div');
-        container.classList.add('image-container');
-        container.appendChild(img);
-        container.appendChild(deleteBtn);
+            var container = document.createElement('div');
+            container.className = 'image-container';
+            container.appendChild(img);
+            container.appendChild(deleteBtn);
 
-        previewContainer.appendChild(container);
-      }
-      reader.readAsDataURL(files[i]);
+            previewContainer.appendChild(container);
+        };
+
+        reader.readAsDataURL(files[i]);
     }
-  });
+}
 
-  document.querySelector('.uploadBtn').addEventListener('click', function() {
-    const csrfTokenElement = document.getElementById('csrf_token');
-    const csrfToken = csrfTokenElement.value;
-
-    var formData = new FormData();
-    var files = document.querySelector("input[type='file']").files;
-
-    for (var i = 0; i < files.length; i++) {
-      console.log(files[i]);
-      formData.append('uploadFiles', files[i]);
+// 삭제 버튼 클릭 이벤트 핸들러
+document.getElementById('preview-container').addEventListener('click', function (e) {
+    if (e.target.classList.contains('delete-btn')) {
+        var imageContainer = e.target.closest('.image-container');
+        imageContainer.remove();
     }
-
-    fetch('/uploadAjax', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'X-CSRF-TOKEN': csrfToken
-      }
-    })
-    .then(response => response.json())
-    .then(result => {
-      console.log(result);
-      localStorage.setItem('uploadedImages', JSON.stringify(result));
-      location.href = '/';
-    })
-    .catch(error => console.log(error));
-  });
 });
-</script>
 
+
+</script>
 
 </body>
 </html>
