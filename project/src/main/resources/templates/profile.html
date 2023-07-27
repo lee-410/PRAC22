@@ -327,45 +327,39 @@
 </script>
 
 <script>
+// 이미지 업로드 버튼 클릭 이벤트 핸들러
+document.querySelector(".uploadBtn").addEventListener("click", function() {
+    var formData = new FormData();
+    var files = document.querySelector("input[type='file']").files;
 
- $('.uploadBtn').click(function() {
-        var formData = new FormData();
-        var files = $("input[type='file']")[0].files;
+    for (var i = 0; i < files.length; i++) {
+        formData.append("uploadFiles", files[i]);
+    }
 
-        for (var i = 0; i < files.length; i++) {
-            console.log(files[i]);
-            formData.append("uploadFiles", files[i]);
+    const csrfTokenElement = document.getElementById("csrf_token");
+    const csrfToken = csrfTokenElement.value;
+    // const param = JSON.stringify(Object.fromEntries(formData));
+
+
+    // 실제 업로드 부분 - upload ajax
+    fetch("/uploadAjax", {
+        method: "POST",
+        body: formData,
+        headers: {
+            // "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
         }
-
-        //실제 업로드 부분
-        //upload ajax
-        $.ajax({
-            url: '/uploadAjax',
-            processData: false,
-            contentType: false,
-            data: formData,
-            type: 'POST',
-            dataType: 'json',
-            beforeSend: function(xhr) {
-                const csrfTokenElement = document.getElementById("csrf_token");
-                const csrfToken = csrfTokenElement.value;
-                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-            },
-            success: function(result) {
-                console.log(result);
-                localStorage.setItem("uploadedImages", JSON.stringify(result)); //결과를 LocalStorage에 저장
-                location.href = "/";
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus);
-            }
-        });
-      });
-<!--headers: {-->
-<!--                'X-CSRF-TOKEN': csrfToken-->
-<!--            },-->
-
-
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        localStorage.setItem("uploadedImages", JSON.stringify(result)); // 결과를 LocalStorage에 저장
+        location.href = "/";
+    })
+    .catch(error => {
+        console.log(error);
+    });
+});
 
 // 이미지 미리보기 함수
 function readURL(input) {
