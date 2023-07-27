@@ -328,10 +328,7 @@
 
 <script>
 
- $('.uploadBtn').click(function( ) {
-     const csrfTokenElement = document.getElementById("csrf_token");
-     const csrfToken = csrfTokenElement.value;
-
+ $('.uploadBtn').click(function() {
         var formData = new FormData();
         var files = $("input[type='file']")[0].files;
 
@@ -348,20 +345,27 @@
             contentType: false,
             data: formData,
             type: 'POST',
-            dataType:'json',
-            headers: {
-            'X-CSRF-TOKEN': csrfToken
+            dataType: 'json',
+            beforeSend: function(xhr) {
+                const csrfTokenElement = document.getElementById("csrf_token");
+                const csrfToken = csrfTokenElement.value;
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
-            success: function(result){
+            success: function(result) {
                 console.log(result);
                 localStorage.setItem("uploadedImages", JSON.stringify(result)); //결과를 LocalStorage에 저장
-                location.href="/";
+                location.href = "/";
             },
-            error: function(jqXHR, textStatus, errorThrown){
+            error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
             }
-        }); //$.ajax
-    }); //end click
+        });
+      });
+<!--headers: {-->
+<!--                'X-CSRF-TOKEN': csrfToken-->
+<!--            },-->
+
+
 
 // 이미지 미리보기 함수
 function readURL(input) {
@@ -404,7 +408,6 @@ document.getElementById('preview-container').addEventListener('click', function 
         imageContainer.remove();
     }
 });
-
 
 </script>
 

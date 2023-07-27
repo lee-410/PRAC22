@@ -232,13 +232,12 @@
         for(var i = 0; i < arr.length; i++){
             str += "<div>";
             str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
-            str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'><i class='fa-solid fa-square-minus'></i></button>";
             str += "<div>";
         }
         divArea.append(str);
     }
 </script>
-
+<!--    str += "<button class='removeBtn' data-name='"+arr[i].imageURL+"'><i class='fa-solid fa-square-minus'></i></button>";-->
 
 <!--//이미지(1개) 미리보기
 function readURL(input) {

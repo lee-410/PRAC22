@@ -5,6 +5,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,8 @@ public class UploadController {
     @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
     private String uploadPath; //이미지가 저장될 경로
 
-    @PostMapping("/uploadAjax")
+//
+    @PostMapping(value = "/uploadAjax", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){ //배열로 받은 이유는 이미지가 여러개일 수 있기 때문. uploadFiles는 내가 업로드한 이미지 그 자체!! (아직 가공되기 전!)
 
         List<UploadResultDTO> resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
@@ -81,12 +83,16 @@ public class UploadController {
                 e.printStackTrace();
             }
         }
+        // 성공적인 응답을 생성하고, HttpHeaders를 사용하여 Content-Type을 application/json으로 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         //Spring Framework에서 HTTP응답을 반환하는 코드이다.
         //ResponseEntity는 HTTP응답을 나타내는 클래스로, 응답의 본문을 데이터와 함께 응답상태코드, 헤더 등을 포함할 수 있다.
         /* resultDTOList 객체를 응답 본문으로 설정하고, 상태코드를 HttpStatus.OK로 설정하여 성공적인 응답을 반환한다.
            API에서 반환되는 데이터를 담은 객체이며, 클라이언트에게 전달할 정보를 담고 있다. */
-        return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
+        //return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(resultDTOList, headers, HttpStatus.OK);
     }
 
     @GetMapping("/display")
