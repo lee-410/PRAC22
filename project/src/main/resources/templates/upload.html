@@ -366,18 +366,19 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
   var files = document.querySelector("input[type='file']").files;
 
   for (var i = 0; i < files.length; i++) {
-    formData.append('uploadFiles', files[i]);
     console.log(files[i]);
+    formData.append('uploadFiles', files[i]);
   }
-    console.log(files);
+
   // 미리보기와 업로드 간의 일관성을 위해 이미지 데이터를 서버로 전송하기 전에 미리보기에서 추가 및 삭제된 이미지 데이터를 formData에 추가
   var previewImages = document.querySelectorAll('#preview-container img');
 
   previewImages.forEach(function(image) {
     formData.append('previewImages', image.src);
   });
-    console.log(formData);
+
     event.preventDefault();
+
   // jQuery를 사용하여 AJAX 요청 보내기
   $.ajax({
     url: '/uploadAjax',
@@ -389,7 +390,7 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
     success: function(result) {
       console.log(result);
       console.log("suc");
-      location.href = '?result=' + JSON.stringify(result);
+      location.href = './?result=' + encodeURIComponent((JSON.stringify(result)));
     },
     error: function(jqXHR, textStatus, errorThrown) {
       alert("실패요");
