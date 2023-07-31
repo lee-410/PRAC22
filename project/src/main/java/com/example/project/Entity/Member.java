@@ -1,7 +1,7 @@
 package com.example.project.Entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity(name = "MEMBER")
 public class Member {
@@ -25,9 +25,9 @@ public class Member {
 
     protected Member() {}
 
-    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
-        return new Member(null, userId, passwordEncoder.encode(pw), "USER");
-    }
+//    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
+//        return new Member(null, userId, passwordEncoder.encode(pw), "USER");
+//    }
 
     public Long getId() {
         return id;

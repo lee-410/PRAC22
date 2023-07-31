@@ -294,7 +294,7 @@
 </nav>
 <script src="/js/modal.js"></script>
 <div class="section">
-    <form id="upload_form" method="post" enctype="multipart/form-data" action="/controller/UploadController?${_csrf.parameterName}=${_csrf.token}">>
+    <form id="upload_form">
         <table border="1">
             <tr>
                 <td>
@@ -348,38 +348,58 @@ document.addEventListener('DOMContentLoaded', function() {
         container.appendChild(deleteBtn);
 
         previewContainer.appendChild(container);
-      }
+
+        // 이미지 추가 시 formData에도 추가
+        var formData = new FormData();
+        formData.append('uploadFiles', files[i]);
+
+        // 이후 fetch를 사용하여 formData를 서버로 전송 (업로드는 미리보기 시점이 아닌 실제 업로드 버튼 클릭 시점에 수행)
+      };
+
       reader.readAsDataURL(files[i]);
     }
   });
+});
 
-  document.querySelector('.uploadBtn').addEventListener('click', function() {
-    const csrfTokenElement = document.getElementById('csrf_token');
-    const csrfToken = csrfTokenElement.value;
+document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+  var formData = new FormData();
+  var files = document.querySelector("input[type='file']").files;
 
-    var formData = new FormData();
-    var files = document.querySelector("input[type='file']").files;
+  for (var i = 0; i < files.length; i++) {
+    formData.append('uploadFiles', files[i]);
+    console.log(files[i]);
+  }
+    console.log(files);
+  // 미리보기와 업로드 간의 일관성을 위해 이미지 데이터를 서버로 전송하기 전에 미리보기에서 추가 및 삭제된 이미지 데이터를 formData에 추가
+  var previewImages = document.querySelectorAll('#preview-container img');
 
-    for (var i = 0; i < files.length; i++) {
-      console.log(files[i]);
-      formData.append('uploadFiles', files[i]);
-    }
-
-    fetch('/uploadAjax', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'X-CSRF-TOKEN': csrfToken
-      }
-    })
-    .then(response => response.json())
-    .then(result => {
+  previewImages.forEach(function(image) {
+    formData.append('previewImages', image.src);
+  });
+    console.log(formData);
+    event.preventDefault();
+  // jQuery를 사용하여 AJAX 요청 보내기
+  $.ajax({
+    url: '/uploadAjax',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    dataType: 'json',
+    success: function(result) {
       console.log(result);
-      location.href = '/';
-    })
-    .catch(error => console.log(error));
+      console.log("suc");
+      location.href = '?result=' + JSON.stringify(result);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert("실패요");
+      console.log("실패!");
+      console.log('Request failed. Status:', textStatus);
+    }
   });
 });
+
+
 </script>
 
 
