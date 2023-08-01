@@ -210,28 +210,22 @@
 
 </script>
 <script>
-function showUploadedImages(result) {
-  var divArea = document.querySelector('.uploadResult');
-  divArea.innerHTML = ''; // 이미지를 보여주는 태그 초기화
+ function showUploadedImages(result){
 
-  // result로부터 이미지 정보를 가져와서 미리보기를 생성
-  for (var i = 0; i < result.length; i++) {
-    var img = document.createElement('img');
-    img.src = '/display?fileName=' + result[i].thumbnailURL;
+        console.log(result);
 
-    var deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('removeBtn');
-    deleteBtn.setAttribute('data-name', result[i].imageURL);
-    deleteBtn.innerHTML = 'REMOVE';
+        var divArea = $(".uploadResult");
 
-    var container = document.createElement('div');
-    container.classList.add('image-container');
-    container.appendChild(img);
-    container.appendChild(deleteBtn);
+        var str = "";
 
-    divArea.appendChild(container); // 이미지 미리보기를 추가
-  }
-}
+        for(var i = 0; i < result.length; i++){
+            str += "<div>";
+            str += "<img src='/display?fileName="+result[i].thumbnailURL+"'>";
+            str += "<div>"
+        }
+        divArea.append(str);
+
+    }
 
 // 이미지를 보여주는 페이지의 URL 파라미터로부터 result 데이터를 읽어와서 showUploadedImages 함수 호출
 document.addEventListener('DOMContentLoaded', function () {

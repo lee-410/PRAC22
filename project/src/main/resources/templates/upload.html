@@ -389,12 +389,10 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
     dataType: 'json',
     success: function(result) {
       console.log(result);
-      console.log("suc");
       location.href = './?result=' + encodeURIComponent((JSON.stringify(result)));
     },
     error: function(jqXHR, textStatus, errorThrown) {
       alert("실패요");
-      console.log("실패!");
       console.log('Request failed. Status:', textStatus);
     }
   });
