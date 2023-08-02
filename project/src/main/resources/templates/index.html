@@ -224,7 +224,6 @@
             str += "<div>"
         }
         divArea.append(str);
-
     }
 
 // 이미지를 보여주는 페이지의 URL 파라미터로부터 result 데이터를 읽어와서 showUploadedImages 함수 호출
@@ -233,22 +232,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var resultStr = urlParams.get('result');
   var result = JSON.parse(resultStr);
   showUploadedImages(result);
+  history.replaceState({}, document.title, window.location.pathname);
 });
 </script>
-
-
-<!--//이미지(1개) 미리보기
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      document.getElementById('preview').src = e.target.result;
-    };
-    reader.readAsDataURL(input.files[0]);
-  } else {
-    document.getElementById('preview').src = "";
-  }
-}-->
 
 </body>
 </html>
