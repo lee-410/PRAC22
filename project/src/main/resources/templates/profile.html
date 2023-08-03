@@ -166,18 +166,52 @@
     }
 
     .profile_information {
-
+        font-family: cursive;
     }
 
     .profile_information li{
         font-size: 35px;
         list-style: none;
         margin-top: 30px;
+        position: relative;
+        top: 50px;
+        line-height: 1.5;
+
+    }
+
+    .profile_information li button{
+        width: 100px;
+        height: 50px;
+        border: 2px solid #383838;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+
+        background-color: #ffdc3b;
+        color: #383838;
     }
 
     .feed {
         border-top: 1px solid lightgray;
         clear: both;
+    }
+
+    .main_list {
+        margin-top: 20px;
+        width: 900px;
+    }
+
+    .list_start {
+
+    }
+
+    .list_detail {
+        display: inline-block;
+        width: 270px;
+        height: 300px;
+        border: 1px solid;
+        margin-bottom: 5px;
     }
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
@@ -224,12 +258,24 @@
             <img src="/static/images/profile2.png" alt="base profile" class="profile">
             <div class="profile_information">
                 <li> ID</li>
-                <li> <button>follow</button></li>
-                <li> <span>following</span> <span>follower</span></li>
+<!--                <li> <span>팔로잉</span> <span>팔로워</span></li>-->
+                <li> <button>팔로우</button></li>
             </div>
         </section>
         <section class="feed">
-            <h1>피드</h1>
+            <div class="main_list">
+                <div class="list_start">
+                    <div class="list_detail"><p>1</p></div>
+                    <div class="list_detail"><p>2</p></div>
+                    <div class="list_detail"><p>3</p></div>
+                    <div class="list_detail"><p>4</p></div>
+                    <div class="list_detail"><p>5</p></div>
+                    <div class="list_detail"><p>6</p></div>
+                    <div class="list_detail"><p>7</p></div>
+                    <div class="list_detail"><p>8</p></div>
+                    <div class="list_detail"><p>9</p></div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
