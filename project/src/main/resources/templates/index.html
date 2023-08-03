@@ -8,6 +8,7 @@
             margin: 0px 30px 0px 30px;
         }
 
+/* 좌측 네비게이션 */
         /* 헤더 */
         .header{
             text-align: center;
@@ -70,38 +71,48 @@
         .footer {
             position: absolute;
             bottom: 0;
-
             width: 300px;
             text-align: center;
             font-size: x-small;
         }
+/* 좌측 네비게이션 */
 
+
+/* 본 컨텐츠 */
         .section {
             padding-left: 380px;
             padding-top: 60px;
             padding-right: 200px;
             padding-bottom: 20px;
         }
-
         .content {
             padding : 30px;
             border-bottom: 1px solid lightgray;
             margin: 20px 10px;
         }
+/* 본 컨텐츠 */
 
-        /* 모달 팝업 */
+/* 모달 팝업 */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
+            z-index: 9999;
 
         /* 모달 팝업: 숨기기 */
             z-index: -1;
             opacity: 0;
+      }
+
+      #close {
+        font-size: 30px;
+        position: absolute;
+        top: -30px;
+        right: 8px;
+        cursor: pointer;
       }
 
       .show {
@@ -139,7 +150,36 @@
         transition: all 0.5s;
       }
 
-      /* 밑줄 애니메이션 */
+      #search {
+        display: none;
+        position: relative;
+      }
+
+      .search { font-size: 25px; display: inline-block; margin-left: 5px; cursor: pointer;}
+
+      .input_text{
+          width: 200px;
+          height: 35px;
+          font-size: 15px;
+          border: 3px solid #F8CD07;
+          border-radius: 15px;
+          outline: none;
+          padding-left: 10px;
+          background-color: #fcf7de;
+
+      }
+
+      .search_list {
+        width: 300px;
+        height: 200px;
+        border: 1px solid #F8CD07;
+        margin-top: 15px;
+        border-radius: 10px;
+        margin-left: 70px;
+      }
+/* 모달팝업 */
+
+/* 밑줄 애니메이션 */
       .underline {
       background-image: linear-gradient(transparent calc(100% - 3px), #000 3px);
       background-repeat: no-repeat;
@@ -155,6 +195,8 @@
     .underline:hover {
       background-size: 100% 100%;
     }
+/* 밑줄 애니메이션 */
+
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
 </head>
@@ -173,18 +215,22 @@
         </div>
     </ul>
 
+<!--이후에 class=background 도 따로 뺄 것 -->
     <div class="background">
         <div class="window">
             <div class="popup">
-                <p>ID로 친구 찾기</p>
-                <input type="text" id="user_id" placeholder="ID"/>
-                <input type="button" onclick="" value="검색"/>
-                <br>
-                <a id="close">팝업닫기</a>
-
+                <h1>ID로 친구 찾기</h1>
+                <input type="text" class="input_text" placeholder="ID"/>
+                <label for="search">
+                    <div class="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+                </label>
+                <input type="button" onclick="" value="검색" id="search">
+                <p id="close"><i class="fa-solid fa-xmark"></i></p>
+                <div class="search_list"></div>
             </div>
         </div>
     </div>
+
     <div class="information">
         <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
         <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
@@ -194,7 +240,18 @@
         <p> Created By TEARAN <br> xofks2000@gmail.com</p>
     </div>
 </nav>
-<script src="/js/modal.js"></script>
+<!--<script src="/js/modal.js"></script>-->
+<script>
+// search modal
+function show () {
+    document.querySelector(".background").className = "background show";
+}
+function close () {
+    document.querySelector(".background").className = "background";
+}
+document.querySelector("#show").addEventListener('click', show);
+document.querySelector("#close").addEventListener('click', close);
+</script>
 <div class="section">
     <div class="content">
         <div class="uploadResult_Bin">
