@@ -212,9 +212,6 @@
             <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
         </div>
     </ul>
-
-
-
     <div class="information">
         <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
         <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
@@ -287,7 +284,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var resultStr = urlParams.get('result');
   var result = JSON.parse(resultStr);
   showUploadedImages(result);
-  history.replaceState({}, document.title, window.location.pathname);
+
+  // url 경로 숨기기
+  //history.replaceState({}, document.title, window.location.pathname);
 });
 </script>
 
