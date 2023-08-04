@@ -103,22 +103,8 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
         /* 모달 팝업: 숨기기 */
-            z-index: -1;
-            opacity: 0;
-      }
-
-      #close {
-        font-size: 30px;
-        position: absolute;
-        top: -30px;
-        right: 8px;
-        cursor: pointer;
-      }
-
-      .show {
-        z-index: 1;
-        opacity: 1;
-        transition: all 0.5s;
+          z-index: -1;
+          opacity: 0;
       }
 
       .window {
@@ -128,8 +114,8 @@
       }
 
       .popup {
-        color : black;
         position: absolute;
+        color : black;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -145,9 +131,23 @@
         transform: translate(-50%, -40%);
       }
 
+        .show {
+                opacity: 1;
+                z-index: 1000;
+                transition: all 0.5s;
+              }
+
       .show .popup {
         transform: translate(-50%, -50%);
         transition: all 0.5s;
+      }
+
+      #close {
+        position: absolute;
+        font-size: 30px;
+        top: -30px;
+        right: 8px;
+        cursor: pointer;
       }
 
       #search {
@@ -176,6 +176,7 @@
         border-radius: 10px;
         margin-left: 70px;
       }
+
 /* 모달팝업 */
 
 /* 밑줄 애니메이션 */
@@ -269,20 +270,7 @@
         </div>
     </ul>
 
-    <div class="background">
-        <div class="window">
-            <div class="popup">
-                <h1>ID로 친구 찾기</h1>
-                <input type="text" class="input_text" placeholder="ID"/>
-                <label for="search">
-                    <div class="search"><i class="fa-solid fa-magnifying-glass"></i></div>
-                </label>
-                <input type="button" onclick="" value="검색" id="search">
-                <p id="close"><i class="fa-solid fa-xmark"></i></p>
-                <div class="search_list"></div>
-            </div>
-        </div>
-    </div>
+
     <div class="information">
         <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
         <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
@@ -293,6 +281,20 @@
     </div>
 </nav>
 <!--<script src="/js/modal.js"></script>-->
+<div class="background">
+    <div class="window">
+        <div class="popup">
+            <h1>ID로 친구 찾기</h1>
+            <input type="text" class="input_text" placeholder="ID"/>
+            <label for="search">
+                <div class="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+            </label>
+            <input type="button" onclick="" value="검색" id="search">
+            <p id="close"><i class="fa-solid fa-xmark"></i></p>
+            <div class="search_list"></div>
+        </div>
+    </div>
+</div>
 <script>
 // search modal
 function showSearchModal() {
