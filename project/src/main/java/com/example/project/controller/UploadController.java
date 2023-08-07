@@ -36,11 +36,12 @@ public class UploadController {
     @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
     private String uploadPath; //이미지가 저장될 경로
 
+    List<UploadResultDTO> resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
 //, produces = MediaType.APPLICATION_JSON_VALUE
     @PostMapping(value = "/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){ //배열로 받은 이유는 이미지가 여러개일 수 있기 때문. uploadFiles는 내가 업로드한 이미지 그 자체!! (아직 가공되기 전!)
 
-        List<UploadResultDTO> resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
+
 
         for (MultipartFile uploadFile : uploadFiles) {
 
@@ -82,9 +83,6 @@ public class UploadController {
                 e.printStackTrace();
             }
         }
-        // 성공적인 응답을 생성하고, HttpHeaders를 사용하여 Content-Type을 application/json으로 설정
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
 
         //Spring Framework에서 HTTP응답을 반환하는 코드이다.
         //ResponseEntity는 HTTP응답을 나타내는 클래스로, 응답의 본문을 데이터와 함께 응답상태코드, 헤더 등을 포함할 수 있다.
@@ -123,6 +121,15 @@ public class UploadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
+    }
+
+    @GetMapping("/getDataFromUpload")
+    public ResponseEntity<String> getDataFromUpload() {
+        // upload.html의 AJAX 요청에서 데이터 처리 및 전달 로직
+        //resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
+        // 처리한 데이터를 클라이언트로 응답
+        //return ResponseEntity.ok("Processed data to send to index.html");
+        return new ResponseEntity(resultDTOList, HttpStatus.OK);
     }
 
     @PostMapping("/removeFile")

@@ -443,10 +443,7 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
     dataType: 'json',
     success: function(result) {
       console.log(result);
-      //location.href = '/';
-      //location.href = './?result=' + encodeURIComponent((JSON.stringify(result)));
-      /* 브라우저에 좆같은 url이 뜨면서 이미지가 띄워지지는건 인코딩때문이다.
-      그러니까 여기에 index을 호출하는 ajax를 하나 더 사용해서 result를 index로 전달해야한다. */
+      location.href = '/';
     },
     error: function(jqXHR, textStatus, errorThrown) {
       alert("잘못된 입력입니다.");

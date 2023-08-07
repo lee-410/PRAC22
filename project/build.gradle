@@ -23,6 +23,7 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
@@ -30,8 +31,8 @@ dependencies {
 //	implementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	testImplementation 'org.springframework.security:spring-security-test'
-	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
-	implementation 'org.reactivestreams:reactive-streams:1.0.3'
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.19'
+	implementation 'org.reactivestreams:reactive-streams:1.0.4'
 
 }
 

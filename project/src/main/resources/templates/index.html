@@ -265,9 +265,7 @@ document.querySelector("#close").addEventListener('click', close);
  function showUploadedImages(result){
 
         console.log(result);
-
         var divArea = $(".uploadResult");
-
         var str = "";
 
         for(var i = 0; i < result.length; i++){
@@ -275,19 +273,22 @@ document.querySelector("#close").addEventListener('click', close);
             str += "<img src='/display?fileName="+result[i].thumbnailURL+"'>";
             str += "<div>"
         }
+
         divArea.append(str);
     }
 
-// 이미지를 보여주는 페이지의 URL 파라미터로부터 result 데이터를 읽어와서 showUploadedImages 함수 호출
-document.addEventListener('DOMContentLoaded', function () {
-  var urlParams = new URLSearchParams(window.location.search);
-  var resultStr = urlParams.get('result');
-  var result = JSON.parse(resultStr);
-  showUploadedImages(result);
-
-  // url 경로 숨기기
-  //history.replaceState({}, document.title, window.location.pathname);
+$.ajax({
+    url: '/getDataFromUpload',
+    type: 'GET',
+    dataType: 'json',
+    success: function(result) {
+        showUploadedImages(result);
+    },
+    error: function(error) {
+        console.log('Error getting data from upload.html');
+    }
 });
+
 </script>
 
 </body>
