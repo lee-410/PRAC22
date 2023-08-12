@@ -3,11 +3,8 @@
     <meta charset="UTF-8">
     <title>PROFILE</title>
     <!--<link rel="stylesheet" href="/css/layout.css">-->
+    <!--  내가 보는 내 프로필 페이지  -->
     <style>
-        body {
-            margin: 0px 30px 0px 30px;
-        }
-
         body {
             margin: 0px 30px 0px 30px;
         }
@@ -198,7 +195,24 @@
 /* 밑줄 애니메이션 */
 
 /* 프로필 */
+    .profile_image_section {
+        position: relative;
+        width: 310px;
+        height: 300px;
+        margin: 0;
+        display: inline-block; /* 부모 요소를 인라인 블록으로 설정하여 이미지와 아이콘이 나란히 표시 */
+    }
+
+    .profile_image_section i{
+        position: absolute;
+        font-size: 30px;
+        right: 0px;
+        bottom: 0px;
+        cursor: pointer;
+    }
+
     .profile {
+        position: absolute;
         border-radius: 50%;
         width: 300px;
         height: 300px;
@@ -211,6 +225,10 @@
 
     .profile_information {
         font-family: cursive;
+        display: inline-block;
+        position: relative;
+        top: -110px;
+        left: 60px
     }
 
     .profile_information li{
@@ -221,16 +239,29 @@
         line-height: 1.5;
     }
 
+    .profile_information li span i {
+        position: absolute;
+        margin-top: 9px;
+        margin-left: 10px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
     .profile_information li button{
+        margin-top: 70px;
         width: 100px;
-        height: 50px;
+        height: 40px;
         border: 2px solid #383838;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 15px;
         border-radius: 10px;
         cursor: pointer;
         background-color: #ffdc3b;
         color: #383838;
+    }
+
+    .profile_information li i {
+
     }
 
     .feed {
@@ -310,11 +341,15 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 <div class="section">
     <div class="content">
         <section>
-            <img src="/images/profile2.png" alt="base profile" class="profile">
+            <div class="profile_image_section">
+                <img src="/images/profile2.png" alt="base profile" class="profile">
+                <i class="fa-solid fa-camera-rotate"></i>
+            </div>
             <div class="profile_information">
-                <li> ID</li>
-<!--                <li> <span>팔로잉</span> <span>팔로워</span></li>-->
-                <li> <button>팔로우</button></li>
+                <li> <spanp>ID</spanp>   <span><i class="fa-solid fa-user-plus"></i></span></li>
+                <li> <span>팔로잉</span> <span>팔로워</span></li>
+<!--                <li> <button>팔로우</button></li>-->
+                <li></li>
             </div>
         </section>
         <section class="feed">
