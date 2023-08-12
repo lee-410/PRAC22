@@ -37,11 +37,8 @@ public class UploadController {
     private String uploadPath; //이미지가 저장될 경로
 
     List<UploadResultDTO> resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
-//, produces = MediaType.APPLICATION_JSON_VALUE
-    @PostMapping(value = "/uploadAjax")
+    @PostMapping(value = "/uploadImages")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){ //배열로 받은 이유는 이미지가 여러개일 수 있기 때문. uploadFiles는 내가 업로드한 이미지 그 자체!! (아직 가공되기 전!)
-
-
 
         for (MultipartFile uploadFile : uploadFiles) {
 
@@ -89,7 +86,6 @@ public class UploadController {
         /* resultDTOList 객체를 응답 본문으로 설정하고, 상태코드를 HttpStatus.OK로 설정하여 성공적인 응답을 반환한다.
            API에서 반환되는 데이터를 담은 객체이며, 클라이언트에게 전달할 정보를 담고 있다. */
         return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
-        //return new ResponseEntity<>(resultDTOList, headers, HttpStatus.OK);
     }
 
     @GetMapping("/display")
@@ -122,6 +118,9 @@ public class UploadController {
         }
         return result;
     }
+
+    //@PostMapping("/uploadText")
+
 
     @GetMapping("/getDataFromUpload")
     public ResponseEntity<String> getDataFromUpload() {

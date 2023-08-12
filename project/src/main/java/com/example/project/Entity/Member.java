@@ -1,8 +1,11 @@
 package com.example.project.Entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
+//DB에서 사용되는 데이터의 표현, DB와 관련된 작업처리
 @Entity(name = "MEMBER")
 public class Member {
     @Id
@@ -15,12 +18,16 @@ public class Member {
     private String pw;
 
     private String roles;
+//    private String create_time;
 
-    private Member(Long id, String userid, String pw, String roleUser) {
+    private LocalDateTime createTime;
+
+    private Member(Long id, String userid, String pw, String roleUser,LocalDateTime createTime) {
         this.id = id;
         this.userid = userid;
         this.pw = pw;
         this.roles = roleUser;
+        this.createTime = createTime;
     }
 
     protected Member() {}
@@ -44,4 +51,6 @@ public class Member {
     public String getRoles() {
         return roles;
     }
+
+    public LocalDateTime getCreateTime() { return createTime; }
 }

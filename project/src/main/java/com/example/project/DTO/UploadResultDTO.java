@@ -6,6 +6,7 @@ import lombok.Data;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+//데이터 전송을 위한 객체, 데이터 구조를 정의!!
 @Data
 @AllArgsConstructor
 public class UploadResultDTO {
