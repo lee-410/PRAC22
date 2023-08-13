@@ -13,12 +13,11 @@ public class Member {
     private Long id;
 
     @Column(unique = true)
-    private String userid;
+    private String userid; // =author
 
     private String pw;
 
     private String roles;
-//    private String create_time;
 
     private LocalDateTime createTime;
 

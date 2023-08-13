@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>HOME</title>
@@ -252,6 +253,7 @@ document.querySelector("#close").addEventListener('click', close);
         <div class="uploadResult_Bin">
             <div class="uploadResult">
             </div>
+            <p th:value="${content}"></p>
         </div>
     </div>
 </div>
@@ -278,7 +280,7 @@ document.querySelector("#close").addEventListener('click', close);
     }
 
 $.ajax({
-    url: '/getDataFromUpload',
+    url: '/uploadData',
     type: 'GET',
     dataType: 'json',
     success: function(result) {

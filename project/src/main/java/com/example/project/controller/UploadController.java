@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 //@CrossOrigin(origins="*", allowedHeaders = "*")
@@ -86,14 +88,13 @@ public class UploadController {
         /* resultDTOList 객체를 응답 본문으로 설정하고, 상태코드를 HttpStatus.OK로 설정하여 성공적인 응답을 반환한다.
            API에서 반환되는 데이터를 담은 객체이며, 클라이언트에게 전달할 정보를 담고 있다. */
         return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
-    }
+    } //imagepath DB에 저장해야함
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName, String size){
         ResponseEntity<byte[]> result = null;
 
         try {
-
             //UTF-8인코딩을 사용하여 fileName을 디코딩한다. fileName에 포함된 URL인코딩된 문자를 처리하기 위한 것이다.
             //디코딩하면 "~/이미지.jpg"와 같이 변경된다.
             String srcFileName = URLDecoder.decode(fileName,"UTF-8");
@@ -119,10 +120,30 @@ public class UploadController {
         return result;
     }
 
-    //@PostMapping("/uploadText")
+    private String uploadedContent = ""; // 글 내용을 임시로 저장할 변수
+
+    @PostMapping("/uploadText")
+    public ResponseEntity<String> uploadText(@RequestBody Map<String, String> requestBody) {
+        String content = requestBody.get("content");
+
+        // 받은 글 내용을 임시로 저장
+        uploadedContent = content;
+
+        // 성공적인 응답을 반환합니다.
+        return ResponseEntity.ok("글 업로드가 성공하였습니다.");
+    }
+
+    @GetMapping("/show")
+    public String showContent(Model model) {
+        // 2번 페이지에서 글 내용을 사용할 수 있도록 모델에 추가
+        model.addAttribute("content", uploadedContent);
+
+        // 2번 페이지의 Thymeleaf 템플릿 이름을 반환
+        return "/";
+    }
 
 
-    @GetMapping("/getDataFromUpload")
+    @GetMapping("/uploadData")
     public ResponseEntity<String> getDataFromUpload() {
         // upload.html의 AJAX 요청에서 데이터 처리 및 전달 로직
         //resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성

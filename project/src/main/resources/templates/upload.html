@@ -366,9 +366,9 @@ document.querySelector("#close").addEventListener('click', close);
             </tr>
         </table>
         <div class="product-title">
-            <textarea class="input" placeholder=" 내용 입력"></textarea>
+            <textarea id="content" class="input" placeholder=" 내용 입력"></textarea>
         </div>
-        <button class="uploadBtn">업로드</button>
+        <button id="uploadBtn" class="uploadBtn">업로드</button>
 <!--        <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
     </form>
 </section>
@@ -379,7 +379,7 @@ document.querySelector("#close").addEventListener('click', close);
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+
   document.getElementById('image-input').addEventListener('change', function() {
     var files = this.files;
     var previewContainer = document.getElementById('preview-container');
@@ -413,9 +413,9 @@ document.addEventListener('DOMContentLoaded', function() {
       reader.readAsDataURL(files[i]);
     }
   });
-});
 
-document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+
+document.querySelector('.uploadBtn').addEventListener('click', function() {
   var formData = new FormData();
   var files = document.querySelector("input[type='file']").files;
 
@@ -431,7 +431,7 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
     formData.append('previewImages', image.src);
   });
 
-    event.preventDefault();
+
 
   // jQuery를 사용하여 AJAX 요청 보내기
   $.ajax({
@@ -451,6 +451,25 @@ document.querySelector('.uploadBtn').addEventListener('click', function(event) {
     }
   });
 });
+
+ document.querySelector('#uploadBtn').addEventListener('click', function() {
+    var content = document.querySelector('#content').value;
+
+    // 글 내용을 서버로 보내는 Ajax 요청
+    $.ajax({
+      url: '/uploadText',
+      type: 'POST',
+      data: JSON.stringify({ content: content }),
+      contentType: 'application/json',
+      success: function(result) {
+        location.href = '/';
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('글 업로드에 실패하였습니다.');
+        console.log('Request failed. Status:', textStatus);
+      }
+    });
+  });
 
 
 </script>

@@ -16,7 +16,7 @@ public class Feed {
 
     private String title;
 
-    private String author; // userid
+    private String author; // =userid
 
     private LocalDateTime uploadTime;
     private String content;
