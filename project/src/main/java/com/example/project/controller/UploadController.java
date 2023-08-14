@@ -120,35 +120,31 @@ public class UploadController {
         return result;
     }
 
-    private String uploadedContent = ""; // 글 내용을 임시로 저장할 변수
+    private String uploadedContent = ""; // content 임시저장
 
     @PostMapping("/uploadText")
     public ResponseEntity<String> uploadText(@RequestBody Map<String, String> requestBody) {
         String content = requestBody.get("content");
 
-        // 받은 글 내용을 임시로 저장
         uploadedContent = content;
 
-        // 성공적인 응답을 반환합니다.
-        return ResponseEntity.ok("글 업로드가 성공하였습니다.");
+        return new ResponseEntity(uploadedContent, HttpStatus.OK);
     }
 
-    @GetMapping("/show")
-    public String showContent(Model model) {
-        // 2번 페이지에서 글 내용을 사용할 수 있도록 모델에 추가
-        model.addAttribute("content", uploadedContent);
+    @GetMapping("/getContentFromUpload")
+    public ResponseEntity<String> getContentFromUpload() {
 
-        // 2번 페이지의 Thymeleaf 템플릿 이름을 반환
-        return "/";
+        return ResponseEntity.ok(uploadedContent);
     }
 
+//    @GetMapping("/getContentFromUpload")
+//    public String getContentFromUpload(Model model) {
+//        model.addAttribute("content", uploadedContent);
+//        return "/";
+//    }
 
-    @GetMapping("/uploadData")
-    public ResponseEntity<String> getDataFromUpload() {
-        // upload.html의 AJAX 요청에서 데이터 처리 및 전달 로직
-        //resultDTOList = new ArrayList<>(); //업로드 결과 정보를 담을 리스트 객체 생성
-        // 처리한 데이터를 클라이언트로 응답
-        //return ResponseEntity.ok("Processed data to send to index.html");
+    @GetMapping("/getImagesFromUpload")
+    public ResponseEntity<String> getImagesFromUpload() {
         return new ResponseEntity(resultDTOList, HttpStatus.OK);
     }
 

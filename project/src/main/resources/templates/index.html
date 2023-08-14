@@ -253,7 +253,7 @@ document.querySelector("#close").addEventListener('click', close);
         <div class="uploadResult_Bin">
             <div class="uploadResult">
             </div>
-            <p th:value="${content}"></p>
+            <div class="uploadContent"></div>
         </div>
     </div>
 </div>
@@ -272,15 +272,15 @@ document.querySelector("#close").addEventListener('click', close);
 
         for(var i = 0; i < result.length; i++){
             str += "<div>";
-            str += "<img src='/display?fileName="+result[i].thumbnailURL+"'>";
-            str += "<div>"
+            str += "<img src='/display?fileName=" + result[i].thumbnailURL + "'>";
+            str += "<div>";
         }
 
         divArea.append(str);
     }
 
 $.ajax({
-    url: '/uploadData',
+    url: '/getImagesFromUpload',
     type: 'GET',
     dataType: 'json',
     success: function(result) {
@@ -288,8 +288,29 @@ $.ajax({
     },
     error: function(error) {
         console.log('Error getting data from upload.html');
+        console.log(error);
     }
 });
+ function showUploadedContent(result){
+        console.log(result);
+        var divArea = $(".uploadContent");
+        var str = "<p>" + result + "</p>";
+        divArea.append(str);
+    }
+
+$.ajax({
+    url: '/getContentFromUpload',
+    type: 'GET',
+    dataType: 'text',
+    success: function(result) {
+        showUploadedContent(result);
+    },
+    error: function(error) {
+        console.log('Error getting data from upload.html2');
+        console.log(error);
+    }
+});
+
 
 </script>
 

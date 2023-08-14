@@ -415,7 +415,7 @@ document.querySelector("#close").addEventListener('click', close);
   });
 
 
-document.querySelector('.uploadBtn').addEventListener('click', function() {
+document.querySelector('.uploadBtn').addEventListener('click', function(event) {
   var formData = new FormData();
   var files = document.querySelector("input[type='file']").files;
 
@@ -431,7 +431,7 @@ document.querySelector('.uploadBtn').addEventListener('click', function() {
     formData.append('previewImages', image.src);
   });
 
-
+ event.preventDefault();
 
   // jQuery를 사용하여 AJAX 요청 보내기
   $.ajax({
@@ -452,9 +452,9 @@ document.querySelector('.uploadBtn').addEventListener('click', function() {
   });
 });
 
- document.querySelector('#uploadBtn').addEventListener('click', function() {
+ document.querySelector('#uploadBtn').addEventListener('click', function(event) {
     var content = document.querySelector('#content').value;
-
+event.preventDefault();
     // 글 내용을 서버로 보내는 Ajax 요청
     $.ajax({
       url: '/uploadText',
@@ -462,6 +462,7 @@ document.querySelector('.uploadBtn').addEventListener('click', function() {
       data: JSON.stringify({ content: content }),
       contentType: 'application/json',
       success: function(result) {
+        console.log(result);
         location.href = '/';
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -470,7 +471,6 @@ document.querySelector('.uploadBtn').addEventListener('click', function() {
       }
     });
   });
-
 
 </script>
 
