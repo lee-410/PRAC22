@@ -91,6 +91,12 @@
             border-bottom: 1px solid lightgray;
             margin: 20px 10px;
         }
+
+        .uploadResultImage{
+            border-top: 1px solid lightgray;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
 /* 본 컨텐츠 */
 
 /* 모달 팝업 */
@@ -271,11 +277,10 @@ document.querySelector("#close").addEventListener('click', close);
         var str = "";
 
         for(var i = 0; i < result.length; i++){
-            str += "<div>";
+            str += "<div class='uploadResultImage'>";
             str += "<img src='/display?fileName=" + result[i].thumbnailURL + "'>";
-            str += "<div>";
+            str += "</div>";
         }
-
         divArea.append(str);
     }
 

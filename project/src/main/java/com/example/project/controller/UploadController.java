@@ -75,7 +75,7 @@ public class UploadController {
 
                 File thumbnailFile = new File(thubmnailSaveName);
 
-                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,200,200);// 섬네일 생성
+                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,400,400);// 섬네일 생성
 
                 resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
             }catch (IOException e){
@@ -119,6 +119,10 @@ public class UploadController {
         }
         return result;
     }
+    @GetMapping("/getImagesFromUpload")
+    public ResponseEntity<String> getImagesFromUpload() {
+        return new ResponseEntity(resultDTOList, HttpStatus.OK);
+    }
 
     private String uploadedContent = ""; // content 임시저장
 
@@ -133,20 +137,10 @@ public class UploadController {
 
     @GetMapping("/getContentFromUpload")
     public ResponseEntity<String> getContentFromUpload() {
-
         return ResponseEntity.ok(uploadedContent);
     }
 
-//    @GetMapping("/getContentFromUpload")
-//    public String getContentFromUpload(Model model) {
-//        model.addAttribute("content", uploadedContent);
-//        return "/";
-//    }
 
-    @GetMapping("/getImagesFromUpload")
-    public ResponseEntity<String> getImagesFromUpload() {
-        return new ResponseEntity(resultDTOList, HttpStatus.OK);
-    }
 
     @PostMapping("/removeFile")
     public ResponseEntity<Boolean> removeFile(String fileName){

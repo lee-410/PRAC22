@@ -368,7 +368,7 @@ document.querySelector("#close").addEventListener('click', close);
         <div class="product-title">
             <textarea id="content" class="input" placeholder=" 내용 입력"></textarea>
         </div>
-        <button id="uploadBtn" class="uploadBtn">업로드</button>
+        <button class="uploadBtn">업로드</button>
 <!--        <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
     </form>
 </section>
@@ -378,102 +378,92 @@ document.querySelector("#close").addEventListener('click', close);
         crossorigin="anonymous">
 </script>
 
+
 <script>
+    function previewImages(files) {
+        var previewContainer = document.getElementById('preview-container');
+        previewContainer.innerHTML = '';
 
-  document.getElementById('image-input').addEventListener('change', function() {
-    var files = this.files;
-    var previewContainer = document.getElementById('preview-container');
-    previewContainer.innerHTML = '';
+        for (var i = 0; i < files.length; i++) {
+            var reader = new FileReader();
 
-    for (var i = 0; i < files.length; i++) {
-      var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.setAttribute('src', e.target.result);
 
-      reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.setAttribute('src', e.target.result);
+                var deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.innerHTML = "<i class='fa-solid fa-square-minus'></i>";
 
-        var deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.innerHTML = "<i class='fa-solid fa-square-minus'></i>";
+                var container = document.createElement('div');
+                container.classList.add('image-container');
+                container.appendChild(img);
+                container.appendChild(deleteBtn);
 
-        var container = document.createElement('div');
-        container.classList.add('image-container');
-        container.appendChild(img);
-        container.appendChild(deleteBtn);
+                previewContainer.appendChild(container);
+            };
 
-        previewContainer.appendChild(container);
-
-        // 이미지 추가 시 formData에도 추가
-        var formData = new FormData();
-        formData.append('uploadFiles', files[i]);
-
-        // 이후 fetch를 사용하여 formData를 서버로 전송 (업로드는 미리보기 시점이 아닌 실제 업로드 버튼 클릭 시점에 수행)
-      };
-
-      reader.readAsDataURL(files[i]);
+            reader.readAsDataURL(files[i]);
+        }
     }
-  });
 
-
-document.querySelector('.uploadBtn').addEventListener('click', function(event) {
-  var formData = new FormData();
-  var files = document.querySelector("input[type='file']").files;
-
-  for (var i = 0; i < files.length; i++) {
-    console.log(files[i]);
-    formData.append('uploadFiles', files[i]);
-  }
-
-  // 미리보기와 업로드 간의 일관성을 위해 이미지 데이터를 서버로 전송하기 전에 미리보기에서 추가 및 삭제된 이미지 데이터를 formData에 추가
-  var previewImages = document.querySelectorAll('#preview-container img');
-
-  previewImages.forEach(function(image) {
-    formData.append('previewImages', image.src);
-  });
-
- event.preventDefault();
-
-  // jQuery를 사용하여 AJAX 요청 보내기
-  $.ajax({
-    url: '/uploadImages',
-    type: 'POST',
-    data: formData,
-    processData: false,
-    contentType: false,
-    dataType: 'json',
-    success: function(result) {
-      console.log(result);
-      location.href = '/';
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      alert("잘못된 입력입니다.");
-      console.log('Request failed. Status:', textStatus);
-    }
-  });
-});
-
- document.querySelector('#uploadBtn').addEventListener('click', function(event) {
-    var content = document.querySelector('#content').value;
-event.preventDefault();
-    // 글 내용을 서버로 보내는 Ajax 요청
-    $.ajax({
-      url: '/uploadText',
-      type: 'POST',
-      data: JSON.stringify({ content: content }),
-      contentType: 'application/json',
-      success: function(result) {
-        console.log(result);
-        location.href = '/';
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert('글 업로드에 실패하였습니다.');
-        console.log('Request failed. Status:', textStatus);
-      }
+    document.getElementById('image-input').addEventListener('change', function() {
+        var files = this.files;
+        previewImages(files); // 이미지 미리보기 업데이트
     });
-  });
+
+    document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+
+        var formData = new FormData();
+        var files = document.querySelector("input[type='file']").files;
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('uploadFiles', files[i]);
+        }
+
+        var previewImages = document.querySelectorAll('#preview-container img');
+
+        previewImages.forEach(function(image) {
+            formData.append('previewImages', image.src);
+        });
+        event.preventDefault();
+
+        $.ajax({
+            url: '/uploadImages',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(result) {
+                console.log('이미지 업로드 성공: ', result);
+                location.href = '/';
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('이미지 업로드 실패: ', errorThrown);
+            }
+        });
+    });
+
+    document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+        var content = document.querySelector('#content').value;
+        event.preventDefault();
+
+        $.ajax({
+            url: '/uploadText',
+            type: 'POST',
+            data: JSON.stringify({ content: content }),
+            contentType: 'application/json',
+            success: function(result) {
+                console.log('글 업로드 성공: ', result);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('글 업로드 실패: ', errorThrown);
+            }
+        });
+    });
 
 </script>
-
 
 </body>
 </html>
