@@ -270,19 +270,16 @@ document.querySelector("#close").addEventListener('click', close);
 
 </script>
 <script>
- function showUploadedImages(result){
+function showUploadedImages(result) {
+    var divArea = $(".uploadResult");
 
-        console.log(result);
-        var divArea = $(".uploadResult");
-        var str = "";
-
-        for(var i = 0; i < result.length; i++){
-            str += "<div class='uploadResultImage'>";
-            str += "<img src='/display?fileName=" + result[i].thumbnailURL + "'>";
-            str += "</div>";
-        }
-        divArea.append(str);
-    }
+    for (var i = result.length - 1; i >= 0; i--) {
+        var imgDiv = $("<div class='uploadResultImage'></div>");
+        var img = $("<img>").attr("src", "/display?fileName=" + result[i].thumbnailURL);
+        imgDiv.append(img);
+        divArea.append(imgDiv);
+    } //div uploadResult 안에 div uploadResultImage 안에 img,, for문 역순으로 조건두면서 이미지 추가-> 최근 내용을 가장 위에.
+}
 
 $.ajax({
     url: '/getImagesFromUpload',
@@ -296,6 +293,7 @@ $.ajax({
         console.log(error);
     }
 });
+
  function showUploadedContent(result){
         console.log(result);
         var divArea = $(".uploadContent");

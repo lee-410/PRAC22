@@ -426,6 +426,7 @@ document.querySelector("#close").addEventListener('click', close);
         previewImages.forEach(function(image) {
             formData.append('previewImages', image.src);
         });
+
         event.preventDefault();
 
         $.ajax({

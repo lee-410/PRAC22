@@ -75,7 +75,7 @@ public class UploadController {
 
                 File thumbnailFile = new File(thubmnailSaveName);
 
-                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,400,400);// 섬네일 생성
+                Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,700,700);// 섬네일 생성
 
                 resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
             }catch (IOException e){
