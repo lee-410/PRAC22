@@ -119,10 +119,6 @@ public class UploadController {
         }
         return result;
     }
-    @GetMapping("/getImagesFromUpload")
-    public ResponseEntity<String> getImagesFromUpload() {
-        return new ResponseEntity(resultDTOList, HttpStatus.OK);
-    }
 
     private String uploadedContent = ""; // content 임시저장
 
@@ -137,10 +133,15 @@ public class UploadController {
 
     @GetMapping("/getContentFromUpload")
     public ResponseEntity<String> getContentFromUpload() {
+        //글 없으면 안돼. 무조건 있어야돼
         return ResponseEntity.ok(uploadedContent);
     }
 
-
+    @GetMapping("/getImagesFromUpload")
+    public ResponseEntity<String> getImagesFromUpload() {
+        //이미지 무조건 있어야 하고 단 1개만.
+        return new ResponseEntity(resultDTOList, HttpStatus.OK);
+    }
 
     @PostMapping("/removeFile")
     public ResponseEntity<Boolean> removeFile(String fileName){

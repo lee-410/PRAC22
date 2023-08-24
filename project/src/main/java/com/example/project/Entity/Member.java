@@ -2,22 +2,23 @@ package com.example.project.Entity;
 
 import jakarta.persistence.*;
 
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
-//DB에서 사용되는 데이터의 표현, DB와 관련된 작업처리
-@Entity(name = "MEMBER")
+
+@Entity(name = "Member")
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
-    private String userid; // =author
+    private String userid; // 참조
 
     private String pw;
 
-    private String roles;
+    private String roles; // 참조
 
     private LocalDateTime createTime;
 
@@ -29,7 +30,7 @@ public class Member {
         this.createTime = createTime;
     }
 
-    protected Member() {}
+    public Member() {}
 
 //    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
 //        return new Member(null, userId, passwordEncoder.encode(pw), "USER");
@@ -52,4 +53,24 @@ public class Member {
     }
 
     public LocalDateTime getCreateTime() { return createTime; }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public void setPw(String pw) {
+        this.pw = pw;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 }
