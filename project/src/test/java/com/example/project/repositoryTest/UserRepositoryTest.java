@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest
@@ -25,11 +26,14 @@ public class UserRepositoryTest {
         member.setRoles("USER");
         member = userRepository.save(member);
 
-        Feed feed = new Feed();
-        feed.setAuthor(member.getUserid());
-        feed.setRoles(member.getRoles());
-        feed.setTitle("plave");
-        Feed newFeed = feedRepository.save(feed);
+        Feed feed = Feed.builder()
+                .title("Title")
+                .content("Content")
+                .image_path("Path")
+                .member(member)
+                .build();
+
+      Feed newFeed = feedRepository.save(feed);
     }
 
 
