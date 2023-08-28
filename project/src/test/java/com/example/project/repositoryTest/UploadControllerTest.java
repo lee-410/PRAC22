@@ -34,7 +34,8 @@ public class UploadControllerTest {
         member.setRoles("USER");
         member = userRepository.save(member);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/uploadText")
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/uploadText/{userid}", member.getUserid())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"content\":\"" + content + "\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

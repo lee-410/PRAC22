@@ -128,11 +128,11 @@ public class UploadController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping("/uploadText")
-    public ResponseEntity<String> uploadText(@RequestBody Map<String, String> requestBody) {
+    @PostMapping("/uploadText/{userid}")
+    public ResponseEntity<String> uploadText(@PathVariable String userid, @RequestBody Map<String, String> requestBody) {
         String newcontent = requestBody.get("content");
 
-        Optional<Member> memberOptional = userRepository.findByUserid("ean");
+        Optional<Member> memberOptional = userRepository.findByUserid(userid);
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
 
