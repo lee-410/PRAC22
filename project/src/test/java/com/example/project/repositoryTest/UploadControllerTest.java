@@ -34,13 +34,11 @@ public class UploadControllerTest {
         member.setRoles("USER");
         member = userRepository.save(member);
 
-
         mockMvc.perform(MockMvcRequestBuilders.post("/uploadText/{userid}", member.getUserid())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"content\":\"" + content + "\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(content));
-
 
         //log.info("TestUploadText completed successfully.");
         System.out.println("TestUploadText completed successfully2.");

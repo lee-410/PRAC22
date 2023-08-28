@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Entity(name = "Member")
@@ -32,9 +32,11 @@ public class Member {
 
     public Member() {}
 
-//    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
-//        return new Member(null, userId, passwordEncoder.encode(pw), "USER");
-//    }
+
+    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
+        return new Member(null, userId, passwordEncoder.encode(pw), "USER", LocalDateTime.now());
+    }
+
 
     public Long getId() {
         return id;
