@@ -24,16 +24,9 @@ public class UserRepositoryTest {
         member.setUserid("ean");
         member.setPw("1234");
         member.setRoles("USER");
-        member = userRepository.save(member);
+        userRepository.save(member);
 
-        Feed feed = Feed.builder()
-                .title("Title")
-                .content("Content")
-                .image_path("Path")
-                .member(member)
-                .build();
 
-      Feed newFeed = feedRepository.save(feed);
     }
 
 

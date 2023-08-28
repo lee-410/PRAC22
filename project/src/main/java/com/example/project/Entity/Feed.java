@@ -32,6 +32,5 @@ public class Feed {
         this.content = content;
         this.image_path = image_path;
     }
-
 }
 

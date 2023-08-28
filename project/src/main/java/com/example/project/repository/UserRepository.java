@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<Member, Long> { //<해당엔티티, 엔티티 PK자료형>
-    Optional<Member> findByUserid(String userId);
+    Optional<Member> findByUserid(String userid);
 
     //JSQL select m from Member m where m.name = ? // name으로 엔티티 찾기 가능
     //@Override

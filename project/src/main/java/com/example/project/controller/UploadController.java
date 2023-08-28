@@ -1,7 +1,12 @@
 package com.example.project.controller;
 
 import com.example.project.DTO.UploadResultDTO;
+import com.example.project.Entity.Feed;
+import com.example.project.Entity.Member;
+import com.example.project.repository.FeedRepository;
+import com.example.project.repository.UserRepository;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,10 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 //@CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
@@ -120,22 +122,43 @@ public class UploadController {
         return result;
     }
 
-    private String uploadedContent = ""; // content 임시저장
+    @Autowired
+    private FeedRepository feedRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("/uploadText")
     public ResponseEntity<String> uploadText(@RequestBody Map<String, String> requestBody) {
-        String content = requestBody.get("content");
+        String newcontent = requestBody.get("content");
 
-        uploadedContent = content;
+        Optional<Member> memberOptional = userRepository.findByUserid("ean");
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
 
-        return new ResponseEntity(uploadedContent, HttpStatus.OK);
+            Feed feed = Feed.builder()
+                    .title("Title")
+                    .content(newcontent)
+                    .image_path("Path")
+                    .member(member)
+                    .build();
+
+            feedRepository.save(feed);
+
+            return new ResponseEntity(newcontent, HttpStatus.OK);
+        } else {
+            // member가 존재하지 않는 경우 처리
+            System.out.println("Fail");
+            return new ResponseEntity("Member not found", HttpStatus.NOT_FOUND);
+        }
     }
 
-    @GetMapping("/getContentFromUpload")
-    public ResponseEntity<String> getContentFromUpload() {
-        //글 없으면 안돼. 무조건 있어야돼
-        return ResponseEntity.ok(uploadedContent);
-    }
+//    @GetMapping("/getContentFromUpload")
+//    public ResponseEntity<String> getContentFromUpload() {
+//        //0.글 없으면 안돼. 무조건 있어야돼
+//        //1. DB에서 저장된 내용을 불러올 수 있도록.
+//        return ResponseEntity.ok(uploadedContent);
+//    }
 
     @GetMapping("/getImagesFromUpload")
     public ResponseEntity<String> getImagesFromUpload() {
