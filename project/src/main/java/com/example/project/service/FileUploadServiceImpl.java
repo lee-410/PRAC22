@@ -33,7 +33,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             if (uploadFile.getContentType().startsWith("image") == false) {
                 throw new IllegalArgumentException("Only image files are allowed.");
-            }
+            } //타입에러나서 변경
 //            if(uploadFile.getContentType().startsWith("image") == false){
 //                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 //            }//getContentType()는 업로드된파일의 MIME타입(확장자)을 확인, startsWith는 그 문자열이 image로 시작하는지 확인(MIME ex. image/jpeg)
