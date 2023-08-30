@@ -23,6 +23,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
     private String uploadPath; //이미지가 저장될 경로
 
+    private String imagePath;
+
     @Override
     public List<UploadResultDTO> uploadFiles(MultipartFile[] uploadFiles) {
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
@@ -66,6 +68,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,700,700);// 섬네일 생성
 
+                imagePath = thubmnailSaveName;
+
                 resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
             }catch (IOException e){
                 e.printStackTrace();
@@ -74,6 +78,13 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         return resultDTOList;
     }
+
+    public String getImagePath() {
+        System.out.println("---------------------");
+        System.out.println(imagePath);
+        return imagePath;
+    }
+
     private String makeFolder() {
 
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
@@ -89,5 +100,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         return folderPath;
     }
+
 }
 

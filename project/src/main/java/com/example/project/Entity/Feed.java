@@ -22,6 +22,10 @@ public class Feed {
     private String content;
     private String image_path;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @Builder
     public Feed(Long post_id, String title, String author, String roles, LocalDateTime uploadTime, String content, String image_path, Member member) {
         this.post_id = post_id;
@@ -31,6 +35,7 @@ public class Feed {
         this.uploadTime = LocalDateTime.now();
         this.content = content;
         this.image_path = image_path;
+        this.member = member;
     }
 }
 

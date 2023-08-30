@@ -430,10 +430,10 @@ document.querySelector("#close").addEventListener('click', close);
 
         event.preventDefault();
 
-        if (files.length !== 1) {
-            alert('이미지는 1개만 업로드 가능합니다.');
-            return; // Ajax 요청을 중단하고 함수 실행을 종료
-        }
+//        if (files.length !== 1) {
+//            alert('이미지는 1개만 업로드 가능합니다.');
+//           return; // Ajax 요청을 중단하고 함수 실행을 종료
+//        }
 
         $.ajax({
             url: '/uploadImages',
@@ -457,16 +457,16 @@ document.querySelector("#close").addEventListener('click', close);
 
     document.querySelector('.uploadBtn').addEventListener('click', function(event) {
         var content = document.querySelector('#content').value;
-         var csrfToken = document.querySelector('#csrf_token').value;
+        var csrfToken = document.querySelector('#csrf_token').value;
         event.preventDefault();
 
-        if (content.length < 5) {
-            alert('5자 이상 작성해야 합니다.');
-            return; // Ajax 요청을 중단하고 함수 실행을 종료
-        }
+//        if (content.length < 5) {
+//            alert('5자 이상 작성해야 합니다.');
+//            return; // Ajax 요청을 중단하고 함수 실행을 종료
+//        }
 
         $.ajax({
-            url: '/uploadText/user' ,
+            url: '/uploadText' ,
             type: 'POST',
             data: JSON.stringify({ content: content }),
             contentType: 'application/json',
