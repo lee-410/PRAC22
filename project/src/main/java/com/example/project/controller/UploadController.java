@@ -51,7 +51,9 @@ public class UploadController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam String size) {
+    public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam(required = false, defaultValue = "1") String size) {
+        System.out.println("------------------");
+        System.out.println(fileName);
         return fileDisplayService.getFile(fileName, size);
     }
 
@@ -63,45 +65,33 @@ public class UploadController {
 
     @PostMapping("/uploadText")
     public ResponseEntity<String> uploadText(@RequestBody Map<String, String> requestBody, Authentication authentication) {
-        String newcontent = requestBody.get("content");
+        String newContent = requestBody.get("content");
         String userid = authentication.getName();
 
-        if (userid != null) {
-            Optional<Member> memberOptional = userRepository.findByUserid(userid);
-            if (memberOptional.isPresent()) {
-                Member member = memberOptional.get();
+        Optional<Member> memberOptional = userRepository.findByUserid(userid);
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
 
-                FileUploadService fileUploadService = new FileUploadServiceImpl();
+            Feed feed = Feed.builder()
+                    .content(newContent)
+                    .member(member)
+                    .build();
 
-                String imagePath = fileUploadService.getImagePath();
+            feedRepository.save(feed);
 
-                Feed feed = Feed.builder()
-                        .title("Title")
-                        .content(newcontent)
-                        .image_path(imagePath)
-                        .member(member)
-                        .build();
-
-                feedRepository.save(feed);
-
-                return new ResponseEntity<>(newcontent, HttpStatus.OK);
-            } else {
-                // member가 존재하지 않는 경우 처리
-                System.out.println("Fail");
-                return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(newContent, HttpStatus.OK);
         } else {
-            // 로그인하지 않은 경우 처리
-            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+            // member가 존재하지 않는 경우 처리
+            System.out.println("Fail");
+            return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/getContentFromUpload")
     public ResponseEntity<String> getContentFromUpload(Authentication authentication) {
         try {
-            String userid = authentication.getName(); // 현재 로그인한 사용자의 userid 가져오기
+            String userid = authentication.getName();
 
-            // 0. 해당 사용자의 글을 가져온다.
             List<Feed> userFeeds = feedRepository.findByMemberUserid(userid);
 
             if (!userFeeds.isEmpty()) {
@@ -121,10 +111,24 @@ public class UploadController {
     }
 
 //    @GetMapping("/getImagesFromUpload")
-//    public ResponseEntity<String> getImagesFromUpload() {
-//        //이미지 무조건 있어야 하고 단 1개만.
-//        return new ResponseEntity(resultDTOList, HttpStatus.OK);
+//    public ResponseEntity<List<UploadResultDTO>> getImagesFromUpload() {
+//        // uploadImages 메소드를 호출하여 이미지 업로드 결과를 받아옵니다.
+//        List<UploadResultDTO> result = fileUploadService.uploadFiles(/* 업로드할 이미지 파일들 */);
+//
+//        // 받아온 이미지 업로드 결과를 반환합니다.
+//        return new ResponseEntity<>(result, HttpStatus.OK);
 //    }
+
+    @GetMapping("/getImagesFromUpload")
+    public ResponseEntity<List<UploadResultDTO>> getImagesFromUpload(Authentication authentication) {
+
+        String userId = authentication.getName();
+        List<UploadResultDTO> result = fileUploadService.getUploadedImagesByUserId(userId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
 
     @PostMapping("/removeFile")
     public ResponseEntity<Boolean> removeFile(String fileName){

@@ -289,6 +289,8 @@ $.ajax({
     dataType: 'json',
     success: function(result) {
         showUploadedImages(result);
+        console.log(result);
+        console.log('sec');
     },
     error: function(error) {
         console.log('Error getting data from upload.html');

@@ -1,8 +1,10 @@
 package com.example.project.repositoryTest;
 
 import com.example.project.Entity.Feed;
+import com.example.project.Entity.Images;
 import com.example.project.Entity.Member;
 import com.example.project.repository.FeedRepository;
+import com.example.project.repository.ImagesRepository;
 import com.example.project.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class UserRepositoryTest {
     UserRepository userRepository;
     @Autowired
     FeedRepository feedRepository;
+    @Autowired
+    ImagesRepository imagesRepository;
 
     @Test
     public void createFeed() {
@@ -25,6 +29,12 @@ public class UserRepositoryTest {
         member.setPw("1234");
         member.setRoles("USER");
         userRepository.save(member);
+
+        Images images = Images.builder()
+                .fileName("leetaeran")
+                .member(member)
+                .build();
+        imagesRepository.save(images);
 
 
     }

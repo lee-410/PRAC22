@@ -15,7 +15,6 @@ public class Feed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long post_id;
-    private String title;
     private String author;
     private String roles;
     private LocalDateTime uploadTime;
@@ -27,9 +26,8 @@ public class Feed {
     private Member member;
 
     @Builder
-    public Feed(Long post_id, String title, String author, String roles, LocalDateTime uploadTime, String content, String image_path, Member member) {
+    public Feed(Long post_id, String author, String roles, LocalDateTime uploadTime, String content, String image_path, Member member) {
         this.post_id = post_id;
-        this.title = title;
         this.author = member.getUserid();
         this.roles = member.getRoles();
         this.uploadTime = LocalDateTime.now();

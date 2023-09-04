@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FileUploadService {
     List<UploadResultDTO> uploadFiles(MultipartFile[] uploadFiles);
-    String getImagePath();
+    List<UploadResultDTO> getUploadedImagesByUserId(String userId);
 }

@@ -35,7 +35,7 @@ public class FileDisplayServiceImpl implements FileDisplayService{
             HttpHeaders header = new HttpHeaders();
 
             //MIME타입 처리
-            /* Files.probeContetType을 사용하여 파일으 컨텐츠 유형을 결정하고, 이를 응답 헤더에 추가한다. 컨텐츠 유형은 반환되는 파일의 MIME 유형을 나타낸다. */
+            /* Files.probeContentType을 사용하여 파일으 컨텐츠 유형을 결정하고, 이를 응답 헤더에 추가한다. 컨텐츠 유형은 반환되는 파일의 MIME 유형을 나타낸다. */
             header.add("Content-Type", Files.probeContentType(file.toPath()));
 
             //파일 데이터 처리

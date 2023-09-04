@@ -1,10 +1,20 @@
 package com.example.project.service;
 
 import com.example.project.DTO.UploadResultDTO;
+import com.example.project.Entity.Feed;
+import com.example.project.Entity.Images;
+import com.example.project.Entity.Member;
+import com.example.project.repository.FeedRepository;
+import com.example.project.repository.ImagesRepository;
+import com.example.project.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,14 +26,25 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
     @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
     private String uploadPath; //이미지가 저장될 경로
 
     private String imagePath;
+
+    @Autowired
+    private FeedRepository feedRepository;
+
+    @Autowired
+    private ImagesRepository imagesRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<UploadResultDTO> uploadFiles(MultipartFile[] uploadFiles) {
@@ -69,20 +90,60 @@ public class FileUploadServiceImpl implements FileUploadService {
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,700,700);// 섬네일 생성
 
                 imagePath = thubmnailSaveName;
-
                 resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
             }catch (IOException e){
                 e.printStackTrace();
             }
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            String username = authentication.getName();
+            Optional<Member> memberOptional = userRepository.findByUserid(username);
+
+            if (memberOptional.isPresent()) {
+                Member member = memberOptional.get();
+
+                Images images = Images.builder()
+                        .folderPath(folderPath)
+                        .uuid(uuid)
+                        .fileName(fileName)
+                        .member(member)
+                        .build();
+                imagesRepository.save(images);
+
+
+            } else {
+                //entity에 userid와 일치하는 user가 없을 때 처리
+
+            }
+
         }
 
         return resultDTOList;
     }
 
-    public String getImagePath() {
-        System.out.println("---------------------");
-        System.out.println(imagePath);
-        return imagePath;
+    public List<UploadResultDTO> getUploadedImagesByUserId(String userId) {
+        log.info("getUploadedImagesByUserId: userId=={}", userId);
+        List<UploadResultDTO> userImages = new ArrayList<>();
+
+        //userId에 맞는 값 조회
+        List<Images> userImagesEntities = imagesRepository.findByUserId(userId);
+        log.info("getUploadedImagesByUserId: userImagesEntities=={}", userImagesEntities);
+        /*
+        image엔티티에는 아무것도 없으니까 당연히 [] 가 뜨겠지.
+
+        */
+
+
+        for (Images images : userImagesEntities) {
+            // 각 이미지의 정보를 UploadResultDTO로 변환하여 결과 목록에 추가
+            UploadResultDTO dto = new UploadResultDTO(images.getFileName(), images.getUuid(), images.getFolderPath());
+            userImages.add(dto);
+        }
+
+        log.info("getUploadedImagesByUserId: userImages=={}", userImages);
+
+        return userImages;
     }
 
     private String makeFolder() {
@@ -100,6 +161,5 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         return folderPath;
     }
-
 }
 
