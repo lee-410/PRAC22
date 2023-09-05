@@ -3,8 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <title>PROFILE EDIT</title>
+    <style>
+        body {
+            margin: 0px 30px 0px 30px;
+        }
+
+/* 좌측 네비게이션 */
+        /* 헤더 */
+        .header{
+            text-align: center;
+            border-bottom: 1px solid lightgray;
+            padding: 5px 0px 20px;
+        }
+        .header a {
+            font-family: fantasy;
+            font-weight: 100;
+            font-size: xx-large;
+            background-color: #F8CD07;
+        }
+
+        /* 메뉴 */
+        .Menu {
+            position: fixed;
+            width: 300px;
+            height: 100%;
+            border-right: 1px solid lightgray;
+            float: left;
+        }
+        .Menu ul{
+            padding: 0px;
+            position: relative;
+            height: 0;
+        }
+
+        .collection {
+        margin: 20px 0 0 0;
+        }
+
+        .collection li {
+            list-style: none;
+            color: black;
+            font-size: x-large;
+            text-align: center;
+            line-height: 50px;
+        }
+        .collection li a {
+            text-decoration: none;
+            font-family: cursive;
+        }
+
+
+        .information {
+            position: absolute;
+            bottom: 30px;
+            width: 300px;
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            font-size: 30px;
+            padding: 0 0 20px 0;
+
+        }
+        .information i {
+            color: #000000;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 300px;
+            text-align: center;
+            font-size: x-small;
+        }
+/* 좌측 네비게이션 */
+
+
+/* 본 컨텐츠 */
+        .section {
+            padding-left: 380px;
+            padding-top: 60px;
+            padding-right: 200px;
+            padding-bottom: 20px;
+        }
+        .content {
+            margin: 20px 10px;
+        }
+/* 본 컨텐츠 */
+
+/* 모달 팝업 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        /* 모달 팝업: 숨기기 */
+          z-index: -1;
+          opacity: 0;
+      }
+
+      .window {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .popup {
+        position: absolute;
+        color : black;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 1);
+
+        padding: 20px;
+        width: 30%;
+        height: 50%;
+        text-align: center;
+
+        /* 모달 팝업: 초기에 약간 아래에 배치 */
+        transform: translate(-50%, -40%);
+      }
+
+        .show {
+                opacity: 1;
+                z-index: 1000;
+                transition: all 0.5s;
+              }
+
+      .show .popup {
+        transform: translate(-50%, -50%);
+        transition: all 0.5s;
+      }
+
+      #close {
+        position: absolute;
+        font-size: 30px;
+        top: -30px;
+        right: 8px;
+        cursor: pointer;
+      }
+
+      #search {
+        display: none;
+        position: relative;
+      }
+
+      .search { font-size: 25px; display: inline-block; margin-left: 5px; cursor: pointer;}
+
+      .input_text{
+          width: 200px;
+          height: 35px;
+          font-size: 15px;
+          border: 3px solid #F8CD07;
+          border-radius: 15px;
+          outline: none;
+          padding-left: 10px;
+          background-color: #fcf7de;
+      }
+
+      .search_list {
+        width: 300px;
+        height: 200px;
+        border: 1px solid #F8CD07;
+        margin-top: 15px;
+        border-radius: 10px;
+        margin-left: 70px;
+      }
+
+/* 모달팝업 */
+
+/* 밑줄 애니메이션 */
+      .underline {
+      background-image: linear-gradient(transparent calc(100% - 3px), #000 3px);
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      transition: background-size 0.5s;
+      color: #000;
+      cursor: pointer;
+      }
+
+    .underline.yellow {
+      background-image: linear-gradient(transparent 50%, #F8CD07 40%);
+    }
+    .underline:hover {
+      background-size: 100% 100%;
+    }
+/* 밑줄 애니메이션 */
+    </style>
+    <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<nav class="Menu">
+    <ul>
+        <div class="header">
+            <a>&nbsp; WELMING &nbsp;</a>
+            <br>
+        </div>
+        <div class="collection">
+            <li><a class="yellow underline" href="/">HOME</a></li>
+            <li><a class="yellow underline" id="show">SEARCH</a></li>
+            <li><a class="yellow underline" href="/profile">PROFILE</a></li>
+            <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
+        </div>
+    </ul>
+    <div class="information">
+        <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
+        <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
+        <li><a href="/join"><i class="fa-solid fa-arrow-right-to-bracket"></i></a> </li>
+    </div>
+    <div class="footer">
+        <p> Created By TEARAN <br> xofks2000@gmail.com</p>
+    </div>
+</nav>
+<!--<script src="/js/modal.js"></script>-->
+<div class="background">
+    <div class="window">
+        <div class="popup">
+            <h1>ID로 친구 찾기</h1>
+            <input type="text" class="input_text" placeholder="ID"/>
+            <label for="search">
+                <div class="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+            </label>
+            <input type="button" onclick="" value="검색" id="search">
+            <p id="close"><i class="fa-solid fa-xmark"></i></p>
+            <div class="search_list"></div>
+        </div>
+    </div>
+</div>
+<script>
+// search modal
+function showSearchModal() {
+    document.querySelector(".background").className = "background show";
+}
+function closeSearchModal() {
+    document.querySelector(".background").className, = "background";
+}
+document.querySelector("#show").addEventListener('click', showSearchModal);
+document.querySelector("#close").addEventListener('click', closeSearchModal);
+
+</script>
+
+<div class="section">
+    <div class="content">
+        <h1>@leetaeran_0410</h1> <!--ID 들어갈 자리-->
+        <img>
+        <p>한마디</p>
+    </div>
+</div>
 
 </body>
 </html>

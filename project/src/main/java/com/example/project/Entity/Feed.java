@@ -19,20 +19,18 @@ public class Feed {
     private String roles;
     private LocalDateTime uploadTime;
     private String content;
-    private String image_path;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Feed(Long post_id, String author, String roles, LocalDateTime uploadTime, String content, String image_path, Member member) {
+    public Feed(Long post_id, String author, String roles, LocalDateTime uploadTime, String content, Member member) {
         this.post_id = post_id;
         this.author = member.getUserid();
         this.roles = member.getRoles();
         this.uploadTime = LocalDateTime.now();
         this.content = content;
-        this.image_path = image_path;
         this.member = member;
     }
 }
