@@ -192,6 +192,55 @@
       background-size: 100% 100%;
     }
 /* 밑줄 애니메이션 */
+
+/* 프로필 편집 박스 */
+    .userId_box {
+        height: 60px;
+        border-bottom: 1px solid;
+
+        font-family: cursive;
+        font-size: 35px;
+    }
+
+    .profileImage_box_parent {
+        display: flex;
+    }
+
+    .profileImage_box {
+        height: 300px;
+        width: 300px;
+        border: 1px solid;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .profileImage_plusIcon{
+        margin-top: 280px;
+        font-size: 30px;
+        margin-left: 10px;
+        cursor: pointer;
+
+    }
+
+    .introduction_box {
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        height: 60px;
+    }
+
+    .introduction_box input {
+        width: 600px;
+        margin-top: 13px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .profile_edit_button {
+        margin-top: 20px;
+    }
+
+/* 프로필 편집 박스 */
+
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
 </head>
@@ -249,9 +298,15 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 
 <div class="section">
     <div class="content">
-        <h1>@leetaeran_0410</h1> <!--ID 들어갈 자리-->
-        <img>
-        <p>한마디</p>
+        <div class="userId_box">@leetaeran_0410</div>
+        <div class="profileImage_box_parent">
+            <div class="profileImage_box"></div>
+            <div class="profileImage_plusIcon"><i class="fa-solid fa-file-circle-plus"></i></div>
+        </div>
+        <div class="introduction_box">
+            <input type="text">
+        </div>
+        <div class="profile_edit_button"><button>저장</button></div>
     </div>
 </div>
 

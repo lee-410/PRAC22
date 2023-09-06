@@ -1,10 +1,9 @@
 package com.example.project.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity(name = "Profile")
 @NoArgsConstructor
@@ -18,13 +17,21 @@ public class Profile {
 
     private String roles;
 
-    private String image_path; //이거 업데이트되면 feed에서도 갱신같이 되게!
+    private String image_path; //이거 업데이트되면 feed에서도 갱신
+    @Column(length = 50)
+    private String introduction; //controller에서 길이제한 예외처리필요>잘려서저장됨
 
-    public Profile(Long id, String user_id, String roles, String image_path) {
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @Builder
+    public Profile(Long id, String user_id, String roles, String image_path, String introduction, Member member) {
         this.id = id;
-        this.user_id = user_id;
-        this.roles = roles;
+        this.user_id = member.getUserid();
+        this.roles = member.getRoles();
         this.image_path = image_path;
+        this.introduction = introduction;
     }
 
 }
