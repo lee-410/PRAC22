@@ -15,22 +15,26 @@ public class Images {
     private Long imageId;
 
     private String userId;
+    private Long postId;
     private String fileName;
     private String uuid;
     private String folderPath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "feed_id")
+    private Feed feed;
 
     @Builder
-    public Images(Long imageId, String userId, String fileName, String uuid, String folderPath,Member member) {
+    public Images(Long imageId, String userId, Long postId, String fileName, String uuid, String folderPath,Feed feed) {
         this.imageId = imageId;
-        this.userId = member.getUserid();
+        this.userId = feed.getAuthor();
+        this.postId = feed.getPost_id();
         this.fileName = fileName;
         this.uuid = uuid;
         this.folderPath = folderPath;
-        this.member = member;
+        this.feed = feed;
     }
+
+
 }
 

@@ -30,11 +30,11 @@ public class UserRepositoryTest {
         member.setRoles("USER");
         userRepository.save(member);
 
-        Images images = Images.builder()
-                .fileName("leetaeran")
-                .member(member)
-                .build();
-        imagesRepository.save(images);
+//        Images images = Images.builder()
+//                .fileName("leetaeran")
+//                .member(member)
+//                .build();
+//        imagesRepository.save(images);
 
 
     }

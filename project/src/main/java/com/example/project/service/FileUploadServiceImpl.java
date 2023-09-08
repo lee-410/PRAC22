@@ -98,25 +98,22 @@ public class FileUploadServiceImpl implements FileUploadService {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             String username = authentication.getName();
-            Optional<Member> memberOptional = userRepository.findByUserid(username);
 
-            if (memberOptional.isPresent()) {
-                Member member = memberOptional.get();
-
+            List<Feed> feedList = feedRepository.findByMemberUserid(username);
+            
+            if (!feedList.isEmpty()) {
+                Feed feed = feedList.get(0);
                 Images images = Images.builder()
                         .folderPath(folderPath)
                         .uuid(uuid)
                         .fileName(fileName)
-                        .member(member)
+                        .feed(feed)
                         .build();
                 imagesRepository.save(images);
-
-
             } else {
                 //entity에 userid와 일치하는 user가 없을 때 처리
 
             }
-
         }
 
         return resultDTOList;

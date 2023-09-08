@@ -32,6 +32,7 @@ public class Profile {
         this.roles = member.getRoles();
         this.image_path = image_path;
         this.introduction = introduction;
+        this.member = member;
     }
 
 }
