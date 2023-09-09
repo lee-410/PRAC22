@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>PROFILE EDIT</title>
@@ -345,11 +345,15 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         <div class="introduction_box">
             <input type="text">
         </div>
-        <div class="profile_edit_button"><button>저장</button></div>
+        <div class="profile_edit_button"><button class="uploadBtn">저장</button></div>
+        <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
     </div>
 </div>
 <script>
-$.ajax({ // 사용자 ID 가져오기
+
+// 사용자 ID 가져오기
+$.ajax({
     url: '/profile/editGetUserId',
     method: 'GET',
     success: function(data) {
@@ -361,7 +365,8 @@ $.ajax({ // 사용자 ID 가져오기
     }
 });
 
-function previewImage(files) { // 프로필 미리보기
+// 프로필 미리보기
+function previewImage(files) {
     var previewContainer = document.getElementById('profileImageBox');
     previewContainer.innerHTML = '';
 
@@ -391,6 +396,38 @@ fileInput.addEventListener('change', function() {
         previewImage(files[0]); // 첫 번째 이미지 파일에 대한 미리보기 생성
     }
 });
+
+    document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+
+        var formData = new FormData();
+        var files = document.querySelector("input[type='file']").files;
+         var csrfToken = document.querySelector('#csrf_token').value;
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('uploadFiles', files[i]);
+        }
+
+        event.preventDefault();
+
+        $.ajax({
+            url: '/profile/getImageIntro',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            dataType: 'json',
+            success: function(result) {
+                console.log('이미지 업로드 성공: ', result);
+                location.href = '/profile';
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('이미지 업로드 실패: ', errorThrown);
+            }
+        });
+    });
 
 
 </script>

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,10 +31,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
+@Transactional
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
-    @Value("${com.example.upload.path}") // application.properties에서 @Value로 값을 받아온 후 uploadPath에 데이터 주입
-    private String uploadPath; //이미지가 저장될 경로
+    @Value("${com.example.upload.path}")
+    private String uploadPath;
 
     private String imagePath;
 
@@ -100,7 +102,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             String username = authentication.getName();
 
             List<Feed> feedList = feedRepository.findByMemberUserid(username);
-            
+
             if (!feedList.isEmpty()) {
                 Feed feed = feedList.get(0);
                 Images images = Images.builder()

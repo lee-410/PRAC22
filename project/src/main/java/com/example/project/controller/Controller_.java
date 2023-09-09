@@ -15,11 +15,6 @@ public class Controller_ {
         return modelAndView;
     }
 
-//    @GetMapping("/profile")
-//    public ModelAndView profileForm() {
-//        ModelAndView modelAndView = new ModelAndView("profile");
-//        return modelAndView;
-//    }
 
 
 

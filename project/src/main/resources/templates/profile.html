@@ -357,8 +357,6 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         <section class="top_section">
             <div class="profile_image_section">
                 <img src="/images/profile2.png" alt="base profile" class="profile">
-<!--                <i class="fa-solid fa-camera-rotate">-->
-<!--                </i>-->
             </div>
             <div class="profile_information">
                 <li>
@@ -377,6 +375,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 window.location.href = '/profile/profile_edit';
             }
 
+             // 사용자 id불러오기
              $.ajax({
                 url: '/profile/getUserId',
                 method: 'GET',
@@ -388,6 +387,23 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                     console.log(error);
                 }
              });
+
+             function showUploadedImages(result) {
+                var divArea = $(".profile_image_section");
+
+                    //var imgDiv = $("<div class='uploadResultImage'></div>");
+                    //var img = $("<img>").attr("src", "/display?fileName=" + result[i].thumbnailURL);
+                    //이미지 클래스는 profile로 지정.
+                    // 예시 -> C:home\images\profile\test.png
+                    //디비에 이렇게 저장되어있어야함
+                    //imgDiv.append(img);
+                    //divArea.append(imgDiv);
+
+            }
+
+
+
+
         </script>
         <section class="feed">
             <div class="main_list">
