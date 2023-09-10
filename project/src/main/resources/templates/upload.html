@@ -468,7 +468,7 @@ document.querySelector("#close").addEventListener('click', close);
 //        }
 
         $.ajax({
-            url: '/uploadText' ,
+            url: '/uploadText',
             type: 'POST',
             data: JSON.stringify({ content: content }),
             contentType: 'application/json',

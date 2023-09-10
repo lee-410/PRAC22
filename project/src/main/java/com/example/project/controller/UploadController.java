@@ -68,9 +68,9 @@ public class UploadController {
         String newContent = requestBody.get("content");
         String userid = authentication.getName();
 
-        Optional<Member> memberOptional = userRepository.findByUserid(userid);
-        if (memberOptional.isPresent()) {
-            Member member = memberOptional.get();
+        Optional<Member> memberList = userRepository.findByUserid(userid);
+        if (!memberList.isEmpty()) {
+            Member member = memberList.get();
 
             Feed feed = Feed.builder()
                     .content(newContent)

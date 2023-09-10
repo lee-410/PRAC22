@@ -104,7 +104,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             List<Feed> feedList = feedRepository.findByMemberUserid(username);
 
             if (!feedList.isEmpty()) {
-                Feed feed = feedList.get(0);
+                Feed feed = feedList.get(0); //이거 때문에 계속 feedid의 1을 가져오는것같애. 수정필요!!!
                 Images images = Images.builder()
                         .folderPath(folderPath)
                         .uuid(uuid)

@@ -1,13 +1,12 @@
 package com.example.project.Entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity(name = "Profile")
 @NoArgsConstructor
 @Getter
+@Setter
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +20,7 @@ public class Profile {
     @Column(length = 50)
     private String introduction; //controller에서 길이제한 예외처리필요>잘려서저장됨
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

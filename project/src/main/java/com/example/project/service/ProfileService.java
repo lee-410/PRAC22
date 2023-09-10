@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ProfileService {
     List<ProfileDTO> uploadProfile(MultipartFile[] uploadFiles);
+    String uploadIntro(String introductionText);
+   // void updateProfile();
 }

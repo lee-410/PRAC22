@@ -4,8 +4,13 @@ import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
 import com.example.project.Entity.Feed;
 import com.example.project.Entity.Images;
+import com.example.project.Entity.Member;
+import com.example.project.Entity.Profile;
+import com.example.project.repository.ProfileRepository;
+import com.example.project.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +26,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -32,6 +38,21 @@ public class ProfileServiceImpl implements ProfileService{
     private String uploadPath;
 
     private String imagePath;
+
+    @Autowired
+    private ProfileRepository profileRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    private String introduction ;
+
+    @Override
+    public String uploadIntro(String introductionText) {
+
+        introduction = introductionText;
+
+        return introduction;
+    }
 
     @Override
     public List<ProfileDTO> uploadProfile(MultipartFile[] uploadFiles) {
@@ -75,14 +96,59 @@ public class ProfileServiceImpl implements ProfileService{
                 e.printStackTrace();
             }
 
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//            String username = authentication.getName();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            String username = authentication.getName();
+
+            Optional<Member> memberList = userRepository.findByUserid(username);
+
+            if (memberList.isPresent()) {
+                Member member = memberList.get();
+                profileRepository.deleteByMember(member);
+                Profile profile = Profile.builder()
+                        .image_path(imagePath)
+                        .introduction(introduction)
+                        .member(member)
+                        .build();
+                profileRepository.save(profile);
+
+            } else {
+
+            } //db에 적재하는 이 코드를 따로 메소드로 빼.
 
         }
 
         return resultDTOList;
     }
+
+
+
+
+//@Override
+//public void updateProfile() {
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//    String username = authentication.getName();
+//
+//    Optional<Member> memberList = userRepository.findByUserid(username);
+//
+//    if (memberList.isPresent()) {
+//        Member member = memberList.get();
+//        //profileRepository.deleteByMember(member);
+//        Profile profile = Profile.builder()
+//                .image_path(imagePath)
+//                .introduction(introduction)
+//                .member(member)
+//                .build();
+//        profileRepository.save(profile);
+//
+//    } else {
+//
+//    }
+//}
+
+
+
 
     private String makeFolder() {
 

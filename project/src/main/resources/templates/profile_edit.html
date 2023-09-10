@@ -397,11 +397,13 @@ fileInput.addEventListener('change', function() {
     }
 });
 
+//이미지
     document.querySelector('.uploadBtn').addEventListener('click', function(event) {
 
         var formData = new FormData();
         var files = document.querySelector("input[type='file']").files;
          var csrfToken = document.querySelector('#csrf_token').value;
+
 
         for (var i = 0; i < files.length; i++) {
             formData.append('uploadFiles', files[i]);
@@ -425,6 +427,29 @@ fileInput.addEventListener('change', function() {
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('이미지 업로드 실패: ', errorThrown);
+            }
+        });
+    });
+
+//텍스트
+    document.querySelector('.uploadBtn').addEventListener('click', function(event) {
+
+        var textData = document.querySelector('.introduction_box input[type="text"]').value;
+         var csrfToken = document.querySelector('#csrf_token').value;
+
+        $.ajax({
+            url: '/profile/getIntro',
+            type: 'POST',
+            data: {introduction : textData},
+            contentType: 'application/x-www-form-urlencoded',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(result) {
+                console.log('text 업로드 성공: ', result);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('text 업로드 실패: ', errorThrown);
             }
         });
     });

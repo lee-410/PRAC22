@@ -52,9 +52,32 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+//    @PostMapping(value = "/getImageIntro")
+//     public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles, @RequestParam("introduction") String introductionText) {
+//        //이미지
+//        List<ProfileDTO> result = profileService.uploadProfile(uploadFiles);
+//
+//        //텍스트
+//        String intro = profileService.uploadIntro(introductionText);
+//
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
+
     @PostMapping(value = "/getImageIntro")
-     public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+    public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+        //이미지
         List<ProfileDTO> result = profileService.uploadProfile(uploadFiles);
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/getIntro")
+    public ResponseEntity<String> uploadText( @RequestParam("introduction") String introductionText) {
+
+        //텍스트
+        String intro = profileService.uploadIntro(introductionText);
+
+        return new ResponseEntity<>(intro, HttpStatus.OK);
+    }
+
 }
