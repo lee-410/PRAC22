@@ -3,7 +3,9 @@ package com.example.project.controller;
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.Entity.Member;
 import com.example.project.Entity.Profile;
+import com.example.project.Entity.ProfileImage;
 import com.example.project.repository.ProfileRepository;
+import com.example.project.service.ProfileDisplayService;
 import com.example.project.service.ProfileService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +28,8 @@ import java.util.List;
 public class ProfileController {
 
     @GetMapping
-    public ModelAndView profile(Model model) {
+    public ModelAndView profile(Model model, Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView("profile");
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String username = authentication.getName();
 
@@ -64,44 +64,45 @@ public class ProfileController {
     }
 
     private final ProfileService profileService;
+    private final ProfileDisplayService profileDisplayService;
 
     @Autowired
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, ProfileDisplayService profileDisplayService) {
         this.profileService = profileService;
+        this.profileDisplayService = profileDisplayService;
     }
 
     @Autowired
     private ProfileRepository profileRepository;
 
     @PostMapping(value = "/getImageIntro")
-    public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+    public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles,Authentication authentication) {
         //이미지
-        List<ProfileDTO> result = profileService.uploadProfile(uploadFiles);
+        List<ProfileDTO> result = profileService.uploadProfile(uploadFiles, authentication);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/getIntro")
-    public ResponseEntity<String> uploadText(@RequestParam("introduction") String introductionText) {
+    public ResponseEntity<String> uploadText(@RequestParam("introduction") String introductionText,Authentication authentication) {
 
         //텍스트
-        String intro = profileService.uploadIntro(introductionText);
+        String intro = profileService.uploadIntro(introductionText,authentication);
 
         return new ResponseEntity<>(intro, HttpStatus.OK);
     }
 
-
     @GetMapping("/putProfile")
-    public String putProfile(Authentication authentication) {
+    public ResponseEntity<List<ProfileDTO>> putProfile(Authentication authentication) {
         String username = authentication.getName();
-        List<Profile> profileList = profileRepository.findByMemberUserid(username);
+        List<ProfileDTO> profileList = profileService.getUploadedImagesByUserId(username);
 
-        if (!profileList.isEmpty()) {
-            Profile profile = profileList.get(0);
-            String imagePath = profile.getImagePath();
-            return imagePath;
-        } else {
-            return null;
-        }
+        return new ResponseEntity<>(profileList, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam(required = false, defaultValue = "1") String size) {
+        return profileDisplayService.getFile(fileName, size);
     }
 }

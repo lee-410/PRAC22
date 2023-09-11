@@ -52,8 +52,6 @@ public class UploadController {
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam(required = false, defaultValue = "1") String size) {
-        System.out.println("------------------");
-        System.out.println(fileName);
         return fileDisplayService.getFile(fileName, size);
     }
 

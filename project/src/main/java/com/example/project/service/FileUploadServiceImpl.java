@@ -128,10 +128,6 @@ public class FileUploadServiceImpl implements FileUploadService {
         //userId에 맞는 값 조회
         List<Images> userImagesEntities = imagesRepository.findByUserId(userId);
         log.info("getUploadedImagesByUserId: userImagesEntities=={}", userImagesEntities);
-        /*
-        image엔티티에는 아무것도 없으니까 당연히 [] 가 뜨겠지.
-
-        */
 
 
         for (Images images : userImagesEntities) {

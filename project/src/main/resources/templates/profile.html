@@ -388,18 +388,22 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 }
              });
 
-             function showUploadedImages(result) {
-                var divArea = $(".profile_image_section");
-                var img = $("<img>").addClass("profile").attr("src","C:"+result);
+         function showUploadedImages(result) {
+            var divArea = $(".profile_image_section");
 
+            for (var i = result.length - 1; i >= 0; i--) {
+                var img = $("<img>").addClass("profile").attr("src", "/profile/display?fileName=" + result[i].thumbnailURL);
                 divArea.append(img);
-            }
+                }
+
+         }
 
             $.ajax({
                 url: '/profile/putProfile',
                 type: 'GET',
-                dataType: 'text',
+                dataType: 'json',
                 success: function(result) {
+                    console.log(result);
                     showUploadedImages(result);
                 },
                 error: function(error) {

@@ -16,7 +16,7 @@ public class Profile {
 
     private String roles;
 
-    private String imagePath; //이거 업데이트되면 feed에서도 갱신
+    //private String imagePath; //이거 업데이트되면 feed에서도 갱신
     @Column(length = 50)
     private String introduction; //controller에서 길이제한 예외처리필요>잘려서저장됨
 
@@ -25,11 +25,11 @@ public class Profile {
     private Member member;
 
     @Builder
-    public Profile(Long id, String user_id, String roles, String imagePath, String introduction, Member member) {
+    public Profile(Long id, String user_id, String roles, String introduction, Member member) {
         this.id = id;
         this.user_id = member.getUserid();
         this.roles = member.getRoles();
-        this.imagePath = imagePath;
+        //this.imagePath = imagePath;
         this.introduction = introduction;
         this.member = member;
     }
