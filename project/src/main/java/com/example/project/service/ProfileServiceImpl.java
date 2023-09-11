@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -46,6 +49,7 @@ public class ProfileServiceImpl implements ProfileService{
 
     private String introduction ;
 
+    //text
     @Override
     public String uploadIntro(String introductionText) {
 
@@ -84,13 +88,13 @@ public class ProfileServiceImpl implements ProfileService{
             try {
                 uploadFile.transferTo(savePath);
 
-                String thubmnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
+                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator +"s_" + uuid +"_"+ fileName;
 
-                File thumbnailFile = new File(thubmnailSaveName);
+                File thumbnailFile = new File(thumbnailSaveName);
 
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,300,300);// 섬네일 생성
 
-                imagePath = thubmnailSaveName;
+                imagePath = thumbnailSaveName;
                 resultDTOList.add(new ProfileDTO(fileName,uuid,folderPath));
             }catch (IOException e){
                 e.printStackTrace();
@@ -106,7 +110,7 @@ public class ProfileServiceImpl implements ProfileService{
                 Member member = memberList.get();
                 profileRepository.deleteByMember(member);
                 Profile profile = Profile.builder()
-                        .image_path(imagePath)
+                        .imagePath(imagePath)
                         .introduction(introduction)
                         .member(member)
                         .build();
@@ -114,41 +118,12 @@ public class ProfileServiceImpl implements ProfileService{
 
             } else {
 
-            } //db에 적재하는 이 코드를 따로 메소드로 빼.
+            }
 
         }
 
         return resultDTOList;
     }
-
-
-
-
-//@Override
-//public void updateProfile() {
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//    String username = authentication.getName();
-//
-//    Optional<Member> memberList = userRepository.findByUserid(username);
-//
-//    if (memberList.isPresent()) {
-//        Member member = memberList.get();
-//        //profileRepository.deleteByMember(member);
-//        Profile profile = Profile.builder()
-//                .image_path(imagePath)
-//                .introduction(introduction)
-//                .member(member)
-//                .build();
-//        profileRepository.save(profile);
-//
-//    } else {
-//
-//    }
-//}
-
-
-
 
     private String makeFolder() {
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns="http://www.w3.org/1999/html">
     <meta charset="UTF-8">
     <title>PROFILE</title>
     <!--<link rel="stylesheet" href="/css/layout.css">-->
@@ -356,17 +357,16 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
     <div class="content">
         <section class="top_section">
             <div class="profile_image_section">
-                <img src="/images/profile2.png" alt="base profile" class="profile">
+<!--                <img src="${imagePath}" onerror="this.src='/images/profile2.png'"alt="에러가 생겼다 에러가 생겼어" class="profile">-->
             </div>
             <div class="profile_information">
                 <li>
                     <span class="getUserId"> <!--span말고 div로바꾸면 i태그가 작동하나? -->
-
                     </span><i class="fa-solid fa-user-plus"></i>
                 </li>
                 <li> <span>팔로잉</span> <span>팔로워</span></li>
 <!--                <li> <button>팔로우</button></li>-->
-                <li></li>
+                <div id="myDiv" th:text="${introduction}"></div>
             </div>
             <div class="edit_icon"><i class="fa-solid fa-pen-to-square" onclick="profileEdit()"></i></div>
         </section>
@@ -390,15 +390,22 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 
              function showUploadedImages(result) {
                 var divArea = $(".profile_image_section");
+                var img = $("<img>").addClass("profile").attr("src","C:"+result);
 
-                    //var imgDiv = $("<div class='uploadResultImage'></div>");
-                    //var img = $("<img>").attr("src", "/display?fileName=" + result[i].thumbnailURL);
-                    //이미지 클래스는 profile로 지정.
-                    // 예시 -> C:home\images\profile\test.png
-                    //디비에 이렇게 저장되어있어야함
-                    //imgDiv.append(img);
-                    //divArea.append(imgDiv);
+                divArea.append(img);
             }
+
+            $.ajax({
+                url: '/profile/putProfile',
+                type: 'GET',
+                dataType: 'text',
+                success: function(result) {
+                    showUploadedImages(result);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
 
 
 

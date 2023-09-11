@@ -2,25 +2,46 @@ package com.example.project.controller;
 
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.Entity.Member;
+import com.example.project.Entity.Profile;
+import com.example.project.repository.ProfileRepository;
 import com.example.project.service.ProfileService;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
 
     @GetMapping
-    public ModelAndView profile() {
+    public ModelAndView profile(Model model) {
         ModelAndView modelAndView = new ModelAndView("profile");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getName();
+
+        List<Profile> profileList = profileRepository.findByMemberUserid(username);
+
+        if (!profileList.isEmpty()) {
+            Profile profile = profileList.get(0);
+            String introduction = profile.getIntroduction();
+//            String imagePath = profile.getImagePath();
+            model.addAttribute("introduction", introduction);
+//            model.addAttribute("imagePath", imagePath);
+        }
         return modelAndView;
     }
 
@@ -42,9 +63,6 @@ public class ProfileController {
         return userId;
     }
 
-    @Value("${com.example.profile.path}")
-    private String uploadPath;
-
     private final ProfileService profileService;
 
     @Autowired
@@ -52,16 +70,8 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-//    @PostMapping(value = "/getImageIntro")
-//     public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles, @RequestParam("introduction") String introductionText) {
-//        //이미지
-//        List<ProfileDTO> result = profileService.uploadProfile(uploadFiles);
-//
-//        //텍스트
-//        String intro = profileService.uploadIntro(introductionText);
-//
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @PostMapping(value = "/getImageIntro")
     public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
@@ -72,7 +82,7 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/getIntro")
-    public ResponseEntity<String> uploadText( @RequestParam("introduction") String introductionText) {
+    public ResponseEntity<String> uploadText(@RequestParam("introduction") String introductionText) {
 
         //텍스트
         String intro = profileService.uploadIntro(introductionText);
@@ -80,4 +90,18 @@ public class ProfileController {
         return new ResponseEntity<>(intro, HttpStatus.OK);
     }
 
+
+    @GetMapping("/putProfile")
+    public String putProfile(Authentication authentication) {
+        String username = authentication.getName();
+        List<Profile> profileList = profileRepository.findByMemberUserid(username);
+
+        if (!profileList.isEmpty()) {
+            Profile profile = profileList.get(0);
+            String imagePath = profile.getImagePath();
+            return imagePath;
+        } else {
+            return null;
+        }
+    }
 }
