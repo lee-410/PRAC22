@@ -5,6 +5,9 @@
     <title>HOME</title>
     <!--<link rel="stylesheet" href="/css/layout.css">-->
     <style>
+
+     @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
         body {
             margin: 0px 30px 0px 30px;
         }
@@ -50,7 +53,7 @@
         }
         .collection li a {
             text-decoration: none;
-            font-family: cursive;
+            font-family: 'Nanum Gothic Coding', cursive;
         }
 
 
@@ -88,15 +91,63 @@
         }
         .content {
             padding : 30px;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 3px solid #F8CD07;
             margin: 20px 10px;
         }
 
-        .uploadResultImage{
-            border-top: 1px solid lightgray;
-            padding-top: 30px;
-            padding-bottom: 30px;
+        .feed_Area {
+
         }
+
+        .userInfoArea {
+            height: 50px;
+
+        }
+
+        .userInfoImageBin {
+
+        }
+
+        .userInfoImage {
+            height: 40px;
+            float: left;
+            border: 1px solid;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .userInfoId {
+            font-size: 25px;
+        }
+
+        .userFeedImagesArea {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .userFeedImagesBin {
+            border-bottom: 1px solid lightgray;
+            height: 520px;
+            width: 500px;
+        }
+
+        .userFeedImages {
+            height: 500px;
+        }
+
+        .userFeedContentArea {
+            width:  500px;
+        }
+
+        .userFeedContentTime {
+            font-size: 13px;
+        }
+
+        .userFeedContent {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        
 /* 본 컨텐츠 */
 
 /* 모달 팝업 */
@@ -209,14 +260,14 @@
 <nav class="Menu">
     <ul>
         <div class="header">
-            <a>&nbsp; WELLMING &nbsp;</a>
+            <a>&nbsp; WELMING &nbsp;</a>
             <br>
         </div>
         <div class="collection">
-            <li><a class="yellow underline" href="/">HOME</a></li>
-            <li><a class="yellow underline" id="show">SEARCH</a></li>
-            <li><a class="yellow underline" href="/profile">PROFILE</a></li>
-            <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
+            <li><a class="yellow underline" href="/">홈</a></li>
+            <li><a class="yellow underline" id="show">검색</a></li>
+            <li><a class="yellow underline" href="/profile">프로필</a></li>
+            <li><a class="yellow underline" href="/upload">업로드</a></li>
         </div>
     </ul>
     <div class="information">
@@ -256,11 +307,23 @@ document.querySelector("#close").addEventListener('click', close);
 </script>
 <div class="section">
     <div class="content">
-        <div class="uploadResult_Bin">
-            <div class="uploadResult">
+
+        <div class="feed_Area">
+            <div class="userInfoArea">
+                <img class="userInfoImage" src="/static/images/profile2.png">
+                <div class="userInfoId">@eeeaan</div>
             </div>
-            <div class="uploadContent"></div>
+            <div class="userFeedImagesArea">
+                <div class="userFeedImagesBin">
+                    <img class="userFeedImages" src="/static/images/testNormal.jpg">
+                </div>
+            </div>
+            <div class="userFeedContentArea">
+                <div class="userFeedContentTime">2023-09-12 AM 11:26</div>
+                <div class="userFeedContent">우주최강 남예준</div>
+            </div>
         </div>
+
     </div>
 </div>
 <script
@@ -271,14 +334,14 @@ document.querySelector("#close").addEventListener('click', close);
 </script>
 <script>
 function showUploadedImages(result) {
-    var divArea = $(".uploadResult");
+    var divArea = $(".userFeedImages");
 
     for (var i = result.length - 1; i >= 0; i--) {
-        var imgDiv = $("<div class='uploadResultImage'></div>");
-        var img = $("<img>").attr("src", "/display?fileName=" + result[i].thumbnailURL);
-        imgDiv.append(img);
-        divArea.append(imgDiv);
-    } //div uploadResult 안에 div uploadResultImage 안에 img,, for문 역순으로 조건두면서 이미지 추가-> 최근 내용을 가장 위에.
+        // var imgDiv = $("<div class='uploadResultImage'></div>");
+        var img = $("<img>").addClass("profile").attr("src", "/display?fileName=" + result[i].thumbnailURL);
+        //imgDiv.append(img);
+        divArea.append(img);
+    } //div userFeedImage 안에 div uploadResultImage 안에 img,, for문 역순으로 조건두면서 이미지 추가-> 최근 내용을 가장 위에.
 }
 
 
@@ -300,7 +363,7 @@ $.ajax({
 
  function showUploadedContent(result){
         console.log(result);
-        var divArea = $(".uploadContent");
+        var divArea = $(".userFeedContent");
         var str = "<p>" + result + "</p>";
         divArea.append(str);
     }

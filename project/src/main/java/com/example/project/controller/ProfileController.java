@@ -38,9 +38,8 @@ public class ProfileController {
         if (!profileList.isEmpty()) {
             Profile profile = profileList.get(0);
             String introduction = profile.getIntroduction();
-//            String imagePath = profile.getImagePath();
             model.addAttribute("introduction", introduction);
-//            model.addAttribute("imagePath", imagePath);
+//            model.addAttribute("getUserId", username);
         }
         return modelAndView;
     }

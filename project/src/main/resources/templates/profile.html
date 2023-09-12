@@ -6,6 +6,8 @@
     <!--<link rel="stylesheet" href="/css/layout.css">-->
     <!--  내가 보는 내 프로필 페이지  -->
     <style>
+    @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
         body {
             margin: 0px 30px 0px 30px;
         }
@@ -51,7 +53,7 @@
         }
         .collection li a {
             text-decoration: none;
-            font-family: cursive;
+            font-family: 'Nanum Gothic Coding', cursive;
         }
 
 
@@ -215,8 +217,8 @@
     .profile {
         position: absolute;
         border-radius: 50%;
-        width: 300px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
         object-fit: cover;
         border: 5px solid #F8CD07;
         float: left;
@@ -225,10 +227,10 @@
     }
 
     .profile_information {
-        font-family: cursive;
+        font-family: 'Nanum Gothic Coding', cursive;
         display: inline-block;
         position: relative;
-        top: -110px;
+        top: -70px;
         left: 60px
     }
 
@@ -259,6 +261,11 @@
         cursor: pointer;
         background-color: #ffdc3b;
         color: #383838;
+    }
+
+    .introduction {
+        margin-top: 40px;
+        border-bottom: 3px solid #F8CD07;
     }
 
     .top_section {
@@ -309,10 +316,10 @@
             <br>
         </div>
         <div class="collection">
-            <li><a class="yellow underline" href="/">HOME</a></li>
-            <li><a class="yellow underline" id="show">SEARCH</a></li>
-            <li><a class="yellow underline" href="/profile">PROFILE</a></li>
-            <li><a class="yellow underline" href="/upload">UPLOAD</a></li>
+            <li><a class="yellow underline" href="/">홈</a></li>
+            <li><a class="yellow underline" id="show">검색</a></li>
+            <li><a class="yellow underline" href="/profile">프로필</a></li>
+            <li><a class="yellow underline" href="/upload">업로드</a></li>
         </div>
     </ul>
 
@@ -357,7 +364,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
     <div class="content">
         <section class="top_section">
             <div class="profile_image_section">
-<!--                <img src="${imagePath}" onerror="this.src='/images/profile2.png'"alt="에러가 생겼다 에러가 생겼어" class="profile">-->
+
             </div>
             <div class="profile_information">
                 <li>
@@ -366,7 +373,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 </li>
                 <li> <span>팔로잉</span> <span>팔로워</span></li>
 <!--                <li> <button>팔로우</button></li>-->
-                <div id="myDiv" th:text="${introduction}"></div>
+                <div class="introduction" th:text="${introduction}"></div>
             </div>
             <div class="edit_icon"><i class="fa-solid fa-pen-to-square" onclick="profileEdit()"></i></div>
         </section>
@@ -395,7 +402,6 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 var img = $("<img>").addClass("profile").attr("src", "/profile/display?fileName=" + result[i].thumbnailURL);
                 divArea.append(img);
                 }
-
          }
 
             $.ajax({
