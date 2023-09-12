@@ -230,7 +230,7 @@
         font-family: 'Nanum Gothic Coding', cursive;
         display: inline-block;
         position: relative;
-        top: -70px;
+        top: -100px;
         left: 60px
     }
 
@@ -240,6 +240,7 @@
         margin-top: 30px;
         top: 50px;
         line-height: 1.5;
+        font-family: cursive;
     }
 
     .profile_information li span i { /* 사람플러스버튼 */
@@ -266,10 +267,13 @@
     .introduction {
         margin-top: 40px;
         border-bottom: 3px solid #F8CD07;
+        font-family: 'Nanum Gothic Coding';
+        font-size: 20px;
     }
 
     .top_section {
         position: relative;
+        margin-bottom: 30px;
     }
 
     .edit_icon i { /* 편집버튼 */
@@ -281,12 +285,12 @@
     }
 
     .feed {
-        border-top: 1px solid lightgray;
+        border-top: 3px solid lightgray;
         clear: both;
     }
 
     .main_list {
-        margin-top: 20px;
+        margin-top: 50px;
         width: 900px;
     }
 
@@ -298,6 +302,60 @@
         margin-bottom: 5px;
     }
 /* 프로필 */
+
+/* TEST */
+        .feed_Area {
+
+        }
+
+        .userInfoArea {
+            height: 50px;
+
+        }
+
+        .userInfoImageBin {
+
+        }
+
+        .userInfoImage {
+            height: 40px;
+            float: left;
+            border: 1px solid;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .userInfoId {
+            font-size: 25px;
+        }
+
+        .userFeedImagesArea {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .userFeedImagesBin {
+            border-bottom: 1px solid lightgray;
+            height: 520px;
+            width: 500px;
+        }
+
+        .userFeedImages {
+            height: 500px;
+        }
+
+        .userFeedContentArea {
+            width:  500px;
+        }
+
+        .userFeedContentTime {
+            font-size: 13px;
+        }
+
+        .userFeedContent {
+            font-size: 20px;
+            margin-top: 10px;
+        }
 
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
@@ -369,9 +427,10 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
             <div class="profile_information">
                 <li>
                     <span class="getUserId"> <!--span말고 div로바꾸면 i태그가 작동하나? -->
-                    </span><i class="fa-solid fa-user-plus"></i>
+                    </span>
+<!--                    <i class="fa-solid fa-user-plus"></i>-->
                 </li>
-                <li> <span>팔로잉</span> <span>팔로워</span></li>
+<!--                <li> <span>팔로잉</span> <span>팔로워</span></li>-->
 <!--                <li> <button>팔로우</button></li>-->
                 <div class="introduction" th:text="${introduction}"></div>
             </div>
@@ -422,17 +481,23 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         </script>
         <section class="feed">
             <div class="main_list">
-                <div class="list_start">
-                    <div class="list_detail"><p>1</p></div>
-                    <div class="list_detail"><p>2</p></div>
-                    <div class="list_detail"><p>3</p></div>
-                    <div class="list_detail"><p>4</p></div>
-                    <div class="list_detail"><p>5</p></div>
-                    <div class="list_detail"><p>6</p></div>
-                    <div class="list_detail"><p>7</p></div>
-                    <div class="list_detail"><p>8</p></div>
-                    <div class="list_detail"><p>9</p></div>
+
+                <div class="feed_Area">
+                    <div class="userInfoArea">
+                        <img class="userInfoImage" src="https://i.namu.wiki/i/sXs-ZQzLdedY88Xk-Ku92OW3Il88te8jlEp01kmOqzo7D9k4yTloDs2ENXuVQafKvVZEzxdfb3Le6vyQy-HWKcOLbupcRDrn_YKs7sR9O5doDnvAV2sIWa8BTzrSq5KbNC466MHoMuZkZ2dwbcDC_g.webp">
+                        <div class="userInfoId">@Yejun0912</div>
+                    </div>
+                    <div class="userFeedImagesArea">
+                        <div class="userFeedImagesBin">
+                            <img class="userFeedImages" src="https://i.namu.wiki/i/-zxd1pQtud7IeFH50Jh5tUMPa7b1pksYPRqunwrvdjXMIAl11KAgFye83h7YN801UkIbzONwejw7KdZjlWwngAwSDJtYIdNNQ5bo-oC6FsQqsot3NQbtTD70zmrDEq4jwH_jvFBGHW7bZaCZ_d9DHw.webp">
+                        </div>
+                    </div>
+                    <div class="userFeedContentArea">
+                        <div class="userFeedContentTime">2023-09-13 AM 12:58</div>
+                        <div class="userFeedContent">천재 남예준</div>
+                    </div>
                 </div>
+
             </div>
         </section>
     </div>
