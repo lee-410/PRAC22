@@ -200,18 +200,14 @@
 /* 프로필 */
     .profile_image_section {
         position: relative;
-        width: 310px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
         margin: 0;
         display: inline-block; /* 부모 요소를 인라인 블록으로 설정하여 이미지와 아이콘이 나란히 표시 */
-    }
 
-    .profile_image_section i{ /*카메라아이콘*/
-        position: absolute;
-        font-size: 30px;
-        right: 0px;
-        bottom: 0px;
-        cursor: pointer;
+        border-radius: 50%;
+        border: 5px solid #F8CD07;
+
     }
 
     .profile {
@@ -220,7 +216,7 @@
         width: 280px;
         height: 280px;
         object-fit: cover;
-        border: 5px solid #F8CD07;
+        //border: 5px solid #F8CD07;
         float: left;
         margin-right : 50px;
         margin-bottom : 50px;
@@ -266,6 +262,9 @@
 
     .introduction {
         margin-top: 40px;
+    }
+
+    .introduction p{
         border-bottom: 3px solid #F8CD07;
         font-family: 'Nanum Gothic Coding';
         font-size: 20px;
@@ -285,7 +284,7 @@
     }
 
     .feed {
-        border-top: 3px solid lightgray;
+        border-top: 3px solid #F8CD07;
         clear: both;
     }
 
@@ -305,7 +304,8 @@
 
 /* TEST */
         .feed_Area {
-
+            border-bottom: 2px solid lightgray;
+            padding-bottom: 30px;
         }
 
         .userInfoArea {
@@ -432,7 +432,9 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 </li>
 <!--                <li> <span>팔로잉</span> <span>팔로워</span></li>-->
 <!--                <li> <button>팔로우</button></li>-->
-                <div class="introduction" th:text="${introduction}"></div>
+                <div class="introduction">
+                    <p th:text="${introduction}"></p>
+                </div>
             </div>
             <div class="edit_icon"><i class="fa-solid fa-pen-to-square" onclick="profileEdit()"></i></div>
         </section>
@@ -441,26 +443,15 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 window.location.href = '/profile/profile_edit';
             }
 
-             // 사용자 id불러오기
-             $.ajax({
-                url: '/profile/getUserId',
-                method: 'GET',
-                success: function(data) {
-                    $('.getUserId').text('@' + data);
-                },
-                error: function (error){
-                    console.error('사용자 ID를 불러오는 데 실패했습니다.');
-                    console.log(error);
-                }
-             });
-
          function showUploadedImages(result) {
-            var divArea = $(".profile_image_section");
+            var topProfileArea = $(".profile_image_section");
 
             for (var i = result.length - 1; i >= 0; i--) {
                 var img = $("<img>").addClass("profile").attr("src", "/profile/display?fileName=" + result[i].thumbnailURL);
-                divArea.append(img);
+                topProfileArea.append(img);
                 }
+
+                
          }
 
             $.ajax({
@@ -476,30 +467,83 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 }
             });
 
-
-
+             // 사용자 id불러오기
+             $.ajax({
+                url: '/profile/getUserId',
+                method: 'GET',
+                success: function(data) {
+                    $('.getUserId').text('@' + data);
+                },
+                error: function (error){
+                    console.error('사용자 ID를 불러오는 데 실패했습니다.');
+                    console.log(error);
+                }
+             });
         </script>
         <section class="feed">
             <div class="main_list">
-
                 <div class="feed_Area">
                     <div class="userInfoArea">
-                        <img class="userInfoImage" src="https://i.namu.wiki/i/sXs-ZQzLdedY88Xk-Ku92OW3Il88te8jlEp01kmOqzo7D9k4yTloDs2ENXuVQafKvVZEzxdfb3Le6vyQy-HWKcOLbupcRDrn_YKs7sR9O5doDnvAV2sIWa8BTzrSq5KbNC466MHoMuZkZ2dwbcDC_g.webp">
-                        <div class="userInfoId">@Yejun0912</div>
+<!--                        <img class="userInfoImage" src="https://i.namu.wiki/i/sXs-ZQzLdedY88Xk-Ku92OW3Il88te8jlEp01kmOqzo7D9k4yTloDs2ENXuVQafKvVZEzxdfb3Le6vyQy-HWKcOLbupcRDrn_YKs7sR9O5doDnvAV2sIWa8BTzrSq5KbNC466MHoMuZkZ2dwbcDC_g.webp">-->
+                        <div class="userInfoId"></div>
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
-                            <img class="userFeedImages" src="https://i.namu.wiki/i/-zxd1pQtud7IeFH50Jh5tUMPa7b1pksYPRqunwrvdjXMIAl11KAgFye83h7YN801UkIbzONwejw7KdZjlWwngAwSDJtYIdNNQ5bo-oC6FsQqsot3NQbtTD70zmrDEq4jwH_jvFBGHW7bZaCZ_d9DHw.webp">
+<!--                            <img class="userFeedImages" src="https://i.namu.wiki/i/-zxd1pQtud7IeFH50Jh5tUMPa7b1pksYPRqunwrvdjXMIAl11KAgFye83h7YN801UkIbzONwejw7KdZjlWwngAwSDJtYIdNNQ5bo-oC6FsQqsot3NQbtTD70zmrDEq4jwH_jvFBGHW7bZaCZ_d9DHw.webp">-->
                         </div>
                     </div>
                     <div class="userFeedContentArea">
                         <div class="userFeedContentTime">2023-09-13 AM 12:58</div>
-                        <div class="userFeedContent">천재 남예준</div>
+                        <div class="userFeedContent"></div>
                     </div>
                 </div>
-
             </div>
         </section>
+        <script>
+function showFeedImages(result) {
+    var divArea = $(".userFeedImagesBin");
+
+    for (var i = result.length - 1; i >= 0; i--) {
+        var img = $("<img>").addClass("userFeedImages").attr("src", "/display?fileName=" + result[i].thumbnailURL);
+        divArea.append(img);
+    }
+}
+
+$.ajax({
+    url: '/getImagesFromUpload',
+    type: 'GET',
+    dataType: 'json',
+    success: function(result) {
+        showFeedImages(result);
+        console.log(result);
+        console.log('sec');
+    },
+    error: function(error) {
+        console.log('Error getting data from upload.html');
+        console.log(error);
+    }
+});
+
+ function showFeedContent(result){
+        console.log(result);
+        var divArea = $(".userFeedContent");
+        var str = "<p>" + result + "</p>";
+        divArea.append(str);
+    }
+
+$.ajax({
+    url: '/getContentFromUpload',
+    type: 'GET',
+    dataType: 'text',
+    success: function(result) {
+        showFeedContent(result);
+    },
+    error: function(error) {
+        console.log('Error getting data from upload.html2');
+        console.log(error);
+    }
+});
+        </script>
     </div>
 </div>
 
