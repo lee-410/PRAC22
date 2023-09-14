@@ -3,6 +3,7 @@ package com.example.project.service;
 
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
+import com.example.project.Entity.Feed;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +14,5 @@ public interface ProfileService {
     String uploadIntro(String introductionText, Authentication authentication);
     List<ProfileDTO> getUploadedImagesByUserId(String userId);
    // void updateProfile();
+   List<Feed> feedGetList();
 }

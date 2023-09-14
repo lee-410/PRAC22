@@ -3,6 +3,7 @@ package com.example.project.service;
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
 import com.example.project.Entity.*;
+import com.example.project.repository.FeedRepository;
 import com.example.project.repository.ProfileImageRepository;
 import com.example.project.repository.ProfileRepository;
 import com.example.project.repository.UserRepository;
@@ -43,6 +44,8 @@ public class ProfileServiceImpl implements ProfileService{
     private UserRepository userRepository;
     @Autowired
     private ProfileImageRepository profileImageRepository;
+    @Autowired
+    private FeedRepository feedRepository;
 
     private String introduction ;
 
@@ -170,5 +173,10 @@ public class ProfileServiceImpl implements ProfileService{
         }
 
         return folderPath;
+    }
+
+    @Override
+    public List<Feed> feedGetList() {
+        return feedRepository.findAll();
     }
 }

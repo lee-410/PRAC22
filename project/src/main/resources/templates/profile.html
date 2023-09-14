@@ -451,7 +451,6 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 topProfileArea.append(img);
                 }
 
-                
          }
 
             $.ajax({
@@ -482,67 +481,33 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         </script>
         <section class="feed">
             <div class="main_list">
-                <div class="feed_Area">
+
+                <div th:each="uploadResult : ${uploadResults}" class="feed_Area">
                     <div class="userInfoArea">
-<!--                        <img class="userInfoImage" src="https://i.namu.wiki/i/sXs-ZQzLdedY88Xk-Ku92OW3Il88te8jlEp01kmOqzo7D9k4yTloDs2ENXuVQafKvVZEzxdfb3Le6vyQy-HWKcOLbupcRDrn_YKs7sR9O5doDnvAV2sIWa8BTzrSq5KbNC466MHoMuZkZ2dwbcDC_g.webp">-->
-                        <div class="userInfoId"></div>
+                        <!--<img>-->
+                        <div class="userInfoId" ></div>
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
-<!--                            <img class="userFeedImages" src="https://i.namu.wiki/i/-zxd1pQtud7IeFH50Jh5tUMPa7b1pksYPRqunwrvdjXMIAl11KAgFye83h7YN801UkIbzONwejw7KdZjlWwngAwSDJtYIdNNQ5bo-oC6FsQqsot3NQbtTD70zmrDEq4jwH_jvFBGHW7bZaCZ_d9DHw.webp">-->
+                            <img class="userFeedImages" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">
+
+                            <!--<img>-->
+<!--
+<img class="test" th:text="${feedItem.images}">
+아니면 얘는 feed가 아니고 image엔티티에서 들고오는것도 방법일듯-->
                         </div>
                     </div>
                     <div class="userFeedContentArea">
-                        <div class="userFeedContentTime">2023-09-13 AM 12:58</div>
-                        <div class="userFeedContent"></div>
+                        <div class="userFeedContentTime" ></div>
+                        <div class="userFeedContent" ></div>
                     </div>
                 </div>
+
             </div>
         </section>
         <script>
-function showFeedImages(result) {
-    var divArea = $(".userFeedImagesBin");
 
-    for (var i = result.length - 1; i >= 0; i--) {
-        var img = $("<img>").addClass("userFeedImages").attr("src", "/display?fileName=" + result[i].thumbnailURL);
-        divArea.append(img);
-    }
-}
 
-$.ajax({
-    url: '/getImagesFromUpload',
-    type: 'GET',
-    dataType: 'json',
-    success: function(result) {
-        showFeedImages(result);
-        console.log(result);
-        console.log('sec');
-    },
-    error: function(error) {
-        console.log('Error getting data from upload.html');
-        console.log(error);
-    }
-});
-
- function showFeedContent(result){
-        console.log(result);
-        var divArea = $(".userFeedContent");
-        var str = "<p>" + result + "</p>";
-        divArea.append(str);
-    }
-
-$.ajax({
-    url: '/getContentFromUpload',
-    type: 'GET',
-    dataType: 'text',
-    success: function(result) {
-        showFeedContent(result);
-    },
-    error: function(error) {
-        console.log('Error getting data from upload.html2');
-        console.log(error);
-    }
-});
         </script>
     </div>
 </div>

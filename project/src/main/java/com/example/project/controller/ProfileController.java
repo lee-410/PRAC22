@@ -1,9 +1,12 @@
 package com.example.project.controller;
 
 import com.example.project.DTO.ProfileDTO;
+import com.example.project.DTO.UploadResultDTO;
+import com.example.project.Entity.Images;
 import com.example.project.Entity.Member;
 import com.example.project.Entity.Profile;
 import com.example.project.Entity.ProfileImage;
+import com.example.project.repository.ImagesRepository;
 import com.example.project.repository.ProfileRepository;
 import com.example.project.service.ProfileDisplayService;
 import com.example.project.service.ProfileService;
@@ -20,12 +23,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
+
+    @Autowired
+    private ImagesRepository imagesRepository;
+
 
     @GetMapping
     public ModelAndView profile(Model model, Authentication authentication) {
@@ -40,6 +48,18 @@ public class ProfileController {
             String introduction = profile.getIntroduction();
             model.addAttribute("introduction", introduction);
 //            model.addAttribute("getUserId", username);
+            model.addAttribute("feedItems", profileService.feedGetList());
+
+            List<Images> userImagesEntities = imagesRepository.findByUserId(username);
+            List<UploadResultDTO> userImages = new ArrayList<>();
+
+            for (Images images : userImagesEntities) {
+                UploadResultDTO dto = new UploadResultDTO(images.getFileName(), images.getUuid(), images.getFolderPath());
+                userImages.add(dto);
+            }
+
+            // 이미지 DTO 목록을 모델에 추가
+            model.addAttribute("uploadResults", userImages);
         }
         return modelAndView;
     }
@@ -104,4 +124,6 @@ public class ProfileController {
     public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam(required = false, defaultValue = "1") String size) {
         return profileDisplayService.getFile(fileName, size);
     }
+
+
 }

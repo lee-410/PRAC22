@@ -8,7 +8,6 @@ import java.net.URLEncoder;
 
 //데이터 전송을 위한 객체, 데이터 구조를 정의!!
 @Data
-@AllArgsConstructor
 public class UploadResultDTO {
 
     private String fileName;
@@ -36,5 +35,15 @@ public class UploadResultDTO {
         }
 
         return "";
+    }
+
+    public UploadResultDTO(String fileName, String uuid, String folderPath) {
+        this.fileName = fileName;
+        this.uuid = uuid;
+        this.folderPath = folderPath;
+    }
+
+    public UploadResultDTO() {
+        // 기본 생성자
     }
 }
