@@ -54,7 +54,7 @@ public class ProfileController {
             List<UploadResultDTO> userImages = new ArrayList<>();
 
             for (Images images : userImagesEntities) {
-                UploadResultDTO dto = new UploadResultDTO(images.getFileName(), images.getUuid(), images.getFolderPath());
+                UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
                 userImages.add(dto);
             }
 

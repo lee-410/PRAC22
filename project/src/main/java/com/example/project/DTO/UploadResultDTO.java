@@ -10,6 +10,7 @@ import java.net.URLEncoder;
 @Data
 public class UploadResultDTO {
 
+    private Long imageId;
     private String fileName;
 
     private String uuid;
@@ -37,7 +38,8 @@ public class UploadResultDTO {
         return "";
     }
 
-    public UploadResultDTO(String fileName, String uuid, String folderPath) {
+    public UploadResultDTO(Long imageId, String fileName, String uuid, String folderPath) {
+        this.imageId = imageId;
         this.fileName = fileName;
         this.uuid = uuid;
         this.folderPath = folderPath;
@@ -46,4 +48,5 @@ public class UploadResultDTO {
     public UploadResultDTO() {
         // 기본 생성자
     }
+
 }

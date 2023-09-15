@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "Images")
 @NoArgsConstructor
 @Getter
-
 public class Images {
 
     @Id
@@ -36,6 +36,9 @@ public class Images {
         if (feed != null) {
             this.postId = feed.getPostId();
         }
+    }
+    public Long getImageId() {
+        return this.imageId;
     }
 
 

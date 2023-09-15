@@ -98,28 +98,30 @@ public class FileUploadServiceImpl implements FileUploadService {
 
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,700,700);// 섬네일 생성
 
-                imagePath = thubmnailSaveName;
-                resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                String username = authentication.getName();
+
+                List<Feed> feedList = feedRepository.findByMemberUserid(username);
+
+                if (!feedList.isEmpty()) {
+                    Feed desiredFeed = feedList.get(feedList.size() - 1); // 마지막 피드 가져오기
+                    Images images = Images.builder()
+                            .folderPath(folderPath)
+                            .uuid(uuid)
+                            .fileName(fileName)
+                            .feed(desiredFeed) // 이미지와 연관된 피드 엔티티 설정
+                            .build();
+                    imagesRepository.save(images);
+
+
+                    resultDTOList.add(new UploadResultDTO(images.getImageId(), fileName, uuid, folderPath));
+                } else {
+                    // entity에 userid와 일치하는 user가 없을 때 처리
+                }
+
             }catch (IOException e){
                 e.printStackTrace();
-            }
-
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-
-            List<Feed> feedList = feedRepository.findByMemberUserid(username);
-
-            if (!feedList.isEmpty()) {
-                Feed desiredFeed = feedList.get(feedList.size() - 1); // 마지막 피드 가져오기
-                Images images = Images.builder()
-                        .folderPath(folderPath)
-                        .uuid(uuid)
-                        .fileName(fileName)
-                        .feed(desiredFeed) // 이미지와 연관된 피드 엔티티 설정
-                        .build();
-                imagesRepository.save(images);
-            } else {
-                // entity에 userid와 일치하는 user가 없을 때 처리
             }
 
         }
@@ -138,7 +140,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         for (Images images : userImagesEntities) {
             // 각 이미지의 정보를 UploadResultDTO로 변환하여 결과 목록에 추가
-            UploadResultDTO dto = new UploadResultDTO(images.getFileName(), images.getUuid(), images.getFolderPath());
+            UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
             userImages.add(dto);
         }
 

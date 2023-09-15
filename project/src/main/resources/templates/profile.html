@@ -483,8 +483,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
             <div class="main_list">
 
                 <div th:each="uploadResult : ${uploadResults}"  class="feed_Area">
-                    <div th:each="feedItem : ${feedItems}">
-                    <div class="userInfoArea">
+                    <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId}">
+                    <div  class="userInfoArea">
                         <!--<img>-->
                         <div class="userInfoId" th:text="${feedItem.author}"></div>
                     </div>
