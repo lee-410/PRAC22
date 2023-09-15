@@ -482,39 +482,29 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         <section class="feed">
             <div class="main_list">
 
-                <div th:each="uploadResult : ${uploadResults}" class="feed_Area">
+                <div th:each="uploadResult : ${uploadResults}"  class="feed_Area">
+                    <div th:each="feedItem : ${feedItems}">
                     <div class="userInfoArea">
                         <!--<img>-->
-                        <div class="userInfoId" ></div>
+                        <div class="userInfoId" th:text="${feedItem.author}"></div>
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
                             <img class="userFeedImages" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">
-
-                            <!--<img>-->
-<!--
-<img class="test" th:text="${feedItem.images}">
-아니면 얘는 feed가 아니고 image엔티티에서 들고오는것도 방법일듯-->
                         </div>
                     </div>
                     <div class="userFeedContentArea">
-                        <div class="userFeedContentTime" ></div>
-                        <div class="userFeedContent" ></div>
+                        <div class="userFeedContentTime" th:text="${feedItem.uploadTime}"></div>
+                        <div class="userFeedContent" th:text="${feedItem.content}"></div>
                     </div>
                 </div>
-
+            </div>
             </div>
         </section>
         <script>
-
-
         </script>
     </div>
 </div>
-
-
-
-
 </body>
 </html>
 

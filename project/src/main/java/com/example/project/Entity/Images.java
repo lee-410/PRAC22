@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Images")
 @NoArgsConstructor
 @Getter
+
 public class Images {
 
     @Id
@@ -25,15 +26,18 @@ public class Images {
     private Feed feed;
 
     @Builder
-    public Images(Long imageId, String userId, Long postId, String fileName, String uuid, String folderPath,Feed feed) {
+    public Images(Long imageId, String userId, String fileName, String uuid, String folderPath, Feed feed) {
         this.imageId = imageId;
         this.userId = feed.getAuthor();
-        this.postId = feed.getPost_id();
         this.fileName = fileName;
         this.uuid = uuid;
         this.folderPath = folderPath;
         this.feed = feed;
+        if (feed != null) {
+            this.postId = feed.getPostId();
+        }
     }
+
 
 
 }

@@ -15,4 +15,5 @@ public interface ProfileService {
     List<ProfileDTO> getUploadedImagesByUserId(String userId);
    // void updateProfile();
    List<Feed> feedGetList();
+   List<Feed> getFeedByPostId(Long postId);
 }

@@ -48,6 +48,13 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Autowired
     private UserRepository userRepository;
 
+    private final ProfileService profileService;
+
+    @Autowired
+    public FileUploadServiceImpl(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+
     @Override
     public List<UploadResultDTO> uploadFiles(MultipartFile[] uploadFiles) {
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
@@ -98,24 +105,23 @@ public class FileUploadServiceImpl implements FileUploadService {
             }
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
             String username = authentication.getName();
 
             List<Feed> feedList = feedRepository.findByMemberUserid(username);
 
             if (!feedList.isEmpty()) {
-                Feed feed = feedList.get(0); //이거 때문에 계속 feedid의 1을 가져오는것같애. 수정필요!!!
+                Feed desiredFeed = feedList.get(feedList.size() - 1); // 마지막 피드 가져오기
                 Images images = Images.builder()
                         .folderPath(folderPath)
                         .uuid(uuid)
                         .fileName(fileName)
-                        .feed(feed)
+                        .feed(desiredFeed) // 이미지와 연관된 피드 엔티티 설정
                         .build();
                 imagesRepository.save(images);
             } else {
-                //entity에 userid와 일치하는 user가 없을 때 처리
-
+                // entity에 userid와 일치하는 user가 없을 때 처리
             }
+
         }
 
         return resultDTOList;
@@ -156,5 +162,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         return folderPath;
     }
+
 }
 
