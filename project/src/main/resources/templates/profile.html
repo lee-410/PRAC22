@@ -92,6 +92,8 @@
         .content {
             margin: 20px 10px;
         }
+
+
 /* 본 컨텐츠 */
 
 /* 모달 팝업 */
@@ -197,7 +199,7 @@
     }
 /* 밑줄 애니메이션 */
 
-/* 프로필 */
+/* 프로필 top section*/
     .profile_image_section {
         position: relative;
         width: 280px;
@@ -300,17 +302,17 @@
         border: 1px solid;
         margin-bottom: 5px;
     }
-/* 프로필 */
+/* 프로필 top section*/
 
-/* TEST */
+/* 프로필 bottom section */
         .feed_Area {
-            border-bottom: 2px solid lightgray;
+            border-bottom: 3px solid lightgray;
             padding-bottom: 30px;
+            margin-bottom: 30px;
         }
 
         .userInfoArea {
             height: 50px;
-
         }
 
         .userInfoImageBin {
@@ -326,7 +328,8 @@
         }
 
         .userInfoId {
-            font-size: 25px;
+            font-size: 28px;
+            font-family: cursive;
         }
 
         .userFeedImagesArea {
@@ -355,7 +358,46 @@
         .userFeedContent {
             font-size: 20px;
             margin-top: 10px;
+            font-family: 'Nanum Gothic Coding', cursive;
         }
+
+        .userInfoBin {
+            display: flex;
+            /*justify-content: space-between;*/
+            width: 550px;
+        }
+
+        .removeRevise {
+            margin-left: 380px;
+
+        }
+
+        .removeRevise i {
+            font-size: 28px;
+            color: dimgrey;
+        }
+
+        .removeReviseList {
+            list-style: none;
+        }
+
+        .removeReviseList > li:hover .reviseList {
+           display: block;
+        }
+
+        .reviseList {
+            display: none;
+            list-style: none;
+            line-height: 30px;
+            border: 1px solid;
+            padding-left: 20px;
+            margin-left: 13px;
+            margin-top: -60px;
+            width: 60px;
+            font-size: 18px;
+            font-family: 'Nanum Gothic Coding', cursive;
+        }
+/* 프로필 bottom section */
 
     </style>
     <script src="https://kit.fontawesome.com/e77113d6c3.js" crossorigin="anonymous"></script>
@@ -451,6 +493,13 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 topProfileArea.append(img);
                 }
 
+            var bottomProfileArea = $(".userInfoImageBin");
+
+            for (var i = result.length - 1; i >= 0; i--) {
+                var img = $("<img>").addClass("userInfoImage").attr("src", "/profile/display?fileName=" + result[i].thumbnailURL);
+                bottomProfileArea.append(img);
+                }
+
          }
 
             $.ajax({
@@ -481,12 +530,25 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         </script>
         <section class="feed">
             <div class="main_list">
-
                 <div th:each="uploadResult : ${uploadResults}"  class="feed_Area">
                     <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId}">
-                    <div  class="userInfoArea">
-                        <!--<img>-->
-                        <div class="userInfoId" th:text="${feedItem.author}"></div>
+                    <div class="userInfoArea">
+                        <div class="userInfoImageBin"></div>
+                        <div class="userInfoBin">
+                            <div class="userInfoId" th:text="${feedItem.author}"></div>
+                            <div class="removeRevise">
+                                <ul class="removeReviseList">
+                                    <li>
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        <ul class="reviseList">
+                                            <li><a>삭제</a></li>
+                                            <li><a>수정</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
@@ -494,16 +556,20 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                         </div>
                     </div>
                     <div class="userFeedContentArea">
-                        <div class="userFeedContentTime" th:text="${feedItem.uploadTime}"></div>
+
+                            <div class="userFeedContentTime" th:text="${feedItem.formattedUploadTime}"></div>
+
                         <div class="userFeedContent" th:text="${feedItem.content}"></div>
                     </div>
                 </div>
             </div>
             </div>
         </section>
-        <script>
-        </script>
+
     </div>
+    <script>
+
+    </script>
 </div>
 </body>
 </html>

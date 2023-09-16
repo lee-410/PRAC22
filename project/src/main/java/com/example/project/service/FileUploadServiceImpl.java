@@ -110,7 +110,7 @@ public class FileUploadServiceImpl implements FileUploadService {
                             .folderPath(folderPath)
                             .uuid(uuid)
                             .fileName(fileName)
-                            .feed(desiredFeed) // 이미지와 연관된 피드 엔티티 설정
+                            .feed(desiredFeed)
                             .build();
                     imagesRepository.save(images);
 

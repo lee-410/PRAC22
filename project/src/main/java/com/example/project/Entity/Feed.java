@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity(name = "Feed")
@@ -32,6 +33,11 @@ public class Feed {
         this.author = member.getUserid();
         this.roles = member.getRoles();
         this.uploadTime = LocalDateTime.now();
+    }
+
+    public String getFormattedUploadTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+        return uploadTime.format(formatter);
     }
 
 }
