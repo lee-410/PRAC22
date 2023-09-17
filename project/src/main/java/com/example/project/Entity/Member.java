@@ -8,7 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity(name = "Member")
 public class Member {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(unique = true,length = 20)

@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class Feed {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long postId;
     private String author;
     private String roles;

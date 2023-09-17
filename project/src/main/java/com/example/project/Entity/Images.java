@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Images {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long imageId;
 
     private String userId;
@@ -37,6 +37,7 @@ public class Images {
             this.postId = feed.getPostId();
         }
     }
+
     public Long getImageId() {
         return this.imageId;
     }

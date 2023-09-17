@@ -530,7 +530,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         </script>
         <section class="feed">
             <div class="main_list">
-                <div th:each="uploadResult : ${uploadResults}"  class="feed_Area">
+                <div th:each="uploadResult : ${uploadResults}" class="feed_Area">
                     <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId}">
                     <div class="userInfoArea">
                         <div class="userInfoImageBin"></div>

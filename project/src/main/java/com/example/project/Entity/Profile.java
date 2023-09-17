@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String user_id;

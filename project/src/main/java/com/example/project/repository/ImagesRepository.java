@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ImagesRepository extends JpaRepository<Images, Long> {
 
     List<Images> findByUserId(String userId);
-
+    List<Images> findAllByOrderByImageIdDesc();
 
 }
