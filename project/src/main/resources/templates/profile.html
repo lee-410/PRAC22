@@ -335,6 +335,8 @@
         .userFeedImagesArea {
             margin-top: 10px;
             margin-bottom: 5px;
+            width: 1000px;
+            display: flex;
         }
 
         .userFeedImagesBin {
@@ -345,7 +347,73 @@
 
         .userFeedImages {
             height: 500px;
+            width: 500px;
+            object-fit: contain;
         }
+
+        .userFeedCommentArea {
+            height: 450px;
+            width: 300px;
+            background-color: #ebeef2;
+            margin-left: 50px;
+            /* margin-top: 30px; */
+            border-radius: 5%;
+        }
+
+        .userFeedLike {
+            border-bottom: 2px solid lightgrey;
+            width: 280px;
+            margin-left: 10px;
+        }
+
+        .userFeedLike i {
+            font-size: 25px;
+            color: #F8CD07;
+            margin-top: 10px;
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+
+        .userFeedComment {
+            width: 280px;
+            height: 400px;
+            margin-left: 10px;
+        }
+
+        .userFeedCommentList {
+            height: 350px;
+            border-bottom: 2px solid lightgrey;
+        }
+
+        .userFeedCommentInput {
+            display: flex;
+        }
+
+        .userFeedCommentInputTextBin {
+            margin-top: 8px;
+            margin-left: 1px;
+        }
+
+        .userFeedCommentInputText {
+            width: 220px;
+            height: 20px;
+            background-color: transparent;
+            border: 2px solid lightgrey;
+        }
+
+        .userFeedCommentInputBtnBin{
+            margin-top: 8px;
+            margin-left: 6px;
+        }
+
+        .userFeedCommentInputBtn {
+            font-size: 15px;
+            background-color: transparent;
+            border: 2px solid lightgray;
+            height: 26px;
+            cursor: pointer;
+        }
+
 
         .userFeedContentArea {
             width:  500px;
@@ -368,8 +436,7 @@
         }
 
         .removeRevise {
-            margin-left: 380px;
-
+            margin-left: 320px;
         }
 
         .removeRevise i {
@@ -553,6 +620,22 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
                             <img class="userFeedImages" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">
+                        </div>
+                        <div class="userFeedCommentArea">
+                            <div class="userFeedLike">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="userFeedComment">
+                                <div class="userFeedCommentList"></div>
+                                <div class="userFeedCommentInput">
+                                    <div class="userFeedCommentInputTextBin">
+                                        <input class="userFeedCommentInputText" type="text" placeholder="댓글 입력">
+                                    </div>
+                                    <div class="userFeedCommentInputBtnBin">
+                                        <button class="userFeedCommentInputBtn">등록</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="userFeedContentArea">

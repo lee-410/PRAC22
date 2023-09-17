@@ -66,8 +66,6 @@ public class ProfileController {
         return modelAndView;
     }
 
-
-
     @GetMapping("/profile_edit")
     public ModelAndView profileEdit() {
         ModelAndView modelAndView = new ModelAndView("profile_edit");
