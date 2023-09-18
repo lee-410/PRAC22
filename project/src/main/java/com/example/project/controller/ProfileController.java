@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
 import com.example.project.Entity.*;
+import com.example.project.repository.FeedRepository;
 import com.example.project.repository.ImagesRepository;
 import com.example.project.repository.ProfileRepository;
 import com.example.project.service.ProfileDisplayService;
@@ -97,7 +98,7 @@ public class ProfileController {
     private ProfileRepository profileRepository;
 
     @PostMapping(value = "/getImageIntro")
-    public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles,Authentication authentication) {
+    public ResponseEntity<List<ProfileDTO>> uploadImages(@RequestParam("uploadFiles") MultipartFile[] uploadFiles, Authentication authentication) {
         //이미지
         List<ProfileDTO> result = profileService.uploadProfile(uploadFiles, authentication);
 
@@ -105,10 +106,10 @@ public class ProfileController {
     }
 
     @PostMapping(value = "/getIntro")
-    public ResponseEntity<String> uploadText(@RequestParam("introduction") String introductionText,Authentication authentication) {
+    public ResponseEntity<String> uploadText(@RequestParam("introduction") String introductionText, Authentication authentication) {
 
         //텍스트
-        String intro = profileService.uploadIntro(introductionText,authentication);
+        String intro = profileService.uploadIntro(introductionText, authentication);
 
         return new ResponseEntity<>(intro, HttpStatus.OK);
     }
@@ -125,6 +126,20 @@ public class ProfileController {
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(@RequestParam String fileName, @RequestParam(required = false, defaultValue = "1") String size) {
         return profileDisplayService.getFile(fileName, size);
+    }
+
+    @PostMapping("/like")
+    public String feedLikeShow(@RequestParam Boolean isLinked) {
+
+//        Like like = new Like();
+//
+//        if (isLinked == true) {
+//            like.setFeedLikeCnt(like.getFeedLikeCnt() + 1);
+//        } else {
+//            like.setFeedLikeCnt(like.getFeedLikeCnt() - 1);
+//        }
+
+        return "";
     }
 
 

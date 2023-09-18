@@ -364,13 +364,14 @@
             border-bottom: 2px solid lightgrey;
             width: 280px;
             margin-left: 10px;
+            display: flex;
         }
 
         .userFeedLike i {
             font-size: 25px;
             color: #F8CD07;
             margin-top: 10px;
-            margin-left: 15px;
+            margin-left: 10px;
             margin-bottom: 10px;
         }
 
@@ -623,7 +624,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                         </div>
                         <div class="userFeedCommentArea">
                             <div class="userFeedLike">
-                                <i class="fa-solid fa-heart"></i>
+                                <i class="heart-icon fa-regular fa-heart" onclick="toggleLikeIcon(this)"></i>
+                                <div class="userFeedLikeCnt" ></div> <!-- th로 cnt보내주면 됨 -->
                             </div>
                             <div class="userFeedComment">
                                 <div class="userFeedCommentList"></div>
@@ -639,9 +641,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                         </div>
                     </div>
                     <div class="userFeedContentArea">
-
                             <div class="userFeedContentTime" th:text="${feedItem.formattedUploadTime}"></div>
-
                         <div class="userFeedContent" th:text="${feedItem.content}"></div>
                     </div>
                 </div>
@@ -651,6 +651,34 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 
     </div>
     <script>
+    function toggleLikeIcon(iconElement) {
+        const iconClasses = iconElement.classList;
+
+        //빈 하트 상태
+        if (iconClasses.contains("fa-regular")) {
+            iconClasses.remove("fa-regular"); //삭제 후
+            iconClasses.add("fa-solid");//찬 하트로 변경
+            sendLikeStatus(true);
+        } else { //하트 취소
+            iconClasses.remove("fa-solid");
+            iconClasses.add("fa-regular");
+            sendLikeStatus(false);
+        }
+    }
+
+    function sendLikeStatus(isLiked) {
+    $.ajax({
+        url: "/profile/like",
+        method: "POST",
+        data: { isLiked: isLiked },
+        success: function (response) {
+
+        },
+        error: function (error) {
+
+        }
+    });
+}
 
     </script>
 </div>
