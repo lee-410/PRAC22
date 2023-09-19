@@ -603,7 +603,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                     <div class="userInfoArea">
                         <div class="userInfoImageBin"></div>
                         <div class="userInfoBin">
-                            <div class="userInfoId" th:text="${feedItem.author}"></div>
+                            <div class="userInfoId" id="userInfoId" th:text="${feedItem.author}"></div>
+<!--이거 feeditem에서 가져오면 안될거같은데,프로필 사진도 그렇고, 유저아이디도 그렇고, profileImages에서 가져와야할듯..?-->
                             <div class="removeRevise">
                                 <ul class="removeReviseList">
                                     <li>
@@ -651,6 +652,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 
     </div>
     <script>
+
     function toggleLikeIcon(iconElement) {
         const iconClasses = iconElement.classList;
 

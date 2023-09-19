@@ -34,36 +34,46 @@ public class ProfileController {
     private ImagesRepository imagesRepository;
 
 
-    @GetMapping
-    public ModelAndView profile(Model model, Authentication authentication) {
+    @GetMapping("/{userId}")
+    public ModelAndView profile(Model model, Authentication authentication, @PathVariable String userId) {
         ModelAndView modelAndView = new ModelAndView("profile");
 
         String username = authentication.getName();
 
-        List<Profile> profileList = profileRepository.findByMemberUserid(username);
+//        model.addAttribute("userId", username);
+//        log.info("1111111111111111111111111111111");
+//        log.info(userId);
+//        log.info(username);
 
-        if (!profileList.isEmpty()) {
-            Profile profile = profileList.get(0);
-            String introduction = profile.getIntroduction();
-            model.addAttribute("introduction", introduction);
+        if (username.equals(userId)) {
+            List<Profile> profileList = profileRepository.findByMemberUserid(username);
 
-            // 피드 데이터 내림차순
-            List<Feed> feedItems = profileService.feedGetList();
-            Collections.reverse(feedItems);
-            model.addAttribute("feedItems", feedItems);
+            if (!profileList.isEmpty()) {
+                Profile profile = profileList.get(0);
+                String introduction = profile.getIntroduction();
+                model.addAttribute("introduction", introduction);
 
-            // 이미지 데이터 내림차순
-            List<Images> userImagesEntities = imagesRepository.findAllByOrderByImageIdDesc();
+                // 피드 데이터 내림차순
+                List<Feed> feedItems = profileService.feedGetList();
+                Collections.reverse(feedItems);
+                model.addAttribute("feedItems", feedItems);
 
-            List<UploadResultDTO> userImages = new ArrayList<>();
+                // 이미지 데이터 내림차순
+                List<Images> userImagesEntities = imagesRepository.findAllByOrderByImageIdDesc();
 
-            for (Images images : userImagesEntities) {
-                UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
-                userImages.add(dto);
+                List<UploadResultDTO> userImages = new ArrayList<>();
+
+                for (Images images : userImagesEntities) {
+                    UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
+                    userImages.add(dto);
+                }
+
+                model.addAttribute("uploadResults", userImages);
             }
+        }else {
 
-            model.addAttribute("uploadResults", userImages);
         }
+
         return modelAndView;
     }
 
