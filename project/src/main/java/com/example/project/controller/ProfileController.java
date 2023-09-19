@@ -39,11 +39,7 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView("profile");
 
         String username = authentication.getName();
-
-//        model.addAttribute("userId", username);
-//        log.info("1111111111111111111111111111111");
-//        log.info(userId);
-//        log.info(username);
+        model.addAttribute("username", username);
 
         if (username.equals(userId)) {
             List<Profile> profileList = profileRepository.findByMemberUserid(username);
