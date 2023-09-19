@@ -129,7 +129,7 @@ public class UploadController {
 
 
     @PostMapping("/removeFile")
-    public ResponseEntity<Boolean> removeFile(String fileName){
+    public ResponseEntity<Boolean> removeFile(String fileName){ //들어오는건 원본이미지
         String srcFileName = null;
 
         try {

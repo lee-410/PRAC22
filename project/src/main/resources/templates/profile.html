@@ -536,12 +536,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
             </div>
             <div class="profile_information">
                 <li>
-                    <span class="getUserId"> <!--span말고 div로바꾸면 i태그가 작동하나? -->
-                    </span>
-<!--                    <i class="fa-solid fa-user-plus"></i>-->
+                    <span class="getUserId"></span>
                 </li>
-<!--                <li> <span>팔로잉</span> <span>팔로워</span></li>-->
-<!--                <li> <button>팔로우</button></li>-->
                 <div class="introduction">
                     <p th:text="${introduction}"></p>
                 </div>
@@ -609,8 +605,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                                     <li>
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                         <ul class="reviseList">
-                                            <li><a>삭제</a></li>
-                                            <li><a>수정</a></li>
+                                            <li><a class="reviseListDEL">삭제</a></li>
+                                            <li><a class="reviseListUPD">수정</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -625,7 +621,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                         <div class="userFeedCommentArea">
                             <div class="userFeedLike">
                                 <i class="heart-icon fa-regular fa-heart" onclick="toggleLikeIcon(this)"></i>
-                                <div class="userFeedLikeCnt" ></div> <!-- th로 cnt보내주면 됨 -->
+                                <div class="userFeedLikeCnt" ></div>
+                                <!-- th로 cnt보내주면 됨 -->
                             </div>
                             <div class="userFeedComment">
                                 <div class="userFeedCommentList"></div>
@@ -647,10 +644,54 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 </div>
             </div>
             </div>
+            <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
         </section>
 
     </div>
-    <script>
+    <script th:inline="javascript">
+//삭제를 누르면
+//1. div class="feed_area" 포함 하위 요소 삭제 (index에 올린것도 같이 삭제)
+//2. 컴퓨터에 있는 파일 삭제(/removeFile)
+//3. db에 있는 해당하는 postId행 삭제(feed, images entity)
+     var uploadResults = /*[[${uploadResults}]]*/ [];
+
+     var csrfToken = document.querySelector('#csrf_token').value;
+
+    $(document).ready(function() {
+        $(".reviseListDEL").on("click", function(e) {
+            e.preventDefault();
+
+            if (confirm("정말로 삭제 하시겠습니까?")) {
+                var target = $(this);
+                var targetDiv = target.closest(".feed_Area");
+
+                // 클릭된 버튼의 인덱스를 찾습니다.
+                var index = $(".reviseListDEL").index(target);
+
+                // 해당 인덱스의 uploadResult 객체를 가져옵니다.
+                var selectedUploadResult = uploadResults[index];
+                var fileName = selectedUploadResult.imageURL;
+
+                $.ajax({
+                    url: "/removeFile",
+                    method: "POST",
+                    data: { fileName: fileName },
+                    headers: {
+                    'X-CSRF-TOKEN': csrfToken // CSRF 토큰을 헤더에 추가
+                    },
+                    success: function(result) {
+                        if (result == true) {
+                            targetDiv.remove();
+                        }
+                    },
+                    error: function(error) {
+                        console.error("삭제 실패:", error);
+                    }
+                });
+            }
+        });
+    });
 
     function toggleLikeIcon(iconElement) {
         const iconClasses = iconElement.classList;

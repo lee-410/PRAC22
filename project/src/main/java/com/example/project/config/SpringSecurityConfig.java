@@ -27,7 +27,7 @@ public class SpringSecurityConfig implements WebMvcConfigurer {
         http
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/", "/images/**", "/view/join", "/auth/join","/getImagesFromUpload","/getContentFromUpload").permitAll()
+                        .requestMatchers("/", "/images/**", "/view/join", "/auth/join","/getImagesFromUpload","/getContentFromUpload","/removeFile").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
