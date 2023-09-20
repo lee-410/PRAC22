@@ -21,7 +21,7 @@ public class Feed {
     private LocalDateTime uploadTime;
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "member_id")
     private Member member;
 

@@ -176,8 +176,9 @@ public class ProfileServiceImpl implements ProfileService{
     public List<Feed> feedGetList() {
         return feedRepository.findAll();
     }
+
     @Override
-    public List<Feed> getFeedByPostId(Long postId) {
+    public Optional<Feed> getFeedByPostId(Long postId) {
         // 특정 post_id에 해당하는 Feed 엔티티 조회
         return feedRepository.findByPostId(postId);
     }

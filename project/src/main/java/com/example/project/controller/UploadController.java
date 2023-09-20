@@ -8,6 +8,7 @@ import com.example.project.repository.UserRepository;
 import com.example.project.service.FileDisplayService;
 import com.example.project.service.FileUploadService;
 import com.example.project.service.FileUploadServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+
+@Slf4j
 @RestController
 public class UploadController {
     @GetMapping("/upload")
@@ -129,29 +132,42 @@ public class UploadController {
 
 
     @PostMapping("/removeFile")
-    public ResponseEntity<Boolean> removeFile(String fileName){ //들어오는건 원본이미지
+    public ResponseEntity<Boolean> removeFile(String fileName) { //들어오는건 원본이미지
         String srcFileName = null;
 
         try {
-            srcFileName = URLDecoder.decode(fileName,"UTF-8");
+            srcFileName = URLDecoder.decode(fileName, "UTF-8");
             File file = new File(uploadPath + File.separator + srcFileName);
 
             boolean result = file.delete();
 
-            File thumbnail = new File(file.getParent(),"s_" + file.getName());
+            File thumbnail = new File(file.getParent(), "s_" + file.getName());
 
             result = thumbnail.delete();
 
-            return new ResponseEntity<>(result,HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
 
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        //여기서 디비 데이터 삭제하는 함수 호출 서비스에 있다~
+        //여기서 디비 데이터 삭제하는 함수 호출! 서비스에 있다~
 
     }
 
+    @PostMapping("/deleteFeed")
+    public void deleteFeed(Long feedPostID) {
+        log.info("feedPostID:" + feedPostID);
 
+        Optional<Feed> feed = feedRepository.findByPostId(feedPostID);
+        log.info("feed:" + feed);
+
+        feed.ifPresent(selector -> {
+            feedRepository.delete(selector);
+        });
+
+
+
+    }
 }

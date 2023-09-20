@@ -33,7 +33,6 @@ public class ProfileController {
     @Autowired
     private ProfileImageRepository profileImageRepository;
 
-
     @GetMapping("/{userId}")
     public ModelAndView profile(Model model, Authentication authentication, @PathVariable String userId) {
         ModelAndView modelAndView = new ModelAndView("profile");
@@ -64,9 +63,6 @@ public class ProfileController {
                     userImages.add(dto);
                 }
                 model.addAttribute("uploadResults", userImages);
-
-
-
             }
         }else {
 

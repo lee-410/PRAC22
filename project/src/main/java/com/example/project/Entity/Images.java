@@ -21,7 +21,7 @@ public class Images {
     private String uuid;
     private String folderPath;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "feed_id")
     private Feed feed;
 

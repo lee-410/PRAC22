@@ -655,13 +655,18 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
 //1. div class="feed_area" 포함 하위 요소 삭제 (index에 올린것도 같이 삭제)
 //2. 컴퓨터에 있는 파일 삭제(/removeFile)
 //3. db에 있는 해당하는 postId행 삭제(feed, images entity)
-     var uploadResults = /*[[${uploadResults}]]*/ [];
+
 
      var csrfToken = document.querySelector('#csrf_token').value;
 
     $(document).ready(function() {
         $(".reviseListDEL").on("click", function(e) {
             e.preventDefault();
+
+            var uploadResults = /*[[${uploadResults}]]*/ [];
+            var feedPostID = uploadResults[0].imageId;
+            console.log(feedPostID);
+
 
             if (confirm("정말로 삭제 하시겠습니까?")) {
                 var target = $(this);
@@ -690,6 +695,22 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                         console.error("삭제 실패:", error);
                     }
                 });
+
+                $.ajax({
+                    url: "/deleteFeed",
+                    method: "POST",
+                    data: { feedPostID: feedPostID },
+                    headers: {
+                    'X-CSRF-TOKEN': csrfToken // CSRF 토큰을 헤더에 추가
+                    },
+                    success: function(result) {
+
+                    },
+                    error: function(error) {
+                        console.error("삭제 실패:", error);
+                    }
+                });
+
             }
         });
     });

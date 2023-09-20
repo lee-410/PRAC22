@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProfileService {
     List<ProfileDTO> uploadProfile(MultipartFile[] uploadFiles,Authentication authentication);
@@ -15,5 +16,5 @@ public interface ProfileService {
     List<ProfileDTO> getUploadedImagesByUserId(String userId);
    // void updateProfile();
    List<Feed> feedGetList();
-   List<Feed> getFeedByPostId(Long postId);
+   Optional<Feed> getFeedByPostId(Long postId);
 }

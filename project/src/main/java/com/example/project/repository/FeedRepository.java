@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
     //Optional<Feed> findByMemberUserid(String userid);
     List<Feed> findByMemberUserid(String userid);
-    List<Feed> findByPostId(Long postId);
+    Optional<Feed> findByPostId(Long postId);
 }
