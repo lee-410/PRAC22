@@ -414,11 +414,16 @@ document.querySelector("#close").addEventListener('click', close);
         <div th:each="uploadResult : ${uploadResults}" class="feed_Area">
             <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId}">
                 <div class="userInfoArea">
-                    <div class="userInfoImageBin"></div>
+                    <div class="userInfoImageBin">
+                        <div th:each="profileImage: ${profileImages}" th:if="${#strings.equals(feedItem.author, profileImage.userID)}">
+                            <img class="userInfoImage" th:src="@{'/profile/display?fileName=' + ${profileImage.thumbnailURL}}">
+                        </div>
+                    </div>
                     <div class="userInfoBin">
                         <div class="userInfoId" th:text="${feedItem.author}"></div>
                     </div>
                 </div>
+
                 <div class="userFeedImagesArea">
                     <div class="userFeedImagesBin">
                         <img class="userFeedImages" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">

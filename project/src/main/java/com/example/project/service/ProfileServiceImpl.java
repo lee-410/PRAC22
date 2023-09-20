@@ -78,7 +78,7 @@ public class ProfileServiceImpl implements ProfileService{
     public List<ProfileDTO> uploadProfile(MultipartFile[] uploadFiles, Authentication authentication) {
 
         List<ProfileDTO> resultDTOList = new ArrayList<>();
-
+        String username = authentication.getName();
         for (MultipartFile uploadFile : uploadFiles) {
 
 
@@ -111,13 +111,10 @@ public class ProfileServiceImpl implements ProfileService{
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,300,300);// 섬네일 생성
 
                 imagePath = thumbnailSaveName;
-                resultDTOList.add(new ProfileDTO(fileName,uuid,folderPath));
+                resultDTOList.add(new ProfileDTO(username, fileName,uuid,folderPath));
             }catch (IOException e){
                 e.printStackTrace();
             }
-
-            String username = authentication.getName();
-
 
             Optional<Member> memberList = userRepository.findByUserid(username);
 
@@ -148,7 +145,7 @@ public class ProfileServiceImpl implements ProfileService{
 
         for (ProfileImage profileImage : userprofile) {
             // 각 이미지의 정보를 UploadResultDTO로 변환하여 결과 목록에 추가
-            ProfileDTO dto = new ProfileDTO(profileImage.getFileName(), profileImage.getUuid(), profileImage.getFolderPath());
+            ProfileDTO dto = new ProfileDTO(userId, profileImage.getFileName(), profileImage.getUuid(), profileImage.getFolderPath());
 
             userImages.add(dto);
         }

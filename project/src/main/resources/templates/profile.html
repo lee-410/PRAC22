@@ -522,7 +522,7 @@ function showSearchModal() {
     document.querySelector(".background").className = "background show";
 }
 function closeSearchModal() {
-    document.querySelector(".background").className, = "background";
+    document.querySelector(".background").className = "background";
 }
 document.querySelector("#show").addEventListener('click', showSearchModal);
 document.querySelector("#close").addEventListener('click', closeSearchModal);
@@ -544,6 +544,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
             </div>
             <div class="edit_icon"><i class="fa-solid fa-pen-to-square" onclick="profileEdit()"></i></div>
         </section>
+
         <script>
             function profileEdit() {
                 window.location.href = '/profile/profile_edit';

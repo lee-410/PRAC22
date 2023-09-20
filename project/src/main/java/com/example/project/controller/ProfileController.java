@@ -3,19 +3,16 @@ package com.example.project.controller;
 import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
 import com.example.project.Entity.*;
-import com.example.project.repository.FeedRepository;
 import com.example.project.repository.ImagesRepository;
+import com.example.project.repository.ProfileImageRepository;
 import com.example.project.repository.ProfileRepository;
 import com.example.project.service.ProfileDisplayService;
 import com.example.project.service.ProfileService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +29,9 @@ public class ProfileController {
 
     @Autowired
     private ImagesRepository imagesRepository;
+
+    @Autowired
+    private ProfileImageRepository profileImageRepository;
 
 
     @GetMapping("/{userId}")
@@ -63,8 +63,10 @@ public class ProfileController {
                     UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
                     userImages.add(dto);
                 }
-
                 model.addAttribute("uploadResults", userImages);
+
+
+
             }
         }else {
 

@@ -2,11 +2,15 @@ package com.example.project.controller;
 
 
 
+import com.example.project.DTO.ProfileDTO;
 import com.example.project.DTO.UploadResultDTO;
 import com.example.project.Entity.Feed;
 import com.example.project.Entity.Images;
+import com.example.project.Entity.ProfileImage;
 import com.example.project.repository.FeedRepository;
 import com.example.project.repository.ImagesRepository;
+import com.example.project.repository.ProfileImageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -18,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @RestController
 public class IndexController {
 
@@ -26,6 +31,9 @@ public class IndexController {
 
     @Autowired
     private ImagesRepository imagesRepository;
+
+    @Autowired
+    private ProfileImageRepository profileImageRepository;
 
     @GetMapping("/")
     public ModelAndView index(Model model) {
@@ -48,6 +56,18 @@ public class IndexController {
 
         model.addAttribute("uploadResults", userImages);
 
+        //profile image
+        List<ProfileImage> profileImagesEntities = profileImageRepository.findAll();
+
+        List<ProfileDTO> profileImages = new ArrayList<>();
+
+        for (ProfileImage profileImage : profileImagesEntities) {
+            ProfileDTO dto = new ProfileDTO(profileImage.getUserID(), profileImage.getFileName(), profileImage.getUuid(), profileImage.getFolderPath());
+            profileImages.add(dto);
+        }
+        model.addAttribute("profileImages",profileImages);
+        log.info("profileImages: {}", profileImages);
+
         return modelAndView;
     }
 
@@ -56,4 +76,6 @@ public class IndexController {
         String userId = authentication.getName();
         return userId;
     }
+
+
 }

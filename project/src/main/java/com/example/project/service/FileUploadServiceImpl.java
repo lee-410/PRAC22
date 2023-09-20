@@ -165,5 +165,11 @@ public class FileUploadServiceImpl implements FileUploadService {
         return folderPath;
     }
 
+    private String deleteDBPostId() {
+        //몇번 postid인지 어떻게 알려주지?
+        return null;
+    }
+
+
 }
 

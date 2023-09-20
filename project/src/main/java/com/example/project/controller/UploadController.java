@@ -148,6 +148,10 @@ public class UploadController {
             e.printStackTrace();
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        //여기서 디비 데이터 삭제하는 함수 호출 서비스에 있다~
+
     }
+
 
 }

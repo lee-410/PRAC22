@@ -14,7 +14,7 @@ public class ProfileImage {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long imageId;
 
-    private String userId;
+    private String userID;
     private String fileName;
     private String uuid;
     private String folderPath;
@@ -24,9 +24,9 @@ public class ProfileImage {
     private Member member;
 
     @Builder
-    public ProfileImage(Long imageId, String userId, String fileName, String uuid, String folderPath, Member member) {
+    public ProfileImage(Long imageId, String userID, String fileName, String uuid, String folderPath, Member member) {
         this.imageId = imageId;
-        this.userId = member.getUserid();
+        this.userID = member.getUserid();
         this.fileName = fileName;
         this.uuid = uuid;
         this.folderPath = folderPath;

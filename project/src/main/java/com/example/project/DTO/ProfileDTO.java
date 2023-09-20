@@ -7,8 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @Data
-@AllArgsConstructor
 public class ProfileDTO {
+
+    private String userID;
 
     private String fileName;
 
@@ -37,4 +38,14 @@ public class ProfileDTO {
         return "";
     }
 
+    public ProfileDTO(String userID, String fileName, String uuid, String folderPath) {
+        this.userID = userID;
+        this.fileName = fileName;
+        this.uuid = uuid;
+        this.folderPath = folderPath;
+    }
+
+    public ProfileDTO() {
+
+    }
 }
