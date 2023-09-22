@@ -634,7 +634,12 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
-                            <img class="userFeedImages" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">
+<!--                            <img class="userFeedImages" th:each="image : ${uploadResults}" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">-->
+
+                            <div th:each="uploadResult : ${uploadResults}">
+                                <img th:each="image : ${uploadResult.thumbnailURL}" th:src="@{'/display?fileName=' + ${image}}" class="userFeedImages">
+                            </div>
+
                         </div>
                         <div class="userFeedCommentArea">
                             <div class="userFeedLike">

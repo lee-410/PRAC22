@@ -116,6 +116,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
                     resultDTOList.add(new UploadResultDTO(images.getImageId(), fileName, uuid, folderPath));
+                    log.info("resultDTOList"+resultDTOList);
                 } else {
                     // entity에 userid와 일치하는 user가 없을 때 처리
                 }
