@@ -51,6 +51,7 @@ public class IndexController {
 
         for (Images images : userImagesEntities) {
             UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
+            dto.setPostId(images.getFeed().getPostId());
             userImages.add(dto);
         }
 

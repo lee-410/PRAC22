@@ -612,8 +612,8 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
         </script>
         <section class="feed">
             <div class="main_list">
-                <div th:each="uploadResult : ${uploadResults}" class="feed_Area">
-                    <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId and feedItem.author == username}">
+                <div th:each="uploadResult : ${uploadResults}">
+                    <div th:each="feedItem : ${feedItems}" th:if="${uploadResult.imageId == feedItem.postId and feedItem.author == username}" class="feed_Area">
                     <div class="userInfoArea">
                         <div class="userInfoImageBin"></div>
                         <div class="userInfoBin">
@@ -628,18 +628,16 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                                         </ul>
                                     </li>
                                 </ul>
-
                             </div>
                         </div>
                     </div>
                     <div class="userFeedImagesArea">
                         <div class="userFeedImagesBin">
-<!--                            <img class="userFeedImages" th:each="image : ${uploadResults}" th:src="@{'/display?fileName=' + ${uploadResult.thumbnailURL}}">-->
-
                             <div th:each="uploadResult : ${uploadResults}">
-                                <img th:each="image : ${uploadResult.thumbnailURL}" th:src="@{'/display?fileName=' + ${image}}" class="userFeedImages">
+                                <div th:each="image : ${uploadResult.thumbnailURL}">
+                                     <img th:if="${uploadResult.postId == feedItem.postId}" th:src="@{'/display?fileName=' + ${image}}" class="userFeedImages">
+                                </div>
                             </div>
-
                         </div>
                         <div class="userFeedCommentArea">
                             <div class="userFeedLike">

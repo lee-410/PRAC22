@@ -1,5 +1,10 @@
 package com.example.project.DTO;
 
+import com.example.project.Entity.Feed;
+import com.example.project.Entity.Member;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,6 +21,10 @@ public class UploadResultDTO {
     private String uuid;
 
     private String folderPath;
+    private Long postId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Feed feed;
 
     public String getImageURL(){
         try {
@@ -40,6 +49,7 @@ public class UploadResultDTO {
 
     public UploadResultDTO(Long imageId, String fileName, String uuid, String folderPath) {
         this.imageId = imageId;
+//        this.postId = feed.getPostId();
         this.fileName = fileName;
         this.uuid = uuid;
         this.folderPath = folderPath;

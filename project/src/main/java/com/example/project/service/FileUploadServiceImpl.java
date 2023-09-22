@@ -116,6 +116,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
                     resultDTOList.add(new UploadResultDTO(images.getImageId(), fileName, uuid, folderPath));
+                    UploadResultDTO dto = resultDTOList.get(resultDTOList.size() - 1);
+                    dto.setPostId(images.getFeed().getPostId());
                     log.info("resultDTOList"+resultDTOList);
                 } else {
                     // entity에 userid와 일치하는 user가 없을 때 처리
@@ -142,6 +144,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         for (Images images : userImagesEntities) {
             // 각 이미지의 정보를 UploadResultDTO로 변환하여 결과 목록에 추가
             UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
+            dto.setPostId(images.getFeed().getPostId());
             userImages.add(dto);
         }
 
