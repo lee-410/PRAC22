@@ -10,26 +10,25 @@ import lombok.*;
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long profileID;
 
-    private String user_id;
+    @Column(name = "userId")
+    private String userID;
 
     private String roles;
 
-    //private String imagePath; //이거 업데이트되면 feed에서도 갱신
     @Column(length = 50)
-    private String introduction; //controller에서 길이제한 예외처리필요>잘려서저장됨
+    private String introduction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Profile(Long id, String user_id, String roles, String introduction, Member member) {
-        this.id = id;
-        this.user_id = member.getUserid();
+    public Profile(Long id, String introduction, Member member) {
+        this.profileID = id;
+        this.userID = member.getUserid();
         this.roles = member.getRoles();
-        //this.imagePath = imagePath;
         this.introduction = introduction;
         this.member = member;
     }

@@ -16,13 +16,13 @@ public class Images {
     private Long imageId;
 
     private String userId;
-    private Long postId;
+
     private String fileName;
     private String uuid;
     private String folderPath;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "feed_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId")
     private Feed feed;
 
     @Builder
@@ -33,9 +33,7 @@ public class Images {
         this.uuid = uuid;
         this.folderPath = folderPath;
         this.feed = feed;
-        if (feed != null) {
-            this.postId = feed.getPostId();
-        }
+
     }
 
     public Long getImageId() {

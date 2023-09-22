@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity(name = "Feed")
@@ -21,9 +22,12 @@ public class Feed {
     private LocalDateTime uploadTime;
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<Images> images;
 
     @Builder
     public Feed(Long postId, String content, Member member) {

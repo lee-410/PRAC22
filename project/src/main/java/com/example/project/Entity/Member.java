@@ -13,11 +13,11 @@ public class Member {
     private Long id;
 
     @Column(unique = true,length = 20)
-    private String userid; // 참조
+    private String userid;
 
     private String pw;
 
-    private String roles; // 참조
+    private String roles;
 
     private LocalDateTime createTime;
 
@@ -31,8 +31,8 @@ public class Member {
 
     public Member() {}
 
-    public static Member createUser(String userId, String pw, PasswordEncoder passwordEncoder) {
-        return new Member(null, userId, passwordEncoder.encode(pw), "USER", LocalDateTime.now());
+    public static Member createUser(String userid, String pw, PasswordEncoder passwordEncoder) {
+        return new Member(null, userid, passwordEncoder.encode(pw), "USER", LocalDateTime.now());
     }
 
 
