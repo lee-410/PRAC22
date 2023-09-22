@@ -62,7 +62,9 @@ public class ProfileController {
                     UploadResultDTO dto = new UploadResultDTO(images.getImageId(), images.getFileName(), images.getUuid(), images.getFolderPath());
                     dto.setPostId(images.getFeed().getPostId());
                     userImages.add(dto);
+
                 }
+
                 model.addAttribute("uploadResults", userImages);
             }
         }else {
