@@ -6,34 +6,93 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>로그인</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+  <style>
+        @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
+        .containerBox {
+            height: 500px;
+            width: 400px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -250px;
+            border-top: 3px solid #F8CD07;
+            border-bottom: 3px solid #F8CD07;
+            font-family: 'Nanum Gothic Coding', cursive;
+        }
+
+        .containerBox img {
+            width: 250px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            margin-left: -46%;
+            margin-top: -25%;
+            text-align: center;
+        }
+
+        .form-signin-heading-text {
+            margin-bottom: 40px;
+            font-size: 30px;
+            letter-spacing: 2px;
+        }
+
+        .form-control {
+            width: 250px;
+            height: 50px;
+            border: 2px solid #5b87c9;
+            font-size: 17px;
+        }
+
+        .signInBTN {
+            margin-top: 50px;
+            width: 120px;
+            height: 50px;
+            border: 3px solid #5b87c9;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #4581d9;
+            color: #ffffff;
+            font-family: 'Nanum Gothic Coding', cursive;
+        }
+
+        .joinInBTN {
+            border: 0px solid;
+            cursor: pointer;
+            background-color: transparent;
+        }
+
+    </style>
 </head>
 
 <body>
+<div class="containerBox">
 <div class="container">
+  <img src="/images/logo1.png">
   <form class="form-signin" method="post" action="/login-process">
 
-    <h2 class="form-signin-heading text-center mb-5">Login Page</h2>
+      <input type="text" id="username" name="userid" class="form-control" placeholder="아이디" required="" autofocus="">
+      <input type="password" id="password" name="pw" class="form-control" placeholder="비밀번호" required="">
 
-    <p>
-      <label for="username" class="sr-only">아이디</label>
-      <input type="text" id="username" name="userid" class="form-control" placeholder="ID" required="" autofocus="">
-    </p>
-    <p>
-      <label for="password" class="sr-only">비밀번호</label>
-      <input type="password" id="password" name="pw" class="form-control" placeholder="PASSWORD" required="">
-    </p>
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="signInBTN" type="submit">로그인</button>
 
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
   </form>
 
   <form class="form-signin" method="get" action="/view/join">
-    <button class="btn btn-lg btn-warning btn-block" type="submit">회원가입</button>
+    <p>회원이 아니신가요?
+      <button class="joinInBTN" type="submit">회원가입</button></p>
+
   </form>
+</div>
 </div>
 
 </script>

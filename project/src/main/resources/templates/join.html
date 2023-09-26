@@ -6,28 +6,75 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>회원가입</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
+        .containerBox {
+            height: 500px;
+            width: 400px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -250px;
+            border-top: 3px solid #F8CD07;
+            border-bottom: 3px solid #F8CD07;
+            font-family: 'Nanum Gothic Coding', cursive;
+        }
+
+        .containerBox img {
+            width: 250px;
+            object-fit: cover;
+        }
+
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            margin-left: -46%;
+            margin-top: -25%;
+            text-align: center;
+        }
+
+        .form-signin {
+            margin-top: 50px;
+        }
+
+        .form-control {
+            width: 250px;
+            height: 50px;
+            border: 2px solid #5b87c9;
+            font-size: 17px;
+        }
+
+        .joinInBTN {
+            margin-top: 50px;
+            width: 120px;
+            height: 50px;
+            border: 3px solid #5b87c9;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #4581d9;
+            color: #ffffff;
+            font-family: 'Nanum Gothic Coding', cursive;
+
+        }
+
+    </style>
 </head>
 
 <body>
-<div class="container">
-    <form class="form-signin" id="join_form">
-        <h2 class="form-signin-heading text-center mb-5">회원가입!</h2>
-
-        <p>
-            <label for="username" class="sr-only">아이디</label>
+<div class="containerBox">
+    <div class="container">
+        <img src="/images/logo1.png">
+        <form class="form-signin" id="join_form">
             <input type="text" id="username" name="userid" class="form-control" placeholder="아이디" required autofocus>
-        </p>
-        <p>
-            <label for="password" class="sr-only">비밀번호</label>
             <input type="password" id="password" name="pw" class="form-control" placeholder="비밀번호" required>
-        </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>
-        <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-    </form>
-
+            <button class="joinInBTN" type="submit">회원가입</button>
+            <input type="hidden" id="csrf_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        </form>
+    </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("join_form");
