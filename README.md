@@ -35,7 +35,7 @@
 +회원 유저의 프로필이미지와 소개는 DB에 저장됨
 
 ## Navigation Bar, 업로드
-<img src="https://github.com/lee-410/PRAC22/assets/58701102/4d00796d-598f-41ee-a085-2ff9bac498c8" width="500" object-fit="cover" >
+<img src="https://github.com/lee-410/PRAC22/assets/58701102/b6b58cd1-7e82-4210-927e-340d03b2e0fe" width="500" object-fit="cover" >
 
 +홈에 업로드할 이미지와 글 작성 가능<br/>
 +이미지 여러개 업로드 가능<br/>
