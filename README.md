@@ -15,7 +15,7 @@
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/db696b7a-8bd3-4b91-a27c-9101c26f310d" width="300" object-fit="cover" >
 
 +밑줄 애니메이션 추가<br/>
-+비회원 유저일 경우 프로필, 업로드 접근 불가(alert("로그인이 필요한 서비스입니다");)
++비회원 유저일 경우, 프로필 및 업로드페이지 접근 불가(alert("로그인이 필요한 서비스입니다");)
 
 ## Navigation Bar, 검색 
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/a941ce6f-f3cf-4a13-a05a-5be467aafe03" width="500" object-fit="cover" >
@@ -45,8 +45,8 @@
 ## Footer (GitHub, velog, 로그인)
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/b7e69d2e-a8c5-42c1-a6b7-c35274c7b2cb" width="500" object-fit="cover" >
 
-+ [GitHub](https://github.com/lee-410/PRAC22/)<br/>
-+ [velog](https://velog.io/@lee-410)</br>
++[GitHub](https://github.com/lee-410/PRAC22/tree/main)<br/>
++[velog](https://velog.io/@lee-410)</br>
 
 ## 로그인
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/17e28bf9-d69b-4289-ac59-7cb8b1314823" width="300" object-fit="cover" >
