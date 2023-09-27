@@ -75,8 +75,8 @@
 <body>
 <div class="containerBox">
 <div class="container">
-  <img src="/images/logo1.png">
-  <form class="form-signin" method="post" action="/login-process">
+    <img src="/images/logo1.png" onerror="this.onerror=null; this.src='/static/images/logo1.png';">
+    <form class="form-signin" method="post" action="/login-process">
 
       <input type="text" id="username" name="userid" class="form-control" placeholder="아이디" required="" autofocus="">
       <input type="password" id="password" name="pw" class="form-control" placeholder="비밀번호" required="">
