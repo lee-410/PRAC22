@@ -6,7 +6,7 @@
 📍 java17, spring framework3.1.0, thymeleaf, spring security6, jpa, oracleDB<br/>
 
 ### Main Page
-<img src="https://github.com/lee-410/PRAC22/assets/58701102/95f39fd6-bd9a-4e22-a636-de41e3e89a22" width="500" object-fit="cover" >
+<img src="https://github.com/lee-410/PRAC22/assets/58701102/5e816f30-464c-465a-895b-388ebf2d5a33" width="500" object-fit="cover" >
 
 +회원 유저가 피드를 올리면 홈에 업로드됨<br/>
 +좋아요 및 댓글은 모양만 만들어두고 구현은 아직 하지않음 (구현 방법 생각 중...)
