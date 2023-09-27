@@ -15,6 +15,7 @@
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/db696b7a-8bd3-4b91-a27c-9101c26f310d" width="300" object-fit="cover" >
 
 +밑줄 애니메이션 추가
++비회원 유저일 경우 프로필, 업로드 접근 불가(alert("로그인이 필요한 서비스입니다");)
 
 ## Navigation Bar, 검색 
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/a941ce6f-f3cf-4a13-a05a-5be467aafe03" width="500" object-fit="cover" >
@@ -24,7 +25,6 @@
 ## Navigation Bar, 프로필
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/9cabe317-cd8d-4d2a-ae55-949c5de5618b" width="500" object-fit="cover" >
 
-+회원 유저의 프로필 페이지 (비회원 접근 불가)<br/>
 +회원 유저 본인이 올린 피드 확인 가능<br/>
 +삭제 원하는 피드 삭제 가능(DB,로컬폴더에서 정보 삭제)
 
