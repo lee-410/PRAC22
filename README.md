@@ -3,7 +3,7 @@
 📌 인스타그램을 모티브 삼아 제작했습니다.<br/>
 📌 23.09.28 기준 완성본이 아니며, 현재 진행중 입니다. <br/>
 📌 웹 개발의 모집단을 공부하고 있기 때문에 html,css도 직접 작성 했습니다.<br/>  
-📍 java17, spring framework3.1.0, thymeleaf, spring security6, jpa, oracleDB<br/>
+📍 java17, spring framework3.1.0, thymeleaf, spring security6, jpa, oracleDB, html, css<br/>
 
 ### Main Page
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/5e816f30-464c-465a-895b-388ebf2d5a33" width="500" object-fit="cover" >
@@ -39,13 +39,15 @@
 
 +홈에 업로드할 이미지와 글 작성 가능<br/>
 +이미지 여러개 업로드 가능<br/>
-+업로드한 이미지와 글은 DB에 저장됨(이미지-folderPath, UUID, fileName | 글-content)<br/>
++업로드한 이미지와 글은 DB에 저장됨(이미지: folderPath, UUID, fileName - 글: content)<br/>
 +업로드한 이미지는 날짜별로 로컬폴더에 저장됨<br/>
 
 ## Footer (GitHub, velog, 로그인)
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/b7e69d2e-a8c5-42c1-a6b7-c35274c7b2cb" width="500" object-fit="cover" >
 
-+[GitHub](https://github.com/lee-410/PRAC22/tree/main정
++[GitHub](https://github.com/lee-410/PRAC22/tree/main) <br/>
++[velog](https://velog.io/@lee-410) <br/>
++로그인한 유저에게는 로그아웃 아이콘으로 바뀔 예정 <br/>
 
 ## 로그인
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/17e28bf9-d69b-4289-ac59-7cb8b1314823" width="300" object-fit="cover" >
