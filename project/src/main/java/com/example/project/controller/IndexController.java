@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,7 +67,7 @@ public class IndexController {
             ProfileDTO dto = new ProfileDTO(profileImage.getUserID(), profileImage.getFileName(), profileImage.getUuid(), profileImage.getFolderPath());
             profileImages.add(dto);
         }
-        model.addAttribute("profileImages",profileImages);
+        model.addAttribute("profileImages", profileImages);
         log.info("profileImages: {}", profileImages);
 
         return modelAndView;
@@ -78,5 +79,9 @@ public class IndexController {
         return userId;
     }
 
-
+//    @PostMapping("/toProfile")
+//    public String toProfile(Authentication authentication) {
+//        String userId = authentication.getName();
+//
+//    }
 }

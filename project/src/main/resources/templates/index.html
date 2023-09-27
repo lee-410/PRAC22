@@ -414,30 +414,54 @@
             <li><a class="yellow underline" href="/">홈</a></li>
             <li><a class="yellow underline" id="show">검색</a></li>
             <li><a class="yellow underline" id="profile-link">프로필</a></li>
-            <li><a class="yellow underline" href="/upload">업로드</a></li>
+            <li><a class="yellow underline" id="upload-link">업로드</a></li>
         </div>
     </ul>
     <script>
-     $.ajax({
+    document.getElementById("profile-link").onclick = function() {
+        var profileLink = this;
+         $.ajax({
             url: "/profile/getUserId",
             method: "GET",
-            success: function(userId) {
-                // userId 값을 사용하여 URL 생성
-                var profileUrl = "/profile/" + userId;
+            success: function(response) {
+                if(response.result == true) {
+                    var profileUrl = "/profile/" + response.userId;
+                    profileLink.href = profileUrl;
+                }else {
+                    alert("로그인이 필요한 서비스입니다.");
+                    window.location.href= "/view/login";
+                }
+            },
+            error: function(error){
+                console.error(error);
+            }
+         });
+    };
 
-                // 프로필 링크의 href 속성 업데이트
-                var profileLink = document.getElementById("profile-link");
-                profileLink.href = profileUrl;
+    document.getElementById("upload-link").onclick = function() {
+        $.ajax({
+            url: "/profile/getUserId",
+            method: "GET",
+            success: function(response) {
+                if (response.result === true) {
+                    window.location.href = "/upload";
+                } else {
+                    alert("로그인이 필요한 서비스입니다.");
+                    window.location.href= "/view/login";
+                }
             },
             error: function(error) {
                 console.error(error);
             }
         });
+    };
+
+
     </script>
     <div class="information">
         <li><a href="https://github.com/lee-410"><i class="fa-brands fa-github"></i></a></li>
         <li><a href="https://velog.io/@lee-410"><i class="fa-regular fa-file-lines"></i></a></li>
-        <li><a href="/join"><i class="fa-solid fa-arrow-right-to-bracket"></i></a> </li>
+        <li><a href="/view/login"><i class="fa-solid fa-arrow-right-to-bracket"></i></a> </li>
     </div>
     <div class="footer">
         <p> Created By TEARAN <br> xofks2000@gmail.com</p>
@@ -528,7 +552,8 @@ document.querySelector("#close").addEventListener('click', close);
     </div>
 </div>
 <script>
-        const slides = document.querySelector('.slides'); //전체 슬라이드 컨테이너
+//피드 이미지 여러개 일때 옆으로 슬라이드
+const slides = document.querySelector('.slides'); //전체 슬라이드 컨테이너
 const slideImg = document.querySelectorAll('.slides li'); //모든 슬라이드들
 let currentIdx = 0; //현재 슬라이드 index
 const slideCount = slideImg.length; // 슬라이드 개수
@@ -565,7 +590,7 @@ next.addEventListener('click', function () {
     </script>
 
 <script>
-
+//피드 좋아요
     function toggleLikeIcon(iconElement) {
         const iconClasses = iconElement.classList;
 

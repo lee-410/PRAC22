@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -81,9 +79,19 @@ public class ProfileController {
     }
 
     @GetMapping("/getUserId")
-    public String getUserId(Authentication authentication) {
+    public Map<String, Object> getUserId(Authentication authentication) {
         String userId = authentication.getName();
-        return userId;
+        Map<String, Object> response = new HashMap<>();
+
+        if (!userId.isEmpty()) {
+            response.put("userId", userId);
+            response.put("result", true);
+        } else {
+            response.put("userId", "");
+            response.put("result", false);
+        }
+
+        return response;
     }
 
     @GetMapping("/editGetUserId")

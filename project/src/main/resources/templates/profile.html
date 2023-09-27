@@ -611,7 +611,6 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
     <div class="content">
         <section class="top_section">
             <div class="profile_image_section">
-
             </div>
             <div class="profile_information">
                 <li>
@@ -664,7 +663,7 @@ document.querySelector("#close").addEventListener('click', closeSearchModal);
                 url: '/profile/getUserId',
                 method: 'GET',
                 success: function(data) {
-                    $('.getUserId').text('@' + data);
+                    $('.getUserId').text('@' + data.userId);
                 },
                 error: function (error){
                     console.error('사용자 ID를 불러오는 데 실패했습니다.');
