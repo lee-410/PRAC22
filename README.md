@@ -1,9 +1,9 @@
 # SNS (portFolio)
 📌 포토폴리용 용도(+공부 목적) 로 제작한 SNS 컨셉 웹페이지 입니다. <br/>
 📌 인스타그램을 모티브 삼아 제작했습니다.<br/>
-📌 23.09.28 기준 완성본이 아니며, 현재 진행중 입니다. <br/>
+📌 23.09.28 기준 완성본이 아니며, 현재 진행중 입니다.(하루 2시간씩 매일) <br/>
 📌 웹 개발의 모집단을 공부하고 있기 때문에 html,css도 직접 작성 했습니다.<br/>  
-📍 java17, spring framework3.1.0, thymeleaf, spring security6, jpa, oracleDB, html, css<br/>
+📍 intellij, java17, spring framework3.1.0, thymeleaf, spring security6, jpa, oracleDB, html, css<br/>
 
 ### Main Page
 <img src="https://github.com/lee-410/PRAC22/assets/58701102/5e816f30-464c-465a-895b-388ebf2d5a33" width="500" object-fit="cover" >
